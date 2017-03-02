@@ -1,0 +1,26 @@
+<div id="LoginWithAmazon"></div>
+<script async="async"
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
+</script>
+<script>
+    window.onAmazonLoginReady = function() {
+        amazon.Login.setClientId('{{ amazonConfig.client_id }}');
+    };
+
+    window.onAmazonPaymentsReady = function(){
+        // render the button here
+        var authRequest;
+
+        OffAmazonPayments.Button('LoginWithAmazon', '{{ amazonConfig.seller_id }}', {
+            type:  'LwA',
+            color: 'Gold',
+            size:  'medium',
+            language: 'de-DE',
+
+            authorization: function() {
+                loginOptions = {scope: 'profile', popup: true};
+                authRequest = amazon.Login.authorize (loginOptions, 'http://www.de.billpay.local');
+            }
+        });
+    }
+</script>
