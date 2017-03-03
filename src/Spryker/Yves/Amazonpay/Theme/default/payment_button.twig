@@ -1,4 +1,4 @@
-<div id="LoginWithAmazon"></div>
+<div id="AmazonPayButton"></div>
 <script>
     window.onAmazonLoginReady = function() {
         amazon.Login.setClientId('{{ amazonConfig.client_id }}');
@@ -8,14 +8,14 @@
         // render the button here
         var authRequest;
 
-        OffAmazonPayments.Button('LoginWithAmazon', '{{ amazonConfig.seller_id }}', {
-            type:  'LwA',
+        OffAmazonPayments.Button('AmazonPayButton', '{{ amazonConfig.seller_id }}', {
+            type:  'PwA',
             color: 'Gold',
             size:  'medium',
-            language: 'de-DE',
+            language: 'en-EN',
 
             authorization: function() {
-                loginOptions = {scope: 'profile', popup: true};
+                loginOptions = {scope: 'profile postal_code payments:widget payments:shipping_address', popup: true};
                 authRequest = amazon.Login.authorize (loginOptions, 'https://www.de.amazonpay.local/checkout/summary');
             }
         });
@@ -24,3 +24,4 @@
 <script async="async"
         src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
 </script>
+
