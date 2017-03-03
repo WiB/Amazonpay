@@ -1,7 +1,4 @@
 <div id="LoginWithAmazon"></div>
-<script async="async"
-        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
-</script>
 <script>
     window.onAmazonLoginReady = function() {
         amazon.Login.setClientId('{{ amazonConfig.client_id }}');
@@ -19,8 +16,11 @@
 
             authorization: function() {
                 loginOptions = {scope: 'profile', popup: true};
-                authRequest = amazon.Login.authorize (loginOptions, 'http://www.de.billpay.local');
+                authRequest = amazon.Login.authorize (loginOptions, 'https://www.de.amazonpay.local');
             }
         });
     }
+</script>
+<script async="async"
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
 </script>
