@@ -16,7 +16,7 @@
 
             authorization: function() {
                 loginOptions = {scope: 'profile', popup: true};
-                authRequest = amazon.Login.authorize (loginOptions, 'https://www.de.amazonpay.local');
+                authRequest = amazon.Login.authorize (loginOptions, 'https://www.de.amazonpay.local/checkout/summary');
             }
         });
     }
