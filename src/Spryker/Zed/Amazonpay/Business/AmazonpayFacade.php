@@ -1,7 +1,7 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
-use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -9,5 +9,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
 {
-
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createQuoteDataUpdater()->update($quoteTransfer);
+    }
 }
