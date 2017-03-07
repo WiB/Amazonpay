@@ -5,5 +5,5 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface AmazonpayClientInterface
 {
-    public function handleWithAmazonpay(QuoteTransfer $quoteTransfer);
+    public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer);
 }

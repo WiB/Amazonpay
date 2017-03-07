@@ -21,9 +21,14 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleWithAmazonpay(QuoteTransfer $quoteTransfer)
+    public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createZedStub()->handleWithAmazonpay($quoteTransfer);
+        return $this->getFactory()->createZedStub()->handleCartWithAmazonpay($quoteTransfer);
+    }
+
+    public function confirmOrderReference(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createZedStub()->confirmOrderReference($quoteTransfer);
     }
 
 }

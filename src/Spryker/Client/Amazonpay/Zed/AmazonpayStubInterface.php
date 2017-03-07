@@ -10,6 +10,6 @@ interface AmazonpayStubInterface
      *
      * @return QuoteTransfer
      */
-    public function handleWithAmazonpay(QuoteTransfer $quoteTransfer);
+    public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer);
 
 }

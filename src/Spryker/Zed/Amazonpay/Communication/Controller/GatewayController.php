@@ -14,7 +14,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleWithAmazonpayAction(QuoteTransfer $quoteTransfer)
+    public function handleCartWithAmazonpayAction(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->updateQuote($quoteTransfer);
     }
