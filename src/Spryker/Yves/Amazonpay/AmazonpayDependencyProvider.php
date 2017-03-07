@@ -6,8 +6,7 @@ use Spryker\Yves\Kernel\Container;
 
 class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const CLIENT_PAYOLUTION = 'payolution client';
+    const CLIENT_QUOTE = 'cart client';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -16,8 +15,8 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container[self::CLIENT_PAYOLUTION] = function (Container $container) {
-            return $container->getLocator()->payolution()->client();
+        $container[self::CLIENT_QUOTE] = function () use ($container) {
+            return $container->getLocator()->quote()->client();
         };
 
         return $container;

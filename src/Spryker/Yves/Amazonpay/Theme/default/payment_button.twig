@@ -16,7 +16,7 @@
 
             authorization: function() {
                 loginOptions = {scope: 'profile postal_code payments:widget payments:shipping_address', popup: true};
-                authRequest = amazon.Login.authorize (loginOptions, 'https://www.de.amazonpay.local/checkout/summary');
+                authRequest = amazon.Login.authorize (loginOptions, '/amazonpay/pay');
             }
         });
     }
