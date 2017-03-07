@@ -29,4 +29,14 @@ class AmazonpayStub implements AmazonpayStubInterface
         return $this->zedStub->call('/amazonpay/gateway/handle-cart-with-amazonpay', $quoteTransfer);
     }
 
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function confirmPurchase(QuoteTransfer $quoteTransfer)
+    {
+        return $this->zedStub->call('/amazonpay/gateway/confirm-purchase', $quoteTransfer);
+    }
+
 }

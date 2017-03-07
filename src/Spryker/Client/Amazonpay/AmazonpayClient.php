@@ -26,9 +26,14 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
         return $this->getFactory()->createZedStub()->handleCartWithAmazonpay($quoteTransfer);
     }
 
-    public function confirmOrderReference(QuoteTransfer $quoteTransfer)
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createZedStub()->confirmOrderReference($quoteTransfer);
+        return $this->getFactory()->createZedStub()->confirmPurchase($quoteTransfer);
     }
 
 }

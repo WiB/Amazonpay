@@ -33,8 +33,9 @@
             language: 'en-EN',
             onOrderReferenceCreate: function(orderReference) {
                 // Here is where you can grab the Order Reference ID.
-                var oid = orderReference.getAmazonOrderReferenceId();
-                console.log(oid);
+                var aoid = orderReference.getAmazonOrderReferenceId();
+
+                document.getElementsByClassName('{{ amazonConfig.amazon_order_reference_element }}')[0].value = aoid;
             },
             onAddressSelect: function(orderReference) {
                 // Replace the following code with the action that you want

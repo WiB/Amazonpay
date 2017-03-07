@@ -12,4 +12,11 @@ interface AmazonpayStubInterface
      */
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer);
 
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return mixed
+     */
+    public function confirmPurchase(QuoteTransfer $quoteTransfer);
+
 }
