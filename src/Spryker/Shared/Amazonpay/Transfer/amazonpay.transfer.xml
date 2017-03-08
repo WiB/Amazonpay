@@ -7,4 +7,7 @@
         <property name="amazonOrderReferenceId" type="string" singular="item"/>
     </transfer>
 
+    <transfer name="">
+    </transfer>
+
 </transfers>

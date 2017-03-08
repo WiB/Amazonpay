@@ -26,6 +26,13 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
+        $response = $this->getFactory()->createSetOrderReferenceTransactionHandler()->execute($quoteTransfer);
+
+        $response = $this->getFactory()->createConfirmOrderReferenceTransactionHandler()->execute($quoteTransfer);
+
+        $response = $this->getFactory()->cre()->execute($quoteTransfer);
+
+        // create transaction handlers and implement API calls
         return $quoteTransfer;
     }
 }

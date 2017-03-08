@@ -8,6 +8,10 @@ interface AmazonpayConstants
     const SELLER_ID = 'SELLER_ID';
     const SECRET_ACCESS_KEY = 'SECRET_ACCESS_KEY';
     const CLIENT_SECRET = 'CLIENT_SECRET';
+    const SANDBOX = 'SANDBOX';
+    const REGION = 'DE';
+
+    const PAYMENT_METHOD = 'Amazonpay';
 
     const PAYMENTS_API_ENDPOINT = 'PAYMENTS_API_ENDPOINT';
     const LOGIN_API_URL = 'LOGIN_API_URL';
