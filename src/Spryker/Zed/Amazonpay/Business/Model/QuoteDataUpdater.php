@@ -17,9 +17,11 @@ class QuoteDataUpdater
     {
         $paymentTransfer = new PaymentTransfer();
         $paymentTransfer->setPaymentMethod('Amazonpay'); // @todo decalre as constant somwhere
+        $paymentTransfer->setPaymentProvider('Amazonpay');
+        $paymentTransfer->setPaymentSelection('Amazonpay');
 
         $shipmentMethod = new ShipmentMethodTransfer();
-        $shipmentMethod->setCarrierName('Amazonpay'); // @todo decalre as constant somwhere
+        $shipmentMethod->setCarrierName('Amazonpay');
         $shipmentMethod->setName('Amazonpay');
         $shipmentMethod->setDefaultPrice(0);
 

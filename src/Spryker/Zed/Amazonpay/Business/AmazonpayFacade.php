@@ -45,6 +45,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
 
         if ($response->getHeader()->getIsSuccess()) {
             $quoteTransfer->setShippingAddress($response->getAddress());
+            $quoteTransfer->setBillingAddress($response->getAddress());
             $quoteTransfer->setBillingSameAsShipping(true);
         }
 

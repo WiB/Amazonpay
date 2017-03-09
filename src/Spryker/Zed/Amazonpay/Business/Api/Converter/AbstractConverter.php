@@ -42,6 +42,7 @@ abstract class AbstractConverter implements ConverterInterface
         $address->setZipCode($aResponseAddress['PostalCode']);
 
         if (!empty($aResponseAddress['Name'])) {
+            $address->setFirstName($aResponseAddress['Name']); //@todo consider parsing
             $address->setLastName($aResponseAddress['Name']);
         }
 

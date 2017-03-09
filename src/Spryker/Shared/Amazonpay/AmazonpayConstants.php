@@ -13,4 +13,5 @@ interface AmazonpayConstants
     const CURRENCY_CODE = 'EUR';
 
     const PAYMENT_METHOD = 'Amazonpay';
+    const PROVIDER_NAME = 'Amazonpay';
 }
