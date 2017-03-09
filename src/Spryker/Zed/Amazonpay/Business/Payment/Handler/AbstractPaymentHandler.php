@@ -2,24 +2,20 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler;
 
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapterInterface;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterInterface;
-use Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException;
-use Spryker\Zed\Amazonpay\Business\Exception\OrderGrandTotalException;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionInterface;
+use Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException;
 
-abstract class AbstractPaymentHandler
+abstract class AbstractPaymentHandler implements QuoteTransactionInterface
 {
 
     /**
      * @var AmazonpayAdapterInterface
      */
     protected $executionAdapter;
-
-    /**
-     * @var ConverterInterface
-     */
-    protected $converter;
 
     /**
      * @var AmazonpayConfig
@@ -38,16 +34,14 @@ abstract class AbstractPaymentHandler
      */
     public function __construct(
         AmazonpayAdapterInterface $executionAdapter,
-        ConverterInterface $converter,
         AmazonpayConfig $config
     ) {
         $this->executionAdapter = $executionAdapter;
-        $this->converter = $converter;
         $this->config = $config;
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\PayolutionConfig
+     * @return \Spryker\Zed\Amazonpay\AmazonpayConfig
      */
     protected function getConfig()
     {
@@ -78,6 +72,16 @@ abstract class AbstractPaymentHandler
         }
 
         return $this->methodMappers[$methodName];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return AbstractTransfer
+     */
+    public function execute(QuoteTransfer $quoteTransfer)
+    {
+        return $this->executionAdapter->call($quoteTransfer);
     }
 
 }

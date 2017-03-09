@@ -10,10 +10,7 @@ interface AmazonpayConstants
     const CLIENT_SECRET = 'CLIENT_SECRET';
     const SANDBOX = 'SANDBOX';
     const REGION = 'DE';
+    const CURRENCY_CODE = 'EUR';
 
     const PAYMENT_METHOD = 'Amazonpay';
-
-    const PAYMENTS_API_ENDPOINT = 'PAYMENTS_API_ENDPOINT';
-    const LOGIN_API_URL = 'LOGIN_API_URL';
-    const PROFILE_API_URL = 'PROFILE_API_URL';
 }

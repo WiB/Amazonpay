@@ -2,6 +2,7 @@
 namespace Spryker\Zed\Amazonpay;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AmazonpayConfig extends AbstractBundleConfig
@@ -52,6 +53,14 @@ class AmazonpayConfig extends AbstractBundleConfig
     public function getRegion()
     {
         return $this->get(AmazonpayConstants::REGION);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyIsoCode()
+    {
+        return Store::getInstance()->getCurrencyIsoCode();
     }
 
     /**

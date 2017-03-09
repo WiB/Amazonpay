@@ -4,10 +4,29 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
-        <property name="amazonOrderReferenceId" type="string" singular="item"/>
+        <property name="amazonOrderReferenceId" type="string"/>
+        <property name="amazonAddressConsentToken" type="string"/>
+        <property name="amazonResponseHeader" type="AmazonpayResponseHeader"/>
     </transfer>
 
-    <transfer name="">
+    <transfer name="AmazonpayResponseHeader">
+        <property name="statusCode" type="int" />
+        <property name="isSuccess" type="bool" />
+        <property name="requestId" type="string" />
+    </transfer>
+
+    <transfer name="SetOrderReferenceDetailsAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+        <property name="address" type="Address"/>
+    </transfer>
+
+    <transfer name="ConfirmOrderReferenceAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+    </transfer>
+
+    <transfer name="GetOrderReferenceDetailsAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+        <property name="address" type="Address"/>
     </transfer>
 
 </transfers>

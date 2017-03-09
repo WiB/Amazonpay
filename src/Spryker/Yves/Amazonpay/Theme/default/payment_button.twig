@@ -7,6 +7,7 @@
     window.onAmazonPaymentsReady = function(){
         // render the button here
         var authRequest;
+        var addressConsentToken;
 
         OffAmazonPayments.Button('AmazonPayButton', '{{ amazonConfig.seller_id }}', {
             type:  'PwA',
@@ -16,8 +17,22 @@
 
             authorization: function() {
                 loginOptions = {scope: 'profile postal_code payments:widget payments:shipping_address', popup: true};
-                authRequest = amazon.Login.authorize (loginOptions, '/amazonpay/pay');
-            }
+                authRequest = amazon.Login.authorize (loginOptions, function(response) {
+                    addressConsentToken = response.access_token;
+                });
+            },
+
+            onSignIn: function (orderReference) {
+                var referenceId = orderReference.getAmazonOrderReferenceId();
+
+                if (!referenceId) {
+                    errorHandler(new Error('referenceId missing'));
+                } else {
+                    window.location = '/amazonpay/pay' + '?referenceId=' +
+                        orderReference.getAmazonOrderReferenceId() +
+                        "&access_token=" + addressConsentToken;
+                }
+            },
         });
     }
 </script>

@@ -28,11 +28,26 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     {
         $response = $this->getFactory()->createSetOrderReferenceTransactionHandler()->execute($quoteTransfer);
 
+        if (!$response->getHeader()->getIsSuccess()) {
+            $quoteTransfer->setAmazonResponseHeader($response->getHeader());
+            return $quoteTransfer;
+        }
+
         $response = $this->getFactory()->createConfirmOrderReferenceTransactionHandler()->execute($quoteTransfer);
 
-        $response = $this->getFactory()->cre()->execute($quoteTransfer);
+        if (!$response->getHeader()->getIsSuccess()) {
+            $quoteTransfer->setAmazonResponseHeader($response->getHeader());
+            return $quoteTransfer;
+        }
 
-        // create transaction handlers and implement API calls
+        $response = $this->getFactory()->createGetOrderReferenceDetailsTransactionHandler()->execute($quoteTransfer);
+        $quoteTransfer->setAmazonResponseHeader($response->getHeader());
+
+        if ($response->getHeader()->getIsSuccess()) {
+            $quoteTransfer->setShippingAddress($response->getAddress());
+            $quoteTransfer->setBillingSameAsShipping(true);
+        }
+
         return $quoteTransfer;
     }
 }

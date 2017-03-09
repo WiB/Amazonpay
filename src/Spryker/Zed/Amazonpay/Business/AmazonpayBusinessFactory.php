@@ -1,6 +1,11 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAmazonpayAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAmazonpayAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAmazonpayAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -8,7 +13,6 @@ use Spryker\Zed\Amazonpay\Business\Model\QuoteDataUpdater;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmOrderReferenceTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\SetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapter;
 
 /**
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
@@ -30,9 +34,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     public function createConfirmOrderReferenceTransactionHandler()
     {
         $handler = new ConfirmOrderReferenceTransaction(
-            $this->createAmazonpayAdapter(),
-            $this->createCancelOrderConverter(),
-            $this->getQueryContainer(),
+            $this->createConfirmOrderReferenceAmazonpayAdapter(),
             $this->getConfig()
         );
 
@@ -49,8 +51,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     public function createSetOrderReferenceTransactionHandler()
     {
         $handler = new SetOrderReferenceDetailsTransaction(
-            $this->createAmazonpayAdapter(),
-            $this->createSalesOrderReferenceDetailsConverter(),
+            $this->createSetOrderReferenceDetailsAmazonpayAdapter(),
             $this->getConfig()
         );
 
@@ -64,8 +65,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     public function createGetOrderReferenceDetailsTransactionHandler()
     {
         $handler = new GetOrderReferenceDetailsTransaction(
-            $this->createAmazonpayAdapter(),
-            $this->createSalesOrderReferenceDetailsConverter(),
+            $this->createGetOrderReferenceDetailsAmazonpayAdapter(),
             $this->getConfig()
         );
 
@@ -77,19 +77,60 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AmazonpayAdapter
+     * @return SetOrderReferenceDetailsAmazonpayAdapter
      */
-    protected function createAmazonpayAdapter()
+    protected function createSetOrderReferenceDetailsAmazonpayAdapter()
     {
-        return new AmazonpayAdapter($this->getConfig());
+        return new SetOrderReferenceDetailsAmazonpayAdapter(
+            $this->getConfig(),
+            $this->createSetOrderReferenceDetailsConverter()
+        );
+    }
+
+    /**
+     * @return ConfirmOrderReferenceAmazonpayAdapter
+     */
+    protected function createConfirmOrderReferenceAmazonpayAdapter()
+    {
+        return new ConfirmOrderReferenceAmazonpayAdapter(
+            $this->getConfig(),
+            $this->createConfirmOrderReferenceConverter()
+        );
+    }
+
+    /**
+     * @return GetOrderReferenceDetailsAmazonpayAdapter
+     */
+    protected function createGetOrderReferenceDetailsAmazonpayAdapter()
+    {
+        return new GetOrderReferenceDetailsAmazonpayAdapter(
+            $this->getConfig(),
+            $this->createGetOrderReferenceDetailsConverter()
+        );
     }
 
     /**
      * @return SetOrderReferenceDetailsConverter
      */
-    protected function createSalesOrderReferenceDetailsConverter()
+    protected function createSetOrderReferenceDetailsConverter()
     {
         return new SetOrderReferenceDetailsConverter();
+    }
+
+    /**
+     * @return ConfirmOrderReferenceConverter
+     */
+    protected function createConfirmOrderReferenceConverter()
+    {
+        return new ConfirmOrderReferenceConverter();
+    }
+
+    /**
+     * @return GetOrderReferenceDetailsConverter
+     */
+    protected function createGetOrderReferenceDetailsConverter()
+    {
+        return new GetOrderReferenceDetailsConverter();
     }
 
     /**

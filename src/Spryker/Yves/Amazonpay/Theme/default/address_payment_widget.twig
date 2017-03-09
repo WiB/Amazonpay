@@ -25,11 +25,14 @@
 </style>
 
 <script>
-    window.onAmazonLoginReady = function() {amazon.Login.setClientId('{{ amazonConfig.client_id }}'); };
+    window.onAmazonLoginReady = function() {
+        amazon.Login.setClientId('{{ amazonConfig.client_id }}');
+    };
+
     window.onAmazonPaymentsReady = function() {
         new OffAmazonPayments.Widgets.AddressBook({
             sellerId: '{{ amazonConfig.seller_id }}',
-            scope: 'profile',
+            scope: 'profile postal_code payments:widget payments:shipping_address',
             language: 'en-EN',
             onOrderReferenceCreate: function(orderReference) {
                 // Here is where you can grab the Order Reference ID.

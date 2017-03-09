@@ -2,36 +2,22 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapterInterface;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAmazonpayAdapter;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\AbstractPaymentHandler;
-use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterInterface;
 
 class ConfirmOrderReferenceTransaction extends AbstractPaymentHandler
 {
+    /**
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     */
     public function __construct(
-        AmazonpayAdapterInterface $adapter,
-        ConverterInterface $converter,
+        ConfirmOrderReferenceAmazonpayAdapter $executionAdapter,
         AmazonpayConfig $config
     ) {
-        parent::__construct(
-            $adapter,
-            $converter,
-            $config
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\BillpayTransactionResponseTransfer
-     */
-    public function execute(QuoteTransfer $quoteTransfer)
-    {
-        $response = $this->adapter->confirmOrderReference($quoteTransfer);
-
-        return $this->converter->toTransactionResponseTransfer($response);
+        $this->executionAdapter = $executionAdapter;
+        $this->config = $config;
     }
 
 }
