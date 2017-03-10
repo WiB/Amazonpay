@@ -24,13 +24,15 @@ class QuoteDataUpdater
         $shipmentMethod->setCarrierName('Amazonpay');
         $shipmentMethod->setName('Amazonpay');
         $shipmentMethod->setDefaultPrice(0);
+        $shipmentMethod->setIdShipmentMethod(3);
+        $shipmentMethod->setFkShipmentCarrier(2);
 
         $shipment = new ShipmentTransfer();
         $shipment->setMethod($shipmentMethod);
 
         $quoteTransfer->setPayment($paymentTransfer);
         $quoteTransfer->setShipment($shipment);
-        
+
         return $quoteTransfer;
     }
 }
