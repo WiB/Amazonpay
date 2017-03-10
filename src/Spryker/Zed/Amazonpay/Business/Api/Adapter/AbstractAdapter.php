@@ -5,7 +5,7 @@ use PayWithAmazon\Client;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractConverter;
 
-abstract class AbstractAmazonpayAdapter implements AmazonpayAdapterInterface
+abstract class AbstractAdapter
 {
     /**
      * @var Client

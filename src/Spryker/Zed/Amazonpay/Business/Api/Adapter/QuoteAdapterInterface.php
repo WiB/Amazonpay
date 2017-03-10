@@ -3,7 +3,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface AmazonpayAdapterInterface
+interface QuoteAdapterInterface
 {
     /**
      * @param QuoteTransfer $quoteTransfer

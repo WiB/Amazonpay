@@ -1,6 +1,7 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -26,29 +27,21 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
-        $response = $this->getFactory()->createSetOrderReferenceTransactionHandler()->execute($quoteTransfer);
+        return $this->getFactory()->createConfirmPurchaseTransactionHandlerCollection()->execute($quoteTransfer);
+    }
 
-        if (!$response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setAmazonResponseHeader($response->getHeader());
-            return $quoteTransfer;
-        }
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    public function authorizeOrder(OrderTransfer $orderTransfer)
+    {
 
-        $response = $this->getFactory()->createConfirmOrderReferenceTransactionHandler()->execute($quoteTransfer);
+    }
 
-        if (!$response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setAmazonResponseHeader($response->getHeader());
-            return $quoteTransfer;
-        }
+    public function cancelOrder(OrderTransfer $orderTransfer)
+    {
 
-        $response = $this->getFactory()->createGetOrderReferenceDetailsTransactionHandler()->execute($quoteTransfer);
-        $quoteTransfer->setAmazonResponseHeader($response->getHeader());
-
-        if ($response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setShippingAddress($response->getAddress());
-            $quoteTransfer->setBillingAddress($response->getAddress());
-            $quoteTransfer->setBillingSameAsShipping(true);
-        }
-
-        return $quoteTransfer;
     }
 }

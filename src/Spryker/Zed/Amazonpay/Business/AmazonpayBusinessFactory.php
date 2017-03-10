@@ -1,12 +1,13 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAmazonpayAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAmazonpayAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAmazonpayAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Amazonpay\Business\Model\QuoteDataUpdater;
@@ -62,6 +63,9 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         return $handler;
     }
 
+    /**
+     * @return GetOrderReferenceDetailsTransaction
+     */
     public function createGetOrderReferenceDetailsTransactionHandler()
     {
         $handler = new GetOrderReferenceDetailsTransaction(
@@ -77,33 +81,45 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SetOrderReferenceDetailsAmazonpayAdapter
+     * @return ConfirmPurchaseTransactionCollection
+     */
+    public function createConfirmPurchaseTransactionHandlerCollection()
+    {
+        return new ConfirmPurchaseTransactionCollection(
+            $this->createSetOrderReferenceTransactionHandler(),
+            $this->createConfirmOrderReferenceTransactionHandler(),
+            $this->createGetOrderReferenceDetailsTransactionHandler()
+        );
+    }
+
+    /**
+     * @return SetOrderReferenceDetailsAdapter
      */
     protected function createSetOrderReferenceDetailsAmazonpayAdapter()
     {
-        return new SetOrderReferenceDetailsAmazonpayAdapter(
+        return new SetOrderReferenceDetailsAdapter(
             $this->getConfig(),
             $this->createSetOrderReferenceDetailsConverter()
         );
     }
 
     /**
-     * @return ConfirmOrderReferenceAmazonpayAdapter
+     * @return ConfirmOrderReferenceAdapter
      */
     protected function createConfirmOrderReferenceAmazonpayAdapter()
     {
-        return new ConfirmOrderReferenceAmazonpayAdapter(
+        return new ConfirmOrderReferenceAdapter(
             $this->getConfig(),
             $this->createConfirmOrderReferenceConverter()
         );
     }
 
     /**
-     * @return GetOrderReferenceDetailsAmazonpayAdapter
+     * @return GetOrderReferenceDetailsAdapter
      */
     protected function createGetOrderReferenceDetailsAmazonpayAdapter()
     {
-        return new GetOrderReferenceDetailsAmazonpayAdapter(
+        return new GetOrderReferenceDetailsAdapter(
             $this->getConfig(),
             $this->createGetOrderReferenceDetailsConverter()
         );

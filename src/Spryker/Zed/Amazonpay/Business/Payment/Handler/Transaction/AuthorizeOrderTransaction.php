@@ -1,11 +1,10 @@
 <?php
-
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
 
-class ConfirmOrderReferenceTransaction extends AbstractQuoteTransaction
+class AuthorizeOrderTransaction extends AbstractOrderTransaction
 {
     /**
      * @param ConfirmOrderReferenceAdapter $executionAdapter

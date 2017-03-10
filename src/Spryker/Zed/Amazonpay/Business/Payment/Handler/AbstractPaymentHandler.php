@@ -2,18 +2,15 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapterInterface;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionInterface;
 use Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException;
 
-abstract class AbstractPaymentHandler implements QuoteTransactionInterface
+abstract class AbstractPaymentHandler
 {
 
     /**
-     * @var AmazonpayAdapterInterface
+     * @var AbstractAdapter
      */
     protected $executionAdapter;
 
@@ -28,12 +25,11 @@ abstract class AbstractPaymentHandler implements QuoteTransactionInterface
     protected $methodMappers = [];
 
     /**
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapterInterface $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterInterface $converter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     * @param AbstractAdapter $executionAdapter
+     * @param AmazonpayConfig $config
      */
     public function __construct(
-        AmazonpayAdapterInterface $executionAdapter,
+        AbstractAdapter $executionAdapter,
         AmazonpayConfig $config
     ) {
         $this->executionAdapter = $executionAdapter;
@@ -61,7 +57,7 @@ abstract class AbstractPaymentHandler implements QuoteTransactionInterface
     /**
      * @param string $methodName
      *
-     * @throws \Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException
+     * @throws \Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay
      */
@@ -74,14 +70,5 @@ abstract class AbstractPaymentHandler implements QuoteTransactionInterface
         return $this->methodMappers[$methodName];
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return AbstractTransfer
-     */
-    public function execute(QuoteTransfer $quoteTransfer)
-    {
-        return $this->executionAdapter->call($quoteTransfer);
-    }
 
 }

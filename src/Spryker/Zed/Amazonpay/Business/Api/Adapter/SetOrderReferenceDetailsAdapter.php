@@ -4,7 +4,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PayWithAmazon\ResponseParser;
 
-class ConfirmOrderReferenceAmazonpayAdapter extends AbstractAmazonpayAdapter
+class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 {
     /**
      * @param QuoteTransfer $quoteTransfer

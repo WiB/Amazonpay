@@ -2,17 +2,16 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAmazonpayAdapter;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\AbstractPaymentHandler;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 
-class SetOrderReferenceDetailsTransaction extends AbstractPaymentHandler
+class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
 {
     /**
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AmazonpayAdapterInterface $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     * @param SetOrderReferenceDetailsAdapter $executionAdapter
+     * @param AmazonpayConfig $config
      */
     public function __construct(
-        SetOrderReferenceDetailsAmazonpayAdapter $executionAdapter,
+        SetOrderReferenceDetailsAdapter $executionAdapter,
         AmazonpayConfig $config
     ) {
         $this->executionAdapter = $executionAdapter;

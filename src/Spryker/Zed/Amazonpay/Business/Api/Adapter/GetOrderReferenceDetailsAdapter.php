@@ -4,7 +4,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PayWithAmazon\ResponseParser;
 
-class SetOrderReferenceDetailsAmazonpayAdapter extends AbstractAmazonpayAdapter
+class GetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 {
     /**
      * @param QuoteTransfer $quoteTransfer
@@ -13,11 +13,12 @@ class SetOrderReferenceDetailsAmazonpayAdapter extends AbstractAmazonpayAdapter
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
-        $result = $this->client->setOrderReferenceDetails([
+        $result = $this->client->getOrderReferenceDetails([
             'amazon_order_reference_id' => $quoteTransfer->getAmazonOrderReferenceId(),
-            'amount' => $quoteTransfer->getTotals()->getGrandTotal(),
+            'address_consent_token' => $quoteTransfer->getAmazonAddressConsentToken(),
         ]);
 
         return $this->converter->toTransactionResponseTransfer($result);
     }
+
 }
