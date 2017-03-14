@@ -14,4 +14,12 @@ interface AmazonpayConstants
 
     const PAYMENT_METHOD = 'Amazonpay';
     const PROVIDER_NAME = 'Amazonpay';
+
+    const OMS_STATUS_NEW = 'new';
+    const OMS_STATUS_AUTHORIZED = 'authorized';
+    const OMS_STATUS_DECLINED = 'declined';
+    const OMS_STATUS_CAPTURED = 'captured';
+    const OMS_STATUS_CANCELLED = 'cancelled';
+    const OMS_STATUS_CLOSED = 'closed';
+
 }

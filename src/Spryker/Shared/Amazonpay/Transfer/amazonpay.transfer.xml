@@ -3,21 +3,31 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="AmazonpayPayment">
+        <property name="fkSalesOrder" type="int" />
+        <property name="orderReferenceId" type="string"/>
+        <property name="addressConsentToken" type="string"/>
+        <property name="responseHeader" type="AmazonpayResponseHeader"/>
+    </transfer>
+
     <transfer name="Quote">
-        <property name="amazonOrderReferenceId" type="string"/>
-        <property name="amazonAddressConsentToken" type="string"/>
-        <property name="amazonResponseHeader" type="AmazonpayResponseHeader"/>
+        <property name="amazonPayment" type="AmazonpayPayment"/>
+    </transfer>
+
+    <transfer name="AmazonpayResponseConstraint">
+        <property name="constraintId" type="string"/>
+        <property name="constraintDescription" type="string"/>
     </transfer>
 
     <transfer name="AmazonpayResponseHeader">
         <property name="statusCode" type="int" />
         <property name="isSuccess" type="bool" />
         <property name="requestId" type="string" />
+        <property name="constraints" type="AmazonpayResponseConstraint[]" singular="constraint" />
     </transfer>
 
     <transfer name="SetOrderReferenceDetailsAmazonpayResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
-        <property name="address" type="Address"/>
     </transfer>
 
     <transfer name="ConfirmOrderReferenceAmazonpayResponse">
@@ -26,7 +36,40 @@
 
     <transfer name="GetOrderReferenceDetailsAmazonpayResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
-        <property name="address" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="billingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="AmazonPrice">
+        <property name="currencyCode" type="string"/>
+        <property name="amount" type="string"/>
+    </transfer>
+
+    <transfer name="AmazonStatus">
+        <property name="state" type="string"/>
+        <property name="lastUpdateTimestamp" type="string"/>
+    </transfer>
+
+    <transfer name="AmazonAuthorizationDetails">
+        <property name="authorizationBillingAddress" type="Address" />
+        <property name="authorizationId" type="string" />
+        <property name="authorizationReference" type="string" />
+        <property name="sellerAuthorizationNote" type="string" />
+        <property name="authorizationAmount" type="AmazonPrice" />
+        <property name="capturedAmount" type="AmazonPrice" />
+        <property name="authorizationFee" type="AmazonPrice" />
+        <property name="idList" type="string" />
+        <property name="creationTimestamp" type="string"/>
+        <property name="expirationTimestamp" type="string"/>
+        <property name="authorizationStatus" type="AmazonStatus" />
+        <property name="softDecline" type="bool" />
+        <property name="captureNow" type="bool" />
+        <property name="softDescriptor" type="string" />
+    </transfer>
+
+    <transfer name="AuthorizeOrderAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+        <property name="authorizationDetails" type="AmazonAuthorizationDetails"/>
     </transfer>
 
 </transfers>

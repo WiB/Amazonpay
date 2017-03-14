@@ -9,6 +9,16 @@ class ConfirmOrderReferenceConverter extends AbstractConverter
     /**
      * @param ResponseParser $responseParser
      *
+     * @return array
+     */
+    protected function extractResult(ResponseParser $responseParser)
+    {
+        return $responseParser->toArray()['ConfirmOrderReferenceResult'];
+    }
+
+    /**
+     * @param ResponseParser $responseParser
+     *
      * @return ConfirmOrderReferenceAmazonpayResponseTransfer
      */
     public function toTransactionResponseTransfer(ResponseParser $responseParser)

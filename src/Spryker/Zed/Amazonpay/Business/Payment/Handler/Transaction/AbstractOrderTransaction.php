@@ -8,8 +8,6 @@ class AbstractOrderTransaction extends AbstractPaymentHandler
 {
     /**
      * @param OrderTransfer $quoteTransfer
-     *
-     * @return QuoteTransfer
      */
     public function execute(OrderTransfer $quoteTransfer)
     {

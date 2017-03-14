@@ -1,20 +1,20 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
+use Generated\Shared\Transfer\ConfirmOrderReferenceAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PayWithAmazon\ResponseParser;
 
 class ConfirmOrderReferenceAdapter extends AbstractQuoteAdapter
 {
     /**
      * @param QuoteTransfer $quoteTransfer
      *
-     * @return ResponseParser
+     * @return ConfirmOrderReferenceAmazonpayResponseTransfer
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
-        $result = $this->client->setOrderReferenceDetails([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonOrderReferenceId(),
+        $result = $this->client->confirmOrderReference([
+            'amazon_order_reference_id' => $quoteTransfer->getAmazonPayment()->getOrderReferenceId(),
             'amount' => $quoteTransfer->getTotals()->getGrandTotal(),
         ]);
 

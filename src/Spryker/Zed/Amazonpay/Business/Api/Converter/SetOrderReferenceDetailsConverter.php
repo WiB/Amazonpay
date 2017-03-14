@@ -11,9 +11,11 @@ class SetOrderReferenceDetailsConverter extends AbstractConverter
      *
      * @return array
      */
-    protected function extractAddressArray(ResponseParser $responseParser)
+    protected function extractResult(ResponseParser $responseParser)
     {
-        return $responseParser->toArray()['SetOrderReferenceDetailsResult']['OrderReferenceDetails']['Destination']['PhysicalDestination'];
+        return empty($responseParser->toArray()['SetOrderReferenceDetailsResult'])
+            ? []
+            : $responseParser->toArray()['SetOrderReferenceDetailsResult'];
     }
 
     /**
@@ -25,7 +27,6 @@ class SetOrderReferenceDetailsConverter extends AbstractConverter
     {
         $responseTransfer = new SetOrderReferenceDetailsAmazonpayResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
-        $responseTransfer->setAddress($this->extractAddress($responseParser));
 
         return $responseTransfer;
     }

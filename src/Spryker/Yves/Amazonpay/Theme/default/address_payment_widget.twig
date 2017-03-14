@@ -32,7 +32,7 @@
     window.onAmazonPaymentsReady = function() {
         new OffAmazonPayments.Widgets.AddressBook({
             sellerId: '{{ amazonConfig.seller_id }}',
-            scope: 'profile postal_code payments:widget payments:shipping_address',
+            scope: 'profile postal_code payments:widget payments:shipping_address payments:billing_address',
             language: 'en-EN',
             onOrderReferenceCreate: function(orderReference) {
                 // Here is where you can grab the Order Reference ID.

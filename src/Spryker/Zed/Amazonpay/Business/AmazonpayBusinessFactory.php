@@ -1,12 +1,16 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\AuthorizeOrderConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Order\Saver;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -81,6 +85,23 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return AuthorizeOrderTransaction
+     */
+    protected function createAuthorizeOrderTransactionHandler()
+    {
+        $handler = new AuthorizeOrderTransaction(
+            $this->createAuthorizeOrderAdapter(),
+            $this->getConfig()
+        );
+
+        $handler->registerMethodMapper(
+            $this->createAmazonpayPaymentMethod()
+        );
+
+        return $handler;
+    }
+
+    /**
      * @return ConfirmPurchaseTransactionCollection
      */
     public function createConfirmPurchaseTransactionHandlerCollection()
@@ -88,7 +109,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         return new ConfirmPurchaseTransactionCollection(
             $this->createSetOrderReferenceTransactionHandler(),
             $this->createConfirmOrderReferenceTransactionHandler(),
-            $this->createGetOrderReferenceDetailsTransactionHandler()
+            $this->createGetOrderReferenceDetailsTransactionHandler(),
+            $this->createAuthorizeOrderTransactionHandler()
         );
     }
 
@@ -125,6 +147,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    protected function createAuthorizeOrderAdapter()
+    {
+        return new AuthorizeOrderAdapter(
+            $this->getConfig(),
+            $this->createAuthorizeOrderConverter()
+        );
+    }
+
     /**
      * @return SetOrderReferenceDetailsConverter
      */
@@ -149,12 +179,25 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         return new GetOrderReferenceDetailsConverter();
     }
 
+    protected function createAuthorizeOrderConverter()
+    {
+        return new AuthorizeOrderConverter();
+    }
+
     /**
      * @return Amazonpay
      */
     protected function createAmazonpayPaymentMethod()
     {
         return new Amazonpay();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Order\SaverInterface
+     */
+    public function createOrderSaver()
+    {
+        return new Saver();
     }
 
 }

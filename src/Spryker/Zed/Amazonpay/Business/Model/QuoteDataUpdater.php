@@ -5,6 +5,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class QuoteDataUpdater
 {
@@ -16,16 +17,16 @@ class QuoteDataUpdater
     public function update(QuoteTransfer $quoteTransfer)
     {
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentMethod('Amazonpay'); // @todo decalre as constant somwhere
-        $paymentTransfer->setPaymentProvider('Amazonpay');
-        $paymentTransfer->setPaymentSelection('Amazonpay');
+        $paymentTransfer->setPaymentMethod(AmazonpayConstants::PAYMENT_METHOD);
+        $paymentTransfer->setPaymentProvider(AmazonpayConstants::PAYMENT_METHOD);
+        $paymentTransfer->setPaymentSelection(AmazonpayConstants::PAYMENT_METHOD);
 
         $shipmentMethod = new ShipmentMethodTransfer();
-        $shipmentMethod->setCarrierName('Amazonpay');
-        $shipmentMethod->setName('Amazonpay');
+        $shipmentMethod->setCarrierName(AmazonpayConstants::PAYMENT_METHOD);
+        $shipmentMethod->setName(AmazonpayConstants::PAYMENT_METHOD);
         $shipmentMethod->setDefaultPrice(0);
-        $shipmentMethod->setIdShipmentMethod(3);
-        $shipmentMethod->setFkShipmentCarrier(2);
+        $shipmentMethod->setIdShipmentMethod(3); //@todo retrieve shipment method from DB instead
+        $shipmentMethod->setFkShipmentCarrier(2);//@todo same
 
         $shipment = new ShipmentTransfer();
         $shipment->setMethod($shipmentMethod);

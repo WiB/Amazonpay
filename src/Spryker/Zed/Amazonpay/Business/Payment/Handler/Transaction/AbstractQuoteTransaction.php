@@ -8,8 +8,6 @@ abstract class AbstractQuoteTransaction extends AbstractPaymentHandler implement
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return QuoteTransfer
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {

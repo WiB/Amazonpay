@@ -21,6 +21,11 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
     protected $getOrderReferenceDetailsTransaction;
 
     /**
+     * @var AuthorizeOrderTransaction
+     */
+    protected $authorizeOrderTransaction;
+
+    /**
      * @param SetOrderReferenceDetailsTransaction $setOrderReferenceDetailsTransaction
      * @param ConfirmOrderReferenceTransaction $confirmOrderReferenceTransaction
      * @param GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction
@@ -28,11 +33,13 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
     public function __construct(
         SetOrderReferenceDetailsTransaction $setOrderReferenceDetailsTransaction,
         ConfirmOrderReferenceTransaction $confirmOrderReferenceTransaction,
-        GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction
+        GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction,
+        AuthorizeOrderTransaction $authorizeOrderTransaction
     ) {
         $this->setOrderReferenceDetailsTransaction = $setOrderReferenceDetailsTransaction;
         $this->confirmOrderReferenceTransaction = $confirmOrderReferenceTransaction;
         $this->getOrderReferenceDetailsTransaction = $getOrderReferenceDetailsTransaction;
+        $this->authorizeOrderTransaction = $authorizeOrderTransaction;
     }
 
     /**
@@ -45,7 +52,7 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
         $response = $this->setOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
         if (!$response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setAmazonResponseHeader($response->getHeader());
+            $quoteTransfer->getAmazonPayment()->setResponseHeader($response->getHeader());
             return $quoteTransfer;
         }
 
@@ -57,13 +64,28 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
         }
 
         $response = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
-        $quoteTransfer->setAmazonResponseHeader($response->getHeader());
+        $quoteTransfer->getAmazonPayment()->setResponseHeader($response->getHeader());
 
         if ($response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setShippingAddress($response->getAddress());
-            $quoteTransfer->setBillingAddress($response->getAddress());
-            $quoteTransfer->setBillingSameAsShipping(true);
-            $quoteTransfer->setOrderReference($quoteTransfer->getAmazonOrderReferenceId());
+            $quoteTransfer->setShippingAddress($response->getShippingAddress());
+
+            if ($response->getBillingAddress()) {
+                $quoteTransfer->setBillingAddress($response->getBillingAddress());
+            } else {
+                $quoteTransfer->setBillingAddress($response->getShippingAddress());
+                $quoteTransfer->setBillingSameAsShipping(true);
+            }
+
+            $quoteTransfer->setOrderReference($quoteTransfer->getAmazonPayment()->getOrderReferenceId());
+        } else {
+            return $quoteTransfer;
+        }
+
+        $response = $this->authorizeOrderTransaction->execute($quoteTransfer);
+        $quoteTransfer->getAmazonPayment()->setResponseHeader($response->getHeader());
+
+        if ($response->getHeader()->getIsSuccess()) {
+            // @todo set info from auth call
         }
 
         return $quoteTransfer;

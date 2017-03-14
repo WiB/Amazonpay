@@ -1,6 +1,7 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -31,17 +32,21 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * {@inheritdoc}
      *
-     * @return OrderTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
      */
-    public function authorizeOrder(OrderTransfer $orderTransfer)
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-
+        $this
+            ->getFactory()
+            ->createOrderSaver()
+            ->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
 
-    public function cancelOrder(OrderTransfer $orderTransfer)
-    {
-
-    }
 }
