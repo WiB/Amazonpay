@@ -1,6 +1,7 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business;
 
+use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
@@ -102,6 +103,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
      * @return ConfirmPurchaseTransactionCollection
      */
     public function createConfirmPurchaseTransactionHandlerCollection()
@@ -123,7 +132,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     {
         return new SetOrderReferenceDetailsAdapter(
             $this->getConfig(),
-            $this->createSetOrderReferenceDetailsConverter()
+            $this->createSetOrderReferenceDetailsConverter(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -134,7 +144,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfirmOrderReferenceAdapter(
             $this->getConfig(),
-            $this->createConfirmOrderReferenceConverter()
+            $this->createConfirmOrderReferenceConverter(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -145,7 +156,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     {
         return new GetOrderReferenceDetailsAdapter(
             $this->getConfig(),
-            $this->createGetOrderReferenceDetailsConverter()
+            $this->createGetOrderReferenceDetailsConverter(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -153,7 +165,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     {
         return new AuthorizeOrderAdapter(
             $this->getConfig(),
-            $this->createAuthorizeOrderConverter()
+            $this->createAuthorizeOrderConverter(),
+            $this->getMoneyFacade()
         );
     }
 

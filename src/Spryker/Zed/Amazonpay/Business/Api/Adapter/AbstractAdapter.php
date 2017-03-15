@@ -4,6 +4,8 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 use PayWithAmazon\Client;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractConverter;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
+use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 
 abstract class AbstractAdapter
 {
@@ -17,8 +19,16 @@ abstract class AbstractAdapter
      */
     protected $converter;
 
-    public function __construct(AmazonpayConfig $config, AbstractConverter $converter)
-    {
+    /**
+     * @var MoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    public function __construct(
+        AmazonpayConfig $config,
+        AbstractConverter $converter,
+        AmazonpayToMoneyInterface $moneyFacade
+    ) {
         $config = [
             'merchant_id'   => $config->getSellerId(),
             'access_key'    => $config->getAccessKeyId(),
@@ -31,6 +41,7 @@ abstract class AbstractAdapter
 
         $this->client = new Client($config);
         $this->converter = $converter;
+        $this->moneyFacade = $moneyFacade;
     }
 
 }

@@ -3,8 +3,6 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\GetOrderReferenceDetailsAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
 
 class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
 {
@@ -12,18 +10,6 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
      * @var GetOrderReferenceDetailsAmazonpayResponseTransfer
      */
     protected $apiResponse;
-
-    /**
-     * @param GetOrderReferenceDetailsAdapter $executionAdapter
-     * @param AmazonpayConfig $config
-     */
-    public function __construct(
-        GetOrderReferenceDetailsAdapter $executionAdapter,
-        AmazonpayConfig $config
-    ) {
-        $this->executionAdapter = $executionAdapter;
-        $this->config = $config;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

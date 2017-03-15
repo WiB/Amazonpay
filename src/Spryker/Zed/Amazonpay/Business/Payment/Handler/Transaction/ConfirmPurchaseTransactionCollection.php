@@ -11,26 +11,6 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
     protected $transactionHandlers;
 
     /**
-     * @var SetOrderReferenceDetailsTransaction
-     */
-    protected $setOrderReferenceDetailsTransaction;
-
-    /**
-     * @var ConfirmOrderReferenceTransaction
-     */
-    protected $confirmOrderReferenceTransaction;
-
-    /**
-     * @var GetOrderReferenceDetailsTransaction
-     */
-    protected $getOrderReferenceDetailsTransaction;
-
-    /**
-     * @var AuthorizeOrderTransaction
-     */
-    protected $authorizeOrderTransaction;
-
-    /**
      * @param AbstractQuoteTransaction[] $transactionHandlers
      */
     public function __construct(

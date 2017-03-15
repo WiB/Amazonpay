@@ -15,7 +15,7 @@ class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
     {
         $result = $this->client->setOrderReferenceDetails([
             'amazon_order_reference_id' => $quoteTransfer->getAmazonPayment()->getOrderReferenceId(),
-            'amount' => $quoteTransfer->getTotals()->getGrandTotal(),
+            'amount' => $this->getAmount($quoteTransfer),
         ]);
 
         return $this->converter->toTransactionResponseTransfer($result);
