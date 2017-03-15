@@ -18,6 +18,6 @@ class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
             'amount' => $this->getAmount($quoteTransfer),
         ]);
 
-        return $this->converter->toTransactionResponseTransfer($result);
+        return $this->converter->convert($result);
     }
 }

@@ -5,11 +5,14 @@ use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AuthorizeOrderConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Order\CustomerDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection;
@@ -32,6 +35,17 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     public function createQuoteDataUpdater()
     {
         return new QuoteDataUpdater();
+    }
+
+    /**
+     * @return CustomerDataQuoteUpdater
+     */
+    public function createCustomerDataQuoteUpdater()
+    {
+        return new CustomerDataQuoteUpdater(
+            $this->createObtainProfileInformationAdapter(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -126,6 +140,18 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return ObtainProfileInformationAdapter
+     */
+    protected function createObtainProfileInformationAdapter()
+    {
+        return new ObtainProfileInformationAdapter(
+            $this->getConfig(),
+            $this->createObtainProfileInformationConverter(),
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
      * @return SetOrderReferenceDetailsAdapter
      */
     protected function createSetOrderReferenceDetailsAmazonpayAdapter()
@@ -161,6 +187,9 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return AuthorizeOrderAdapter
+     */
     protected function createAuthorizeOrderAdapter()
     {
         return new AuthorizeOrderAdapter(
@@ -168,6 +197,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
             $this->createAuthorizeOrderConverter(),
             $this->getMoneyFacade()
         );
+    }
+
+    /**
+     * @return ObtainProfileInformationConverter
+     */
+    protected function createObtainProfileInformationConverter()
+    {
+        return new ObtainProfileInformationConverter();
     }
 
     /**
@@ -194,6 +231,9 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         return new GetOrderReferenceDetailsConverter();
     }
 
+    /**
+     * @return AuthorizeOrderConverter
+     */
     protected function createAuthorizeOrderConverter()
     {
         return new AuthorizeOrderConverter();

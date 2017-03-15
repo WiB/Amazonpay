@@ -5,7 +5,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\GetOrderReferenceDetailsAmazonpayResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
-class GetOrderReferenceDetailsConverter extends AbstractConverter
+class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
     /**
      * @param ResponseParser $responseParser
@@ -60,7 +60,7 @@ class GetOrderReferenceDetailsConverter extends AbstractConverter
      *
      * @return GetOrderReferenceDetailsAmazonpayResponseTransfer
      */
-    public function toTransactionResponseTransfer(ResponseParser $responseParser)
+    public function convert(ResponseParser $responseParser)
     {
         $responseTransfer = new GetOrderReferenceDetailsAmazonpayResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));

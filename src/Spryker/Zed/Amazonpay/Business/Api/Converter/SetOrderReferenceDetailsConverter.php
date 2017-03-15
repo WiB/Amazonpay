@@ -4,7 +4,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 use Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
-class SetOrderReferenceDetailsConverter extends AbstractConverter
+class SetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
     /**
      * @param ResponseParser $responseParser
@@ -23,7 +23,7 @@ class SetOrderReferenceDetailsConverter extends AbstractConverter
      *
      * @return SetOrderReferenceDetailsAmazonpayResponseTransfer
      */
-    public function toTransactionResponseTransfer(ResponseParser $responseParser)
+    public function convert(ResponseParser $responseParser)
     {
         $responseTransfer = new SetOrderReferenceDetailsAmazonpayResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));

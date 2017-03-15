@@ -18,7 +18,7 @@ class GetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
             'address_consent_token' => $quoteTransfer->getAmazonPayment()->getAddressConsentToken(),
         ]);
 
-        return $this->converter->toTransactionResponseTransfer($result);
+        return $this->converter->convert($result);
     }
 
 }

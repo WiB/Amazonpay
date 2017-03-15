@@ -21,7 +21,7 @@ class AuthorizeOrderAdapter extends AbstractQuoteAdapter
             'capture_now' => true,
         ]);
 
-        return $this->converter->toTransactionResponseTransfer($result);
+        return $this->converter->convert($result);
     }
 
 }

@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\AmazonStatusTransfer;
 use Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
-class AuthorizeOrderConverter extends AbstractConverter
+class AuthorizeOrderConverter extends AbstractResponseParserConverter
 {
     /**
      * @param ResponseParser $responseParser
@@ -24,8 +24,6 @@ class AuthorizeOrderConverter extends AbstractConverter
      */
     protected function isSuccess(ResponseParser $responseParser)
     {
-        $authDetails = $this->extractAuthorizationDetails($responseParser);
-
         return
             $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
 
@@ -96,7 +94,7 @@ class AuthorizeOrderConverter extends AbstractConverter
      *
      * @return AuthorizeOrderAmazonpayResponseTransfer
      */
-    public function toTransactionResponseTransfer(ResponseParser $responseParser)
+    public function convert(ResponseParser $responseParser)
     {
         $responseTransfer = new AuthorizeOrderAmazonpayResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
