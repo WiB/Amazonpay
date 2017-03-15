@@ -107,10 +107,12 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     public function createConfirmPurchaseTransactionHandlerCollection()
     {
         return new ConfirmPurchaseTransactionCollection(
-            $this->createSetOrderReferenceTransactionHandler(),
-            $this->createConfirmOrderReferenceTransactionHandler(),
-            $this->createGetOrderReferenceDetailsTransactionHandler(),
-            $this->createAuthorizeOrderTransactionHandler()
+            [
+                $this->createSetOrderReferenceTransactionHandler(),
+                $this->createConfirmOrderReferenceTransactionHandler(),
+                $this->createGetOrderReferenceDetailsTransactionHandler(),
+                $this->createAuthorizeOrderTransactionHandler(),
+            ]
         );
     }
 

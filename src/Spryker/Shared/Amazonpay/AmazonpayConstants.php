@@ -12,8 +12,8 @@ interface AmazonpayConstants
     const REGION = 'DE';
     const CURRENCY_CODE = 'EUR';
 
-    const PAYMENT_METHOD = 'Amazonpay';
-    const PROVIDER_NAME = 'Amazonpay';
+    const PAYMENT_METHOD = 'Amazon Pay';
+    const PROVIDER_NAME = 'Amazon Pay';
 
     const OMS_STATUS_NEW = 'new';
     const OMS_STATUS_AUTHORIZED = 'authorized';

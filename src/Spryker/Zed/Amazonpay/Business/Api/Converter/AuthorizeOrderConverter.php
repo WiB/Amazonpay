@@ -20,6 +20,20 @@ class AuthorizeOrderConverter extends AbstractConverter
 
     /**
      * @param ResponseParser $responseParser
+     * @return bool
+     */
+    protected function isSuccess(ResponseParser $responseParser)
+    {
+        $authDetails = $this->extractAuthorizationDetails($responseParser);
+
+        return
+            $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
+
+            && empty($this->extractConstraints($responseParser));
+    }
+
+    /**
+     * @param ResponseParser $responseParser
      *
      * @return AmazonAuthorizationDetailsTransfer
      */

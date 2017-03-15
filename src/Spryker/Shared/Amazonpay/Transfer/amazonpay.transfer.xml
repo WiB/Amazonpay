@@ -7,6 +7,8 @@
         <property name="fkSalesOrder" type="int" />
         <property name="orderReferenceId" type="string"/>
         <property name="addressConsentToken" type="string"/>
+        <property name="authorizationReferenceId" type="string"/>
+        <property name="captureReferenceId" type="string"/>
         <property name="responseHeader" type="AmazonpayResponseHeader"/>
     </transfer>
 

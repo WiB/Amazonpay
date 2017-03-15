@@ -16,7 +16,9 @@ class AuthorizeOrderAdapter extends AbstractQuoteAdapter
         $result = $this->client->authorize([
             'amazon_order_reference_id' => $quoteTransfer->getAmazonPayment()->getOrderReferenceId(),
             'authorization_amount' => $quoteTransfer->getTotals()->getGrandTotal(),
-            'authorization_reference_id' => $quoteTransfer->getOrderReference()
+            'authorization_reference_id' => $quoteTransfer->getAmazonPayment()->getAuthorizationReferenceId(),
+            'transaction_timeout' => 0,
+            'capture_now' => true,
         ]);
 
         return $this->converter->toTransactionResponseTransfer($result);

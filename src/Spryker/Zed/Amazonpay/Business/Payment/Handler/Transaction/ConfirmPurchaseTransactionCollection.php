@@ -6,6 +6,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
 {
     /**
+     * @var AbstractQuoteTransaction[]
+     */
+    protected $transactionHandlers;
+
+    /**
      * @var SetOrderReferenceDetailsTransaction
      */
     protected $setOrderReferenceDetailsTransaction;
@@ -26,20 +31,12 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
     protected $authorizeOrderTransaction;
 
     /**
-     * @param SetOrderReferenceDetailsTransaction $setOrderReferenceDetailsTransaction
-     * @param ConfirmOrderReferenceTransaction $confirmOrderReferenceTransaction
-     * @param GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction
+     * @param AbstractQuoteTransaction[] $transactionHandlers
      */
     public function __construct(
-        SetOrderReferenceDetailsTransaction $setOrderReferenceDetailsTransaction,
-        ConfirmOrderReferenceTransaction $confirmOrderReferenceTransaction,
-        GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction,
-        AuthorizeOrderTransaction $authorizeOrderTransaction
+        array $transactionHandlers
     ) {
-        $this->setOrderReferenceDetailsTransaction = $setOrderReferenceDetailsTransaction;
-        $this->confirmOrderReferenceTransaction = $confirmOrderReferenceTransaction;
-        $this->getOrderReferenceDetailsTransaction = $getOrderReferenceDetailsTransaction;
-        $this->authorizeOrderTransaction = $authorizeOrderTransaction;
+        $this->transactionHandlers = $transactionHandlers;
     }
 
     /**
@@ -49,43 +46,12 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
-        $response = $this->setOrderReferenceDetailsTransaction->execute($quoteTransfer);
+        foreach ($this->transactionHandlers as $transactionHandler) {
+            $quoteTransfer = $transactionHandler->execute($quoteTransfer);
 
-        if (!$response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->getAmazonPayment()->setResponseHeader($response->getHeader());
-            return $quoteTransfer;
-        }
-
-        $response = $this->confirmOrderReferenceTransaction->execute($quoteTransfer);
-
-        if (!$response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setAmazonResponseHeader($response->getHeader());
-            return $quoteTransfer;
-        }
-
-        $response = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
-        $quoteTransfer->getAmazonPayment()->setResponseHeader($response->getHeader());
-
-        if ($response->getHeader()->getIsSuccess()) {
-            $quoteTransfer->setShippingAddress($response->getShippingAddress());
-
-            if ($response->getBillingAddress()) {
-                $quoteTransfer->setBillingAddress($response->getBillingAddress());
-            } else {
-                $quoteTransfer->setBillingAddress($response->getShippingAddress());
-                $quoteTransfer->setBillingSameAsShipping(true);
+            if (!$quoteTransfer->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
+                return $quoteTransfer;
             }
-
-            $quoteTransfer->setOrderReference($quoteTransfer->getAmazonPayment()->getOrderReferenceId());
-        } else {
-            return $quoteTransfer;
-        }
-
-        $response = $this->authorizeOrderTransaction->execute($quoteTransfer);
-        $quoteTransfer->getAmazonPayment()->setResponseHeader($response->getHeader());
-
-        if ($response->getHeader()->getIsSuccess()) {
-            // @todo set info from auth call
         }
 
         return $quoteTransfer;
