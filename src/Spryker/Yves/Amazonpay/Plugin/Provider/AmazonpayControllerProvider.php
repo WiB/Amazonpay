@@ -14,7 +14,7 @@ class AmazonpayControllerProvider extends YvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $this->createController('/amazonpay/checkout', 'amazonpay_checkout', 'Amazonpay', 'Payment', 'checkout');
-        $this->createController('/amazonpay/place-order', 'amazonpay_place_order', 'Amazonpay', 'Payment', 'placeOrder');
+        $this->createController('/amazonpay/confirm-purchase', 'amazonpay_confirm_purchase', 'Amazonpay', 'Payment', 'confirmPurchase');
         $this->createController('/amazonpay/paybutton', 'amazonpay_paybutton', 'Amazonpay', 'Widget', 'payButton');
         $this->createController('/amazonpay/checkout-widget', 'amazonpay_checkout_widget', 'Amazonpay', 'Widget', 'checkoutWidget');
     }

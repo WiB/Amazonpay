@@ -23,7 +23,7 @@
         max-height: 400px;
     }
 </style>
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> {#@todo shouldn't be done this way#}
 <script>
     window.onAmazonLoginReady = function() {
         amazon.Login.setClientId('{{ amazonConfig.clientId }}');
@@ -37,8 +37,9 @@
             onOrderReferenceCreate: function(orderReference) {
                 // Here is where you can grab the Order Reference ID.
                 var aoid = orderReference.getAmazonOrderReferenceId();
+                var currentUrl = $('#amazonpay_place_order_link').attr('href');
 
-                // document.getElementsByClassName('amazonOrderReferenceElement')[0].value = aoid;
+                $('#amazonpay_place_order_link').attr('href', currentUrl + '?referenceId=' + aoid);
             },
             onAddressSelect: function(orderReference) {
                 // Replace the following code with the action that you want

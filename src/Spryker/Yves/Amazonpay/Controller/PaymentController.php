@@ -15,20 +15,38 @@ class PaymentController extends AbstractController
 {
     /**
      * @param Request $request
+     *
+     * @return []
      */
     public function checkoutAction(Request $request)
     {
-//        $amazonPaymentTransfer = new AmazonpayPaymentTransfer();
-//        $amazonPaymentTransfer->setOrderReferenceId($request->query->get('referenceId'));
-//        $amazonPaymentTransfer->setAddressConsentToken($request->query->get('access_token'));
-//
-//        $quote = $this->getFactory()->getQuoteClient()->getQuote();
-//        $quote->setAmazonPayment($amazonPaymentTransfer);
-//        $quote = $this->getClient()->handleCartWithAmazonpay($quote);
-//        $this->getFactory()->getQuoteClient()->setQuote($quote);
+        $amazonPaymentTransfer = new AmazonpayPaymentTransfer();
+        $amazonPaymentTransfer->setOrderReferenceId($request->query->get('referenceId'));
+        $amazonPaymentTransfer->setAddressConsentToken($request->query->get('access_token'));
+
+        $quote = $this->getFactory()->getQuoteClient()->getQuote();
+        $quote->setAmazonPayment($amazonPaymentTransfer);
+        $quote = $this->getClient()->handleCartWithAmazonpay($quote);
+        $this->getFactory()->getQuoteClient()->setQuote($quote);
+
         return [
-            'quoteTransfer' => $this->getFactory()->getQuoteClient()->getQuote()
+            'quoteTransfer' => $quote
         ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function confirmPurchaseAction(Request $request)
+    {
+        $quote = $this->getFactory()->getQuoteClient()->getQuote();
+        $quote->getAmazonPayment()->setOrderReferenceId($request->query->get('referenceId'));
+        $quote = $this->getClient()->confirmPurchase($quote);
+        $this->getFactory()->getQuoteClient()->setQuote($quote);
+
+        return new Response('done');
     }
 
     /**

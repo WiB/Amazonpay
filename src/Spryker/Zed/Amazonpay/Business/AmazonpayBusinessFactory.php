@@ -12,7 +12,6 @@ use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
-use Spryker\Zed\Amazonpay\Business\Order\CustomerDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction;
@@ -65,11 +64,17 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return ShipmentDataQuoteUpdater
+     */
     protected function createShipmentDataQuoteUpdater()
     {
         return new ShipmentDataQuoteUpdater();
     }
 
+    /**
+     * @return PaymentDataQuoteUpdater
+     */
     protected function createPaymentDataQuoteUpdater()
     {
         return new PaymentDataQuoteUpdater();

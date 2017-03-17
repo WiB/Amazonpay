@@ -109,6 +109,25 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
+     * @param ResponseParser $responseParser
+     *
+     * @return AddressTransfer
+     */
+    protected function extractShippingAddress(ResponseParser $responseParser)
+    {
+        $address = new AddressTransfer();
+
+        if (!$this->isSuccess($responseParser)) {
+            return $address;
+        }
+
+        $aResponseAddress =
+            $this->extractResult($responseParser)['OrderReferenceDetails']['Destination']['PhysicalDestination'];
+
+        return $this->convertAddressToTransfer($aResponseAddress);
+    }
+
+    /**
      * @param array $addressData
      *
      * @return AddressTransfer
