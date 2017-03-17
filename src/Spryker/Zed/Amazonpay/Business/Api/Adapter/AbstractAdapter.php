@@ -20,6 +20,7 @@ abstract class AbstractAdapter
             'secret_key'    => $config->getSecretAccessKey(),
             'client_id'     => $config->getClientId(),
             'region'        => $config->getRegion(),
+           // 'store_name'    => $config->getStoreName(),
             'currency_code'  => $config->getCurrencyIsoCode(),
             'sandbox'       => true,
         ];

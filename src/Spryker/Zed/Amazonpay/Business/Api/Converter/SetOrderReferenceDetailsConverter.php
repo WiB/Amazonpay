@@ -27,6 +27,7 @@ class SetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     {
         $responseTransfer = new SetOrderReferenceDetailsAmazonpayResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
+        $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));
 
         return $responseTransfer;
     }

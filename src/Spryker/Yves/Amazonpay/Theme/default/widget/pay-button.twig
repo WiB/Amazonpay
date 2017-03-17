@@ -1,0 +1,42 @@
+<div id="AmazonPayButton" align="center"></div>
+<script>
+    window.onAmazonLoginReady = function() {
+        amazon.Login.setClientId('{{ amazonConfig.clientId }}');
+    };
+
+    window.onAmazonPaymentsReady = function(){
+        // render the button here
+        var authRequest;
+        var addressConsentToken;
+
+        OffAmazonPayments.Button('AmazonPayButton', '{{ amazonConfig.sellerId }}', {
+            type:  'PwA',
+            color: 'Gold',
+            size:  'medium',
+            language: 'en-GB',
+
+            authorization: function() {
+                loginOptions = {scope: 'profile postal_code payments:widget payments:shipping_address payments:billing_address', popup: true};
+                authRequest = amazon.Login.authorize (loginOptions, function(response) {
+                    addressConsentToken = response.access_token;
+                });
+            },
+
+            onSignIn: function (orderReference) {
+                var referenceId = orderReference.getAmazonOrderReferenceId();
+
+                if (!referenceId) {
+                    errorHandler(new Error('referenceId missing'));
+                } else {
+                    window.location = '/amazonpay/checkout' + '?referenceId=' +
+                        orderReference.getAmazonOrderReferenceId() +
+                        "&access_token=" + addressConsentToken;
+                }
+            }
+        });
+    }
+</script>
+<script async="async"
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
+</script>
+

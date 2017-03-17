@@ -26,7 +26,7 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
      */
     protected function generateAuthorizationReferenceIdForQuote(QuoteTransfer $quoteTransfer)
     {
-        return md5 (__CLASS__ . $quoteTransfer->getOrderReference() . time());
+        return md5 (__CLASS__ . $quoteTransfer->getAmazonPayment()->getOrderReference() . time());
     }
 
     /**

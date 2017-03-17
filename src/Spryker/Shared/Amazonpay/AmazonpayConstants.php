@@ -10,6 +10,7 @@ interface AmazonpayConstants
     const CLIENT_SECRET = 'CLIENT_SECRET';
     const SANDBOX = 'SANDBOX';
     const REGION = 'DE';
+    const STORE_NAME = 'STORE_NAME';
     const CURRENCY_CODE = 'EUR';
 
     const PAYMENT_METHOD = 'Amazon Pay';

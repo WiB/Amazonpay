@@ -13,15 +13,19 @@ use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConvert
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Order\CustomerDataQuoteUpdater;
+use Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction;
+use Spryker\Zed\Amazonpay\Business\Quote\PrepareQuoteCollection;
+use Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteUpdater;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Amazonpay\Business\Model\QuoteDataUpdater;
+use Spryker\Zed\Amazonpay\Business\Quote\PaymentDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmOrderReferenceTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\SetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
@@ -29,23 +33,46 @@ use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
  */
 class AmazonpayBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return QuoteDataUpdater
-     */
-    public function createQuoteDataUpdater()
+    public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
-        return new QuoteDataUpdater();
+        $quoteTransfer = $this->createQuoteDataUpdater()->update($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return PaymentDataQuoteUpdater
+     */
+    protected function createQuoteDataUpdater()
+    {
+        return new PrepareQuoteCollection(
+            [
+                $this->createCustomerDataQuoteUpdater(),
+                $this->createShipmentDataQuoteUpdater(),
+                $this->createPaymentDataQuoteUpdater(),
+            ]
+        );
     }
 
     /**
      * @return CustomerDataQuoteUpdater
      */
-    public function createCustomerDataQuoteUpdater()
+    protected function createCustomerDataQuoteUpdater()
     {
         return new CustomerDataQuoteUpdater(
             $this->createObtainProfileInformationAdapter(),
             $this->getConfig()
         );
+    }
+
+    protected function createShipmentDataQuoteUpdater()
+    {
+        return new ShipmentDataQuoteUpdater();
+    }
+
+    protected function createPaymentDataQuoteUpdater()
+    {
+        return new PaymentDataQuoteUpdater();
     }
 
     /**

@@ -6,6 +6,7 @@
     <transfer name="AmazonpayPayment">
         <property name="fkSalesOrder" type="int" />
         <property name="orderReferenceId" type="string"/>
+        <property name="sellerOrderId" type="string"/>
         <property name="addressConsentToken" type="string"/>
         <property name="authorizationReferenceId" type="string"/>
         <property name="captureReferenceId" type="string"/>
@@ -30,6 +31,7 @@
 
     <transfer name="SetOrderReferenceDetailsAmazonpayResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
+        <property name="shippingAddress" type="Address"/>
     </transfer>
 
     <transfer name="ConfirmOrderReferenceAmazonpayResponse">

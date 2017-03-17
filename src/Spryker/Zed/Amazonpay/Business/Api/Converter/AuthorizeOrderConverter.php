@@ -8,6 +8,8 @@ use PayWithAmazon\ResponseParser;
 
 class AuthorizeOrderConverter extends AbstractResponseParserConverter
 {
+    const AUTH_STATUS_DECLINED = 'Declined';
+
     /**
      * @param ResponseParser $responseParser
      *
@@ -24,10 +26,12 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
      */
     protected function isSuccess(ResponseParser $responseParser)
     {
+        $authDetails = $this->extractResult($responseParser)['AuthorizationDetails'];
+
         return
             $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
-
-            && empty($this->extractConstraints($responseParser));
+            && !empty($authDetails['AuthorizationStatus']['State'])
+            && $authDetails['AuthorizationStatus']['State'] != self::AUTH_STATUS_DECLINED;
     }
 
     /**
