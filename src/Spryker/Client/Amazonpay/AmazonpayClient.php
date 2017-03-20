@@ -31,6 +31,26 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
      *
      * @return QuoteTransfer
      */
+    public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createZedStub()->addSelectedAddressToQuote($quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createZedStub()->addSelectedShipmentMethodToQuote($quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()->createZedStub()->confirmPurchase($quoteTransfer);

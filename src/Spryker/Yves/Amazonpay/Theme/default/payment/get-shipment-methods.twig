@@ -1,0 +1,22 @@
+{% for shipmentMethod in shipmentMethods %}
+    <ul>
+        <input type="radio" id="shipment_method_{{ shipmentMethod.idShipmentMethod }}" name="shipment_method" value="{{ shipmentMethod.idShipmentMethod }}" />
+        <label for="shipment_method_{{ shipmentMethod.idShipmentMethod }}">{{ shipmentMethod.name }}</label>
+    </ul>
+{% endfor %}
+<script>
+    $(function() {
+        $('input[name=shipment_method]').change(function () {
+            $('#amazonpay_place_order_link').attr('disabled', true);
+            $.post(
+                '{{ path('amazonpay_set_shipment_method') }}',
+                {'shipment_method_id': $(this).val()},
+                function (data) {
+                    if (data['success']) {
+                        $('#amazonpay_place_order_link').attr('disabled', false);
+                    }
+                }
+            );
+        });
+    });
+</script>

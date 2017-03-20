@@ -51,6 +51,8 @@
             {#{{ render(path('amazonpay_paybutton')) }}#}
             {#{% include '@amazonpay/address_payment_widget.twig' with amazonConfig %}#}
             <div class="callout">
+                <div id="shipment_methods"></div>
+
                 <ul class="no-bullet">
                     {#{% for item in cartItems %}#}
                         {#{% if item.bundleProduct is defined %}#}
@@ -99,7 +101,7 @@
         <div class="callout">
             <div class="row align-right">
                 <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                    <a href="{{ url('amazonpay_confirm_purchase') }}" id="amazonpay_place_order_link" class="button expanded __no-margin-bottom">Place order</a>
+                    <a href="{{ url('amazonpay_confirm_purchase') }}" disabled="true" id="amazonpay_place_order_link" class="button expanded __no-margin-bottom">Place order</a>
                 </div>
             </div>
         </div>

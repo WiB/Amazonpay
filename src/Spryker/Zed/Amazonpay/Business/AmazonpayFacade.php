@@ -17,7 +17,27 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->handleCartWithAmazonpay($quoteTransfer);
+        return $this->getFactory()->createQuoteDataInitializer()->update($quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createShippingAddressQuoteDataUpdater()->update($quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createShipmentDataQuoteUpdater()->update($quoteTransfer);
     }
 
     /**

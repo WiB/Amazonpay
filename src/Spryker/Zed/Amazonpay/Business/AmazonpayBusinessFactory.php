@@ -18,13 +18,14 @@ use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTra
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Amazonpay\Business\Quote\PrepareQuoteCollection;
+use Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteInitializer;
 use Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteUpdater;
+use Spryker\Zed\Amazonpay\Business\Quote\ShippingAddressDataQuoteUpdater;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Amazonpay\Business\Quote\PaymentDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmOrderReferenceTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\SetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
@@ -32,22 +33,26 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class AmazonpayBusinessFactory extends AbstractBusinessFactory
 {
-    public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
+    /**
+     * @return ShippingAddressDataQuoteUpdater
+     */
+    public function createShippingAddressQuoteDataUpdater()
     {
-        $quoteTransfer = $this->createQuoteDataUpdater()->update($quoteTransfer);
-
-        return $quoteTransfer;
+        return new ShippingAddressDataQuoteUpdater(
+            $this->createSetOrderReferenceDetailsAmazonpayAdapter(),
+            $this->getConfig()
+        );
     }
 
     /**
      * @return PaymentDataQuoteUpdater
      */
-    protected function createQuoteDataUpdater()
+    public function createQuoteDataInitializer()
     {
         return new PrepareQuoteCollection(
             [
                 $this->createCustomerDataQuoteUpdater(),
-                $this->createShipmentDataQuoteUpdater(),
+                $this->createShipmentDataQuoteInitializer(),
                 $this->createPaymentDataQuoteUpdater(),
             ]
         );
@@ -65,11 +70,21 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return ShipmentDataQuoteInitializer
+     */
+    public function createShipmentDataQuoteInitializer()
+    {
+        return new ShipmentDataQuoteInitializer();
+    }
+
+    /**
      * @return ShipmentDataQuoteUpdater
      */
-    protected function createShipmentDataQuoteUpdater()
+    public function createShipmentDataQuoteUpdater()
     {
-        return new ShipmentDataQuoteUpdater();
+        return new ShipmentDataQuoteUpdater(
+            $this->getShipmentFacade()
+        );
     }
 
     /**
@@ -154,6 +169,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
+     */
+    protected function getShipmentFacade()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_SHIPMENT);
     }
 
     /**

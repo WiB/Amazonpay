@@ -34,6 +34,29 @@ class AmazonpayStub implements AmazonpayStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
+    public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->zedStub->call('/amazonpay/gateway/add-selected-address-to-quote', $quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->zedStub->call(
+            '/amazonpay/gateway/add-selected-shipment-method-to-quote',
+            $quoteTransfer
+        );
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
         return $this->zedStub->call('/amazonpay/gateway/confirm-purchase', $quoteTransfer);

@@ -28,7 +28,7 @@
                 if (!referenceId) {
                     errorHandler(new Error('referenceId missing'));
                 } else {
-                    window.location = '{{ url('amazonpay_checkout') }}' + '?referenceId=' +
+                    window.location = '{{ url('amazonpay_checkout') }}' + '?reference_id=' +
                         orderReference.getAmazonOrderReferenceId() +
                         "&access_token=" + addressConsentToken;
                 }

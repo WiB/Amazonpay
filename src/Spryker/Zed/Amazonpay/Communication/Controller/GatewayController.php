@@ -20,6 +20,26 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function addSelectedAddressToQuoteAction(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFacade()->addSelectedAddressToQuote($quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return QuoteTransfer
+     */
+    public function addSelectedShipmentMethodToQuoteAction(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFacade()->addSelectedShipmentMethodToQuote($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return QuoteTransfer

@@ -2,12 +2,17 @@
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge;
 
 class ShipmentDataQuoteUpdater implements QuoteUpdaterInterface
 {
+    protected $shipmentFacade;
+
+    public function __construct(AmazonpayToShipmentBridge $shipmentFacade)
+    {
+        $this->shipmentFacade = $shipmentFacade;
+    }
+
     /**
      * @param QuoteTransfer $quoteTransfer
      * 
@@ -15,17 +20,11 @@ class ShipmentDataQuoteUpdater implements QuoteUpdaterInterface
      */
     public function update(QuoteTransfer $quoteTransfer)
     {
-        $shipmentMethod = new ShipmentMethodTransfer();
-        $shipmentMethod->setCarrierName(AmazonpayConstants::PAYMENT_METHOD);
-        $shipmentMethod->setName(AmazonpayConstants::PAYMENT_METHOD);
-        $shipmentMethod->setDefaultPrice(0);
-        $shipmentMethod->setIdShipmentMethod(1); //@todo retrieve shipment method from DB instead
-        $shipmentMethod->setFkShipmentCarrier(1);//@todo same
+        $shipmentMethodTransfer = $this->shipmentFacade->getShipmentMethodTransferById(
+            $quoteTransfer->getShipment()->getShipmentSelection()
+        );
 
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod($shipmentMethod);
-
-        $quoteTransfer->setShipment($shipment);
+        $quoteTransfer->getShipment()->setMethod($shipmentMethodTransfer);
 
         return $quoteTransfer;
     }
