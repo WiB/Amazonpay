@@ -2,13 +2,13 @@
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface;
 
 class ShipmentDataQuoteUpdater implements QuoteUpdaterInterface
 {
     protected $shipmentFacade;
 
-    public function __construct(AmazonpayToShipmentBridge $shipmentFacade)
+    public function __construct(AmazonpayToShipmentInterface $shipmentFacade)
     {
         $this->shipmentFacade = $shipmentFacade;
     }

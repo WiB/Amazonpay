@@ -7,55 +7,32 @@
     <process name="AmazonpayPayment01" main="true">
         <states>
             <state name="new" reserved="true"/>
-            <state name="authorized" reserved="true"/>
-            <state name="declined"/>
-            <state name="captured" reserved="true"/>
-            <state name="cancelled" />
             <state name="closed" reserved="true"/>
+            <state name="refunded" reserved="true"/>
         </states>
 
         <events>
-            <event name="authorize" manual="true" command="Amazonpay/Authorize" />
-            <event name="capture" manual="true" command="Amazonpay/Capture" />
-            <event name="cancel" manual="true" command="Amazonpay/Cancel" />
-            <event name="close" manual="true" />
+            <event name="close" manual="true" command="Amazonpay/Cancel" />
+            <event name="refund" manual="true" command="Amazonpay/Refund" />
         </events>
 
         <transitions>
-            <transition condition="Amazonpay/IsAuthorized" happy="true">
+            <transition condition="Amazonpay/IsClosed" happy="true">
                 <source>new</source>
-                <target>authorized</target>
-                <event>authorize</event>
-            </transition>
-
-            <transition>
-                <source>new</source>
-                <target>declined</target>
-                <event>authorize</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsCaptured" happy="true">
-                <source>authorized</source>
-                <target>captured</target>
-                <event>capture</event>
-            </transition>
-
-            <transition>
-                <source>authorized</source>
-                <target>cancelled</target>
-                <event>cancel</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsCancelled">
-                <source>captured</source>
-                <target>cancelled</target>
-                <event>cancel</event>
-            </transition>
-
-            <transition happy="true" manual="true">
-                <source>captured</source>
                 <target>closed</target>
                 <event>close</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefunded">
+                <source>new</source>
+                <target>refunded</target>
+                <event>refund</event>
+            </transition>
+
+            <transition  condition="Amazonpay/IsRefunded">
+                <source>closed</source>
+                <target>refunded</target>
+                <event>refund</event>
             </transition>
         </transitions>
     </process>

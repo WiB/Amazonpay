@@ -1,12 +1,18 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
+use Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
 
 class AuthorizeOrderTransaction extends AbstractQuoteTransaction
 {
+    /**
+     * @var AuthorizeOrderAmazonpayResponseTransfer
+     */
+    protected $apiResponse;
+
     /**
      * @param AuthorizeOrderAdapter $executionAdapter
      * @param AmazonpayConfig $config
@@ -40,7 +46,15 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
             $this->generateAuthorizationReferenceIdForQuote($quoteTransfer)
         );
 
-        return parent::execute($quoteTransfer);
+        $quoteTransfer = parent::execute($quoteTransfer);
+
+        if ($quoteTransfer->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
+            $quoteTransfer->getAmazonPayment()->setAuthorizationDetails(
+                $this->apiResponse->getAuthorizationDetails()
+            );
+        }
+
+        return $quoteTransfer;
     }
 
 }

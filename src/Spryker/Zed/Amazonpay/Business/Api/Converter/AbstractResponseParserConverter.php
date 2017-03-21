@@ -2,9 +2,9 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\AmazonpayPriceTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
-use Generated\Shared\Transfer\AmazonPriceTransfer;
 use PayWithAmazon\ResponseParser;
 
 abstract class AbstractResponseParserConverter extends AbstractConverter implements ResponseParserConverterInterface
@@ -97,7 +97,14 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
         }
 
         $constraintTransfers = [];
-        foreach ($result['OrderReferenceDetails']['Constraints']['Constraint'] as $constraint) {
+
+        if (sizeof($result['OrderReferenceDetails']['Constraints']) === 1) {
+            $constraints = array_values($result['OrderReferenceDetails']['Constraints']);
+        } else {
+            $constraints = $result['OrderReferenceDetails']['Constraints'];
+        }
+
+        foreach ($constraints as $constraint) {
             $constraintTransfer = new AmazonpayResponseConstraintTransfer();
             $constraintTransfer->setConstraintId($constraint['ConstraintID']);
             $constraintTransfer->setConstraintId($constraint['Description']);
@@ -174,11 +181,11 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     /**
      * @param array $priceData
      *
-     * @return AmazonPriceTransfer
+     * @return AmazonpayPriceTransfer
      */
     protected function convertPriceToTransfer(array $priceData)
     {
-        $priceTransfer = new AmazonPriceTransfer();
+        $priceTransfer = new AmazonpayPriceTransfer();
 
         $priceTransfer->setAmount($priceData['Amount']);
         $priceTransfer->setCurrencyCode($priceData['CurrencyCode']);

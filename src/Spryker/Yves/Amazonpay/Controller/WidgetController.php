@@ -20,4 +20,13 @@ class WidgetController extends AbstractController
         ];
 
     }
+
+    public function walletWidgetAction()
+    {
+        return [
+            'amazonConfig' => $this->getFactory()->getConfig()
+        ];
+
+    }
+
 }

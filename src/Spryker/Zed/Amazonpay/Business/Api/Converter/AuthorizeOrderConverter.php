@@ -2,13 +2,14 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonAuthorizationDetailsTransfer;
-use Generated\Shared\Transfer\AmazonStatusTransfer;
+use Generated\Shared\Transfer\AmazonpayAuthorizationStatusTransfer;
 use Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
 class AuthorizeOrderConverter extends AbstractResponseParserConverter
 {
     const AUTH_STATUS_DECLINED = 'Declined';
+    const PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
 
     /**
      * @param ResponseParser $responseParser
@@ -20,19 +21,19 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
         return $responseParser->toArray()['AuthorizeResult'];
     }
 
-    /**
-     * @param ResponseParser $responseParser
-     * @return bool
-     */
-    protected function isSuccess(ResponseParser $responseParser)
-    {
-        $authDetails = $this->extractResult($responseParser)['AuthorizationDetails'];
-
-        return
-            $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
-            && !empty($authDetails['AuthorizationStatus']['State'])
-            && $authDetails['AuthorizationStatus']['State'] != self::AUTH_STATUS_DECLINED;
-    }
+//    /**
+//     * @param ResponseParser $responseParser
+//     * @return bool
+//     */
+//    protected function isSuccess(ResponseParser $responseParser)
+//    {
+//        $authDetails = $this->extractResult($responseParser)['AuthorizationDetails'];
+//
+//        return
+//            $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
+//            && !empty($authDetails['AuthorizationStatus']['State'])
+//            && $authDetails['AuthorizationStatus']['State'] != self::AUTH_STATUS_DECLINED;
+//    }
 
     /**
      * @param ResponseParser $responseParser
@@ -60,10 +61,18 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
         }
 
         if (!empty($result['AuthorizationStatus'])) {
-            $authStatus = new AmazonStatusTransfer();
+            $authStatus = new AmazonpayAuthorizationStatusTransfer();
             $authStatus->setLastUpdateTimestamp($result['AuthorizationStatus']['LastUpdateTimestamp']);
             $authStatus->setState($result['AuthorizationStatus']['State']);
             $autorizationDetails->setAuthorizationStatus($authStatus);
+
+            $autorizationDetails->setIsDeclined(
+                $result['AuthorizationStatus']['State'] === self::AUTH_STATUS_DECLINED
+            );
+
+            $autorizationDetails->setIsPaymentMethodInvalid(
+                $result['AuthorizationStatus']['ReasonCode'] === self::PAYMENT_METHOD_INVALID
+            );
         }
 
         if (!empty($result['ExpirationTimestamp'])) {

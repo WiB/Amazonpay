@@ -1,0 +1,9 @@
+<script>
+    window.onAmazonLoginReady = function() {
+        amazon.Login.logout();
+        window.location = '{{ redirectUrl }}';
+    };
+</script>
+<script async="async"
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
+</script>

@@ -2,6 +2,7 @@
 namespace Spryker\Yves\Amazonpay\Controller;
 
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
+use Pyz\Yves\Cart\Plugin\Provider\CartControllerProvider;
 use Spryker\Yves\Amazonpay\Plugin\Provider\AmazonpayControllerProvider;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\Amazonpay\AmazonpayFactory;
@@ -90,21 +91,66 @@ class PaymentController extends AbstractController
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
 
         if (!$quote) {
-            //@todo implement proper eror handling
-            return new Response('Error');
+            $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
         $quote = $this->getClient()->confirmPurchase($quote);
-        $this->getFactory()->getQuoteClient()->setQuote($quote);
 
-        $checkoutResponseTransfer = $this->getFactory()->getCheckoutClient()->placeOrder($quote);
+        if ($quote->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
+            if (!$quote->getAmazonPayment()->getAuthorizationDetails()->getIsDeclined()) {
+                $checkoutResponseTransfer = $this->getFactory()->getCheckoutClient()->placeOrder($quote);
 
-        if ($checkoutResponseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(AmazonpayControllerProvider::SUCCESS);
+                if ($checkoutResponseTransfer->getIsSuccess()) {
+                    return $this->redirectResponseInternal(AmazonpayControllerProvider::SUCCESS);
+                }
+
+                //@todo implement proper error handling (if neccessary)
+                return new Response('Persisting Order Error');
+            }
+
+            if ($quote->getAmazonPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
+                $this->getFactory()->getQuoteClient()->setQuote($quote);
+                return $this->redirectResponseInternal(AmazonpayControllerProvider::CHANGE_PAYMENT_METHOD);
+            } else {
+                return $this->redirectResponseInternal(AmazonpayControllerProvider::PAYMENT_FAILED);
+            }
         }
 
-        //@todo implement proper eror handling
-        return new Response('Error');
+        // @todo maybe generate a more detailed message based on constraints (if any)
+        $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return []
+     */
+    public function changePaymentMethodAction(Request $request)
+    {
+        $quote = $this->getFactory()->getQuoteClient()->getQuote();
+
+        return [
+            'quoteTransfer' => $quote
+        ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return []
+     */
+    public function paymentFailedAction(Request $request)
+    {
+        $quote = $this->getFactory()->getQuoteClient()->getQuote();
+        $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
+
+        return [
+            'redirectUrl' => $this->getApplication()->path(CartControllerProvider::ROUTE_CART)
+        ];
     }
 
     /**

@@ -10,6 +10,7 @@
         <property name="addressConsentToken" type="string"/>
         <property name="authorizationReferenceId" type="string"/>
         <property name="captureReferenceId" type="string"/>
+        <property name="authorizationDetails" type="AmazonAuthorizationDetails"/>
         <property name="responseHeader" type="AmazonpayResponseHeader"/>
     </transfer>
 
@@ -44,13 +45,18 @@
         <property name="billingAddress" type="Address"/>
     </transfer>
 
-    <transfer name="AmazonPrice">
+    <transfer name="CancelOrderAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+    </transfer>
+
+    <transfer name="AmazonpayPrice">
         <property name="currencyCode" type="string"/>
         <property name="amount" type="string"/>
     </transfer>
 
-    <transfer name="AmazonStatus">
+    <transfer name="AmazonpayAuthorizationStatus">
         <property name="state" type="string"/>
+        <property name="reasonCode" type="string"/>
         <property name="lastUpdateTimestamp" type="string"/>
     </transfer>
 
@@ -59,16 +65,18 @@
         <property name="authorizationId" type="string" />
         <property name="authorizationReference" type="string" />
         <property name="sellerAuthorizationNote" type="string" />
-        <property name="authorizationAmount" type="AmazonPrice" />
-        <property name="capturedAmount" type="AmazonPrice" />
-        <property name="authorizationFee" type="AmazonPrice" />
+        <property name="authorizationAmount" type="AmazonpayPrice" />
+        <property name="capturedAmount" type="AmazonpayPrice" />
+        <property name="authorizationFee" type="AmazonpayPrice" />
         <property name="idList" type="string" />
         <property name="creationTimestamp" type="string"/>
         <property name="expirationTimestamp" type="string"/>
-        <property name="authorizationStatus" type="AmazonStatus" />
+        <property name="authorizationStatus" type="AmazonpayAuthorizationStatus" />
         <property name="softDecline" type="bool" />
         <property name="captureNow" type="bool" />
         <property name="softDescriptor" type="string" />
+        <property name="isDeclined" type="bool"/>
+        <property name="isPaymentMethodInvalid" type="bool"/>
     </transfer>
 
     <transfer name="AuthorizeOrderAmazonpayResponse">

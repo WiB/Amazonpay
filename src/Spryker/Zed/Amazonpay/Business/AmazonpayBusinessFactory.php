@@ -3,15 +3,19 @@ namespace Spryker\Zed\Amazonpay\Business;
 
 use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\CancelOrderAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AuthorizeOrderConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\CancelOrderConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\HandleDeclinedOrderTransaction;
 use Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction;
@@ -45,7 +49,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PaymentDataQuoteUpdater
+     * @return PrepareQuoteCollection
      */
     public function createQuoteDataInitializer()
     {
@@ -147,6 +151,23 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return CancelOrderTransaction
+     */
+    protected function createCancelOrderTransactionHandler()
+    {
+        $handler = new CancelOrderTransaction(
+            $this->createGetOrderReferenceDetailsAmazonpayAdapter(),
+            $this->getConfig()
+        );
+
+        $handler->registerMethodMapper(
+            $this->createAmazonpayPaymentMethod()
+        );
+
+        return $handler;
+    }
+
+    /**
      * @return AuthorizeOrderTransaction
      */
     protected function createAuthorizeOrderTransactionHandler()
@@ -172,7 +193,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface
      */
     protected function getShipmentFacade()
     {
@@ -190,7 +211,19 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
                 $this->createConfirmOrderReferenceTransactionHandler(),
                 $this->createGetOrderReferenceDetailsTransactionHandler(),
                 $this->createAuthorizeOrderTransactionHandler(),
+                $this->createHandleDeclinedOrderTransaction()
             ]
+        );
+    }
+
+    /**
+     * @return HandleDeclinedOrderTransaction
+     */
+    protected function createHandleDeclinedOrderTransaction()
+    {
+        return new HandleDeclinedOrderTransaction(
+            $this->createGetOrderReferenceDetailsTransactionHandler(),
+            $this->createCancelOrderTransactionHandler()
         );
     }
 
@@ -254,6 +287,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    protected function createCancelOrderAdapter()
+    {
+        return new CancelOrderAdapter(
+            $this->getConfig(),
+            $this->createCancelOrderConverter()
+        );
+    }
+
     /**
      * @return ObtainProfileInformationConverter
      */
@@ -292,6 +333,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     protected function createAuthorizeOrderConverter()
     {
         return new AuthorizeOrderConverter();
+    }
+
+    /**
+     * @return CancelOrderConverter
+     */
+    protected function createCancelOrderConverter()
+    {
+        return new CancelOrderConverter();
     }
 
     /**
