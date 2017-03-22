@@ -35,8 +35,6 @@
             scope: 'profile postal_code payments:widget payments:shipping_address payments:billing_address',
             language: 'en-GB',
             onOrderReferenceCreate: function(orderReference) {
-                console.log(orderReference);
-
                 // Here is where you can grab the Order Reference ID.
                 var aoid = orderReference.getAmazonOrderReferenceId();
 

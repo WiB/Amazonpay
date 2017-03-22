@@ -9,17 +9,18 @@
         <div class="small-12 xlarge-3 columns">
             <div class="row">
                 <div class="small-12 medium-6 xlarge-12 columns">
+                    {% if quoteTransfer.payment.paymentMethod %}
                     <div class="callout">
                         <h5>{{ 'checkout.step.summary.payment' | trans }}</h5>
                         <ul class="no-bullet">
                             <li>
-                                <span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {#{ quoteTransfer.payment.paymentMethod }#}
+                                <span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ quoteTransfer.payment.paymentMethod }}
                             </li>
-                            {#{% if quoteTransfer.payment.summaryPartialPath %}#}
-                                {#<li>#}
-                                    {#{% include '@' ~ quoteTransfer.payment.summaryPartialPath ~ '.twig' with {'quoteTransfer': quoteTransfer} %}#}
-                                {#</li>#}
-                            {#{% endif %}#}
+                            {% if quoteTransfer.payment.summaryPartialPath %}
+                                <li>
+                                    {% include '@' ~ quoteTransfer.payment.summaryPartialPath ~ '.twig' with {'quoteTransfer': quoteTransfer} %}
+                                </li>
+                            {% endif %}
                             <li>
                                 {% if quoteTransfer.billingAddress %}
                                     {% include '@checkout/checkout/partials/summary-address.twig' with {'address': quoteTransfer.billingAddress} %}
@@ -27,12 +28,14 @@
                             </li>
                         </ul>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="small-12 medium-6 xlarge-12 columns">
+                    {% if quoteTransfer.shipment.method.idShipmentMethod %}
                     <div class="callout">
                         <h5>{{ 'checkout.step.summary.shipping' | trans }}</h5>
                         <ul class="no-bullet">
-                            <li><span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {#{ quoteTransfer.shipment.method.name }#}</li>
+                            <li><span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ quoteTransfer.shipment.method.name }}</li>
                             <li>
                                 {% if quoteTransfer.shippingAddress %}
                                     {% include '@checkout/checkout/partials/summary-address.twig' with {'address': quoteTransfer.shippingAddress} %}
@@ -40,30 +43,28 @@
                             </li>
                         </ul>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-
-
         <div class="small-12 medium-6 columns">
-
             {% block amazonpay_widgets %}
                 {{ render(path('amazonpay_checkout_widget')) }}
             {% endblock %}
-            {#{{ render(path('amazonpay_paybutton')) }}#}
-            {#{% include '@amazonpay/address_payment_widget.twig' with amazonConfig %}#}
             <div class="callout">
                 <div id="shipment_methods"></div>
 
+                {% if cartItems is defined %}
                 <ul class="no-bullet">
-                    {#{% for item in cartItems %}#}
-                        {#{% if item.bundleProduct is defined %}#}
-                            {#{% include '@checkout/checkout/partials/summary-item.twig' with {'item': item.bundleProduct, 'bundleItems' : item.bundleItems} %}#}
-                        {#{% else %}#}
-                            {#{% include '@checkout/checkout/partials/summary-item.twig' %}#}
-                        {#{% endif %}#}
-                    {#{% endfor %}#}
+                    {% for item in cartItems %}
+                        {% if item.bundleProduct is defined %}
+                            {% include '@checkout/checkout/partials/summary-item.twig' with {'item': item.bundleProduct, 'bundleItems' : item.bundleItems} %}
+                        {% else %}
+                            {% include '@checkout/checkout/partials/summary-item.twig' %}
+                        {% endif %}
+                    {% endfor %}
                 </ul>
+                {% endif %}
             </div>
         </div>
 
@@ -74,25 +75,27 @@
                 <ul class="no-bullet">
                     <li>
                         {{ 'checkout.step.summary.sub_total' | trans }}
-                        <span class="float-right">{#{ quoteTransfer.totals.subtotal | money }#}</span>
+                        <span class="float-right">{{ quoteTransfer.totals.subtotal | money }}</span>
                     </li>
                     <li><hr></li>
 
-                    {#% include '@checkout/checkout/partials/summary-discounts.twig' %#}
+                    {% include '@checkout/checkout/partials/summary-discounts.twig' %}
 
-                    <li><strong>{{ 'checkout.step.summary.shipping' | trans }}</strong></li>
-                    <li>
-                        {#{{ quoteTransfer.shipment.method.name }}#}
-                        {#<span class="float-right">{{ quoteTransfer.shipment.method.defaultPrice | money }}</span>#}
-                    </li>
-                    <li><hr></li>
+                    {% if quoteTransfer.shipment.method.idShipmentMethod %}
+                        <li><strong>{{ 'checkout.step.summary.shipping' | trans }}</strong></li>
+                        <li>
+                            {{ quoteTransfer.shipment.method.name }}
+                            <span class="float-right">{{ quoteTransfer.shipment.method.defaultPrice | money }}</span>
+                        </li>
+                        <li><hr></li>
+                    {% endif %}
                     <li class="clearfix">
                         <h5 class="float-left">{{ 'checkout.step.summary.grand_total' | trans }}</h5>
-                        <h5 class="float-right"><strong>{#{ quoteTransfer.totals.grandtotal | money }#}</strong></h5>
+                        <h5 class="float-right"><strong>{{ quoteTransfer.totals.grandtotal | money }}</strong></h5>
                     </li>
                     <li>
                         {{ 'checkout.step.summary.tax' | trans }}
-                        <span class="float-right">{# { quoteTransfer.totals.taxtotal.amount | money } #}</span>
+                        <span class="float-right">{{ quoteTransfer.totals.taxtotal.amount | money }}</span>
                     </li>
                 </ul>
             </div>
