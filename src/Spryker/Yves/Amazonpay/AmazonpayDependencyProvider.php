@@ -8,7 +8,8 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUOTE = 'cart client';
     const CLIENT_SHIPMENT = 'shipment client';
-    const CHECKOUT_CLIENT = 'checkout client';
+    const CLIENT_CHECKOUT = 'checkout client';
+    const CLIENT_CALCULATION = 'calculation client';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,8 +26,12 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->shipment()->client();
         };
 
-        $container[self::CHECKOUT_CLIENT] = function () use ($container) {
+        $container[self::CLIENT_CHECKOUT] = function () use ($container) {
             return $container->getLocator()->checkout()->client();
+        };
+
+        $container[self::CLIENT_CALCULATION] = function () use ($container) {
+            return $container->getLocator()->calculation()->client();
         };
 
         return $container;

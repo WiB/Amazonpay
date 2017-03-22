@@ -13,7 +13,7 @@ class AmazonpayControllerProvider extends YvesControllerProvider
     const PAYMENT_FAILED = 'amazonpay_payment_failed';
 
     const SET_ORDER_REFERENCE = 'amazonpay_set_order_reference';
-    const SET_SHIPMENT_METHOD = 'amazonpay_set_shipment_method';
+    const UPDATE_SHIPMENT_METHOD = 'amazonpay_update_shipment_method';
     const GET_SHIPMENT_METHODS = 'amazonpay_get_shipment_methods';
 
     const PAYBUTTON = 'amazonpay_paybutton';
@@ -35,7 +35,7 @@ class AmazonpayControllerProvider extends YvesControllerProvider
 
         // ajax
         $this->createController('/amazonpay/set-order-reference', self::SET_ORDER_REFERENCE, 'Amazonpay', 'Payment', 'setOrderReference');
-        $this->createController('/amazonpay/set-shipment-method', self::SET_SHIPMENT_METHOD, 'Amazonpay', 'Payment', 'setShipmentMethod');
+        $this->createController('/amazonpay/update-shipment-method', self::UPDATE_SHIPMENT_METHOD, 'Amazonpay', 'Payment', 'updateShipmentMethod');
         $this->createController('/amazonpay/get-shipment-methods', self::GET_SHIPMENT_METHODS, 'Amazonpay', 'Payment', 'getShipmentMethods');
 
         // widgets

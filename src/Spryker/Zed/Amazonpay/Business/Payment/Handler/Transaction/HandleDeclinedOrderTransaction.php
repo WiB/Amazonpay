@@ -42,7 +42,7 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
             return $quoteTransfer;
         }
 
-        // $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
+        $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
         // if (false) {
             //@todo ask amazon if condition about ORO state == Open is neccessary

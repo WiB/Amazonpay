@@ -18,13 +18,10 @@
     };
 
     window.onAmazonPaymentsReady = function() {
-        console.log('amazonpay ready');
-
         new OffAmazonPayments.Widgets.Wallet({
             sellerId: '{{ amazonConfig.sellerId }}',
             scope: 'profile postal_code payments:widget payments:shipping_address',
             onPaymentSelect: function(orderReference) {
-                console.log('amazonpay rules');
                 $('#amazonpay_place_order_link').attr('disabled', false);
             },
             design: {

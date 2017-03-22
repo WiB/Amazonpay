@@ -1,8 +1,10 @@
 <?php
 namespace Spryker\Yves\Amazonpay;
 
+use Spryker\Client\Calculation\CalculationClient;
 use Spryker\Client\Checkout\CheckoutClient;
 use Spryker\Client\Quote\QuoteClient;
+use Spryker\Client\Shipment\ShipmentClient;
 use Spryker\Shared\Amazonpay\AmazonpayConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 
@@ -21,7 +23,7 @@ class AmazonpayFactory extends AbstractFactory
      */
     public function getCheckoutClient()
     {
-        return $this->getProvidedDependency(AmazonpayDependencyProvider::CHECKOUT_CLIENT);
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_CHECKOUT);
     }
 
     /**
@@ -32,9 +34,20 @@ class AmazonpayFactory extends AbstractFactory
         return new AmazonpayConfig();
     }
 
+    /**
+     * @return ShipmentClient
+     */
     public function getShipmentClient()
     {
         return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_SHIPMENT);
+    }
+
+    /**
+     * @return CalculationClient
+     */
+    public function getCalculationClient()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_CALCULATION);
     }
 
 }

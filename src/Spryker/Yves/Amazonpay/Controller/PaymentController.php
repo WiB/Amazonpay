@@ -59,6 +59,7 @@ class PaymentController extends AbstractController
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
         $quote = $this->getClient()->addSelectedAddressToQuote($quote);
+        $this->getFactory()->getQuoteClient()->setQuote($quote);
         $shipmentMethods = $this->getFactory()->getShipmentClient()->getAvailableMethods($quote);
 
         return [
@@ -69,16 +70,19 @@ class PaymentController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return []
      */
-    public function setShipmentMethodAction(Request $request)
+    public function updateShipmentMethodAction(Request $request)
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
         $quote->getShipment()->setShipmentSelection((int) $request->request->get('shipment_method_id'));
         $quote = $this->getClient()->addSelectedShipmentMethodToQuote($quote);
+        $quote = $this->getFactory()->getCalculationClient()->recalculate($quote);
         $this->getFactory()->getQuoteClient()->setQuote($quote);
 
-        return new JsonResponse(['success' => true]);
+        return [
+            'quoteTransfer' => $quote,
+        ];
     }
 
     /**
@@ -91,12 +95,12 @@ class PaymentController extends AbstractController
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
 
         if (!$quote) {
-            $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
-
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->getFailedRedirectResponse();
         }
 
         $quote = $this->getClient()->confirmPurchase($quote);
+        $quote = $this->getFactory()->getCalculationClient()->recalculate($quote);
+        $this->getFactory()->getQuoteClient()->setQuote($quote);
 
         if ($quote->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
             if (!$quote->getAmazonPayment()->getAuthorizationDetails()->getIsDeclined()) {
@@ -111,14 +115,21 @@ class PaymentController extends AbstractController
             }
 
             if ($quote->getAmazonPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
-                $this->getFactory()->getQuoteClient()->setQuote($quote);
                 return $this->redirectResponseInternal(AmazonpayControllerProvider::CHANGE_PAYMENT_METHOD);
             } else {
-                return $this->redirectResponseInternal(AmazonpayControllerProvider::PAYMENT_FAILED);
+                return $this->getFailedRedirectResponse();
             }
         }
 
         // @todo maybe generate a more detailed message based on constraints (if any)
+        return $this->getFailedRedirectResponse();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getFailedRedirectResponse()
+    {
         $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);

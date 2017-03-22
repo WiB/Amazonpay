@@ -8,15 +8,15 @@
     $(function() {
         $('input[name=shipment_method]').change(function () {
             $('#amazonpay_place_order_link').attr('disabled', true);
-            $.post(
-                '{{ path('amazonpay_set_shipment_method') }}',
+            $('#amazonpay_summery_information').load(
+                '{{ path('amazonpay_update_shipment_method') }}',
                 {'shipment_method_id': $(this).val()},
-                function (data) {
-                    if (data['success']) {
-                        $('#amazonpay_place_order_link').attr('disabled', false);
-                    }
+                function() {
+                    $('#amazonpay_place_order_link').attr('disabled', false);
                 }
             );
         });
+
+        $('input[name=shipment_method]:first').click();
     });
 </script>
