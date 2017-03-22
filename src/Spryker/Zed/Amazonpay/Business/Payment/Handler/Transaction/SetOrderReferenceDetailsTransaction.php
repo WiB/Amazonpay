@@ -23,7 +23,8 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
     public function execute(QuoteTransfer $quoteTransfer)
     {
         // handling suspended case
-        if ($quoteTransfer->getAmazonPayment()->getAuthorizationDetails()
+        if ($quoteTransfer->getAmazonPayment()
+            && $quoteTransfer->getAmazonPayment()->getAuthorizationDetails()
             && $quoteTransfer->getAmazonPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()
         ) {
             return $quoteTransfer;

@@ -121,6 +121,10 @@ class PaymentController extends AbstractController
             }
         }
 
+        if ($quote->getAmazonPayment()->getResponseHeader()->getConstraints()) {
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         // @todo maybe generate a more detailed message based on constraints (if any)
         return $this->getFailedRedirectResponse();
     }
@@ -146,21 +150,6 @@ class PaymentController extends AbstractController
 
         return [
             'quoteTransfer' => $quote
-        ];
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return []
-     */
-    public function paymentFailedAction(Request $request)
-    {
-        $quote = $this->getFactory()->getQuoteClient()->getQuote();
-        $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
-
-        return [
-            'redirectUrl' => $this->getApplication()->path(CartControllerProvider::ROUTE_CART)
         ];
     }
 

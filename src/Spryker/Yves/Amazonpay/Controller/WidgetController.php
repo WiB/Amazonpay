@@ -2,13 +2,24 @@
 namespace Spryker\Yves\Amazonpay\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Spryker\Yves\Amazonpay\AmazonpayFactory;
 
+/**
+ * @method AmazonpayFactory getFactory()
+ * @method \Spryker\Client\Amazonpay\AmazonpayClient getClient()
+ */
 class WidgetController extends AbstractController
 {
     public function payButtonAction()
     {
+        $quote = $this->getFactory()->getQuoteClient()->getQuote();
+        $logout =  $quote->getAmazonPayment()
+                   && $quote->getAmazonPayment()->getAuthorizationDetails()
+                   && $quote->getAmazonPayment()->getAuthorizationDetails()->getIsDeclined();
+
         return [
-            'amazonConfig' => $this->getFactory()->getConfig()
+            'amazonConfig' => $this->getFactory()->getConfig(),
+            'logout' => $logout,
         ];
 
     }

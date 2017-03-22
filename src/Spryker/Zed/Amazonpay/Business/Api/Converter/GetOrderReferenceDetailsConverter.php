@@ -17,6 +17,11 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
         return $responseParser->toArray()['GetOrderReferenceDetailsResult'];
     }
 
+    protected function extractOrderReferenceStatus(ResponseParser $responseParser)
+    {
+        return $this->extractResult($responseParser)['OrderReferenceDetails']['OrderReferenceStatus']['State'];
+    }
+
     /**
      * @param ResponseParser $responseParser
      *
@@ -45,6 +50,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     {
         $responseTransfer = new GetOrderReferenceDetailsAmazonpayResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
+        $responseTransfer->setOrderReferenceStatus($this->extractOrderReferenceStatus($responseParser));
         $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));
         $responseTransfer->setBillingAddress($this->extractBillingAddress($responseParser));
 

@@ -10,6 +10,7 @@
         <property name="addressConsentToken" type="string"/>
         <property name="authorizationReferenceId" type="string"/>
         <property name="captureReferenceId" type="string"/>
+        <property name="orderReferenceStatus" type="string"/>
         <property name="authorizationDetails" type="AmazonAuthorizationDetails"/>
         <property name="responseHeader" type="AmazonpayResponseHeader"/>
     </transfer>
@@ -41,6 +42,7 @@
 
     <transfer name="GetOrderReferenceDetailsAmazonpayResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
+        <property name="orderReferenceStatus" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="billingAddress" type="Address"/>
     </transfer>

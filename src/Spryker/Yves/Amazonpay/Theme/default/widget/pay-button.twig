@@ -1,6 +1,9 @@
 <div id="AmazonPayButton" align="center"></div>
 <script>
     window.onAmazonLoginReady = function() {
+        {% if logout %}
+            amazon.Login.logout();
+        {% endif %}
         amazon.Login.setClientId('{{ amazonConfig.clientId }}');
     };
 

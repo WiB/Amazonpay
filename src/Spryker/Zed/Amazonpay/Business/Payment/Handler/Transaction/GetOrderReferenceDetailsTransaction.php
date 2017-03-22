@@ -31,6 +31,7 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
             }
 
             $quoteTransfer->setOrderReference($quoteTransfer->getAmazonPayment()->getOrderReferenceId());
+            $quoteTransfer->getAmazonPayment()->setOrderReferenceStatus($this->apiResponse->getOrderReferenceStatus());
         }
 
         return $quoteTransfer;

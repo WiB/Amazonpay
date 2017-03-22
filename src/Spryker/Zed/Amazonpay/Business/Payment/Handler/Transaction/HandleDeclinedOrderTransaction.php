@@ -5,6 +5,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
 {
+    const ORDER_REFERENCE_STATUS_OPEN = 'Open';
+
     /**
      * @var GetOrderReferenceDetailsTransaction
      */
@@ -44,10 +46,10 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
 
         $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
-        // if (false) {
-            //@todo ask amazon if condition about ORO state == Open is neccessary
+        if ($checkOrderStatus->getAmazonPayment()->getOrderReferenceStatus() == self::ORDER_REFERENCE_STATUS_OPEN)
+        {
             $this->cancelOrderTransaction->execute($quoteTransfer);
-        // }
+        }
 
         return $quoteTransfer;
     }
