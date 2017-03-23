@@ -29,7 +29,7 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
         foreach ($this->transactionHandlers as $transactionHandler) {
             $quoteTransfer = $transactionHandler->execute($quoteTransfer);
 
-            if (!$quoteTransfer->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
+            if (!$quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
                 return $quoteTransfer;
             }
         }

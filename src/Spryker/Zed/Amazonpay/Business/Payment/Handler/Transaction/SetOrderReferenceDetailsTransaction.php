@@ -12,7 +12,7 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
      */
     protected function generateSellerIdForQuote(QuoteTransfer $quoteTransfer)
     {
-        return md5 (__CLASS__ . $quoteTransfer->getAmazonPayment()->getAuthorizationReferenceId() . time());
+        return md5 (__CLASS__ . $quoteTransfer->getAmazonpayPayment()->getAuthorizationReferenceId() . time());
     }
 
     /**
@@ -23,14 +23,14 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
     public function execute(QuoteTransfer $quoteTransfer)
     {
         // handling suspended case
-        if ($quoteTransfer->getAmazonPayment()
-            && $quoteTransfer->getAmazonPayment()->getAuthorizationDetails()
-            && $quoteTransfer->getAmazonPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()
+        if ($quoteTransfer->getAmazonpayPayment()
+            && $quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()
+            && $quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()
         ) {
             return $quoteTransfer;
         }
 
-        $quoteTransfer->getAmazonPayment()->setSellerOrderId(
+        $quoteTransfer->getAmazonpayPayment()->setSellerOrderId(
             $this->generateSellerIdForQuote($quoteTransfer)
         );
 

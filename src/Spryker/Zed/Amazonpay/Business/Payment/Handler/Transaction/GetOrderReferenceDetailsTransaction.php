@@ -20,7 +20,7 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
     {
         $quoteTransfer = parent::execute($quoteTransfer);
 
-        if ($quoteTransfer->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
+        if ($quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
             $quoteTransfer->setShippingAddress($this->apiResponse->getShippingAddress());
 
             if ($this->apiResponse->getBillingAddress()) {
@@ -30,8 +30,8 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
                 $quoteTransfer->setBillingSameAsShipping(true);
             }
 
-            $quoteTransfer->setOrderReference($quoteTransfer->getAmazonPayment()->getOrderReferenceId());
-            $quoteTransfer->getAmazonPayment()->setOrderReferenceStatus($this->apiResponse->getOrderReferenceStatus());
+            $quoteTransfer->setOrderReference($quoteTransfer->getAmazonpayPayment()->getOrderReferenceId());
+            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus($this->apiResponse->getOrderReferenceStatus());
         }
 
         return $quoteTransfer;

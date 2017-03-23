@@ -6,66 +6,35 @@
     <table name="spy_payment_amazonpay" phpName="SpyPaymentAmazonpay">
         <column name="id_payment_amazonpay" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
-
-        <column name="reference" required="true" type="VARCHAR"/>
-        <column name="request_id" required="true" type="VARCHAR"/>
+        <column name="seller_order_id" required="true" type="VARCHAR"/>
+        <column name="order_reference_id" required="true" type="VARCHAR"/>
+        <column name="order_reference_status" required="true" type="VARCHAR"/>
+        <column name="authorization_reference" type="VARCHAR"/>
+        <column name="authorization_id" type="VARCHAR"/>
+        <column name="request_id" type="VARCHAR"/>
 
         <foreign-key name="spy_payment_amazonpay-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>
 
         <unique name="spy_payment_amazonpay-unique-request_id">
-            <unique-column name="request_id" />
+            <unique-column name="seller_order_id" />
         </unique>
 
         <unique name="spy_payment_amazonpay-unique-reference">
-            <unique-column name="reference" />
+            <unique-column name="order_reference" />
         </unique>
 
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_payment_amazonpay_pk_seq"/>
     </table>
 
-    <table name="spy_payment_amazonpay_order_item">
-        <column name="fk_payment_amazonpay" type="INTEGER" primaryKey="true"/>
-        <column name="fk_sales_order_item" type="INTEGER" primaryKey="true"/>
-        <column name="fk_payment_amazonpay_invoice_bank_account" type="INTEGER"/>
-        <column name="invoice_duedate" type="INTEGER"/>
-        <column name="status" required="true" type="VARCHAR"/>
-        <behavior name="timestampable">
-            <parameter name="disable_updated_at" value="true"/>
-        </behavior>
-        <foreign-key name="spy_amazonpay_order_item-fk_amazonpay" foreignTable="spy_payment_amazonpay">
-            <reference foreign="id_payment_amazonpay" local="fk_payment_amazonpay"/>
-        </foreign-key>
-        <foreign-key name="spy_payment_amazonpay_order_item-fk_sales_order_item" foreignTable="spy_sales_order_item">
-            <reference foreign="id_sales_order_item" local="fk_sales_order_item"/>
-        </foreign-key>
-        <foreign-key name="spy_payment_amazonpay_order_item-fk_payment_amazonpay_invoice_bank_account" foreignTable="spy_payment_amazonpay_invoice_bank_account">
-            <reference foreign="id_payment_amazonpay_invoice_bank_account" local="fk_payment_amazonpay_invoice_bank_account"/>
-        </foreign-key>
-    </table>
-
-    <table name="spy_payment_amazonpay_invoice_bank_account">
-        <column name="id_payment_amazonpay_invoice_bank_account" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="account_holder" required="true" type="VARCHAR"/>
-        <column name="account_number" required="true" type="VARCHAR"/>
-        <column name="activation_performed" required="true" type="INTEGER" defaultValue="0"/>
-        <column name="bank_name" required="true" type="VARCHAR"/>
-        <column name="invoice_reference" required="true" type="VARCHAR"/>
-        <id-method-parameter value="spy_payment_amazonpay_invoice_bank_account_pk_seq"/>
-    </table>
-
     <table name="spy_payment_amazonpay_api_log">
         <column name="id_payment_amazonpay_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="status_code" required="true" type="INTEGER"/>
-        <column name="request_id" required="true" type="VARCHAR"/>
-        <column name="error_message" required="false" type="VARCHAR"/>
+        <column name="status_code" type="INTEGER"/>
+        <column name="request_id" type="VARCHAR"/>
+        <column name="error_message" type="VARCHAR"/>
         <behavior name="timestampable"/>
-
-        <unique name="spy_payment_amazonpay_api_log-unique-request_id">
-            <unique-column name="request_id" />
-        </unique>
 
         <id-method-parameter value="spy_payment_amazonpay_api_log_pk_seq"/>
     </table>

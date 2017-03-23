@@ -1,11 +1,10 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition;
 
-// use Orm\Zed\Amazonpay\Persistence\SpyPaymentBillpayOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
-class IsAuthorizedConditionPlugin implements ConditionInterface
+class IsClosedConditionPlugin implements ConditionInterface
 {
     /**
      * @param SpySalesOrderItem $orderItem
@@ -14,6 +13,7 @@ class IsAuthorizedConditionPlugin implements ConditionInterface
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return false;
+        // $orderItem->getOrder()->getSpyPaymentAmazonpays()->getFirst()
+        return true;
     }
 }

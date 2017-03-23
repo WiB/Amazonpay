@@ -13,9 +13,9 @@ class WidgetController extends AbstractController
     public function payButtonAction()
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
-        $logout =  $quote->getAmazonPayment()
-                   && $quote->getAmazonPayment()->getAuthorizationDetails()
-                   && $quote->getAmazonPayment()->getAuthorizationDetails()->getIsDeclined();
+        $logout =  $quote->getAmazonpayPayment()
+                   && $quote->getAmazonpayPayment()->getAuthorizationDetails()
+                   && $quote->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined();
 
         return [
             'amazonConfig' => $this->getFactory()->getConfig(),

@@ -28,7 +28,7 @@ class PaymentController extends AbstractController
         $amazonPaymentTransfer->setAddressConsentToken($request->query->get('access_token'));
 
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
-        $quote->setAmazonPayment($amazonPaymentTransfer);
+        $quote->setAmazonpayPayment($amazonPaymentTransfer);
         $quote = $this->getClient()->handleCartWithAmazonpay($quote);
         $this->getFactory()->getQuoteClient()->setQuote($quote);
 
@@ -45,7 +45,7 @@ class PaymentController extends AbstractController
     public function setOrderReferenceAction(Request $request)
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
-        $quote->getAmazonPayment()->setOrderReferenceId($request->request->get('reference_id'));
+        $quote->getAmazonpayPayment()->setOrderReferenceId($request->request->get('reference_id'));
 
         return new JsonResponse(['success' => true]);
     }
@@ -102,8 +102,8 @@ class PaymentController extends AbstractController
         $quote = $this->getFactory()->getCalculationClient()->recalculate($quote);
         $this->getFactory()->getQuoteClient()->setQuote($quote);
 
-        if ($quote->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
-            if (!$quote->getAmazonPayment()->getAuthorizationDetails()->getIsDeclined()) {
+        if ($quote->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
+            if (!$quote->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined()) {
                 $checkoutResponseTransfer = $this->getFactory()->getCheckoutClient()->placeOrder($quote);
 
                 if ($checkoutResponseTransfer->getIsSuccess()) {
@@ -114,14 +114,14 @@ class PaymentController extends AbstractController
                 return new Response('Persisting Order Error');
             }
 
-            if ($quote->getAmazonPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
+            if ($quote->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
                 return $this->redirectResponseInternal(AmazonpayControllerProvider::CHANGE_PAYMENT_METHOD);
             } else {
                 return $this->getFailedRedirectResponse();
             }
         }
 
-        if ($quote->getAmazonPayment()->getResponseHeader()->getConstraints()) {
+        if ($quote->getAmazonpayPayment()->getResponseHeader()->getConstraints()) {
             return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 

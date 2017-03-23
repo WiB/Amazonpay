@@ -14,7 +14,7 @@ class ConfirmOrderReferenceAdapter extends AbstractQuoteAdapter
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->confirmOrderReference([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonPayment()->getOrderReferenceId(),
+            'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
             'amount' => $this->getAmount($quoteTransfer),
         ]);
 

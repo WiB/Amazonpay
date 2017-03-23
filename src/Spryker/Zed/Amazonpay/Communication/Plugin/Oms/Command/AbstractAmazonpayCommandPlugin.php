@@ -7,13 +7,10 @@
 
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
-use ArrayObject;
 
 /**
  * @method \Spryker\Zed\Amazonpay\Business\AmazonpayFacade getFacade()
@@ -33,9 +30,6 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
         $paymentTransfer = new AmazonpayPaymentTransfer();
         $paymentTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($this->getCustomerEntity($orderEntity)->toArray(), true);
-
         $orderTransfer = $this
             ->getFactory()
             ->getSalesFacade()
@@ -43,22 +37,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
                 $orderEntity->getIdSalesOrder()
             );
 
-        if (sizeof($orderEntity->getItems()) != sizeof($salesOrderItems)) {
-            $paymentTransfer->setIsPartial(true);
-
-            $selectedItems = new ArrayObject();
-            foreach ($salesOrderItems as $salesOrderItem) {
-                $salesOrderItemTransfer = new ItemTransfer();
-                $salesOrderItemTransfer->fromArray($salesOrderItem->toArray(), true);
-                $salesOrderItemTransfer->setUnitGrossPrice($salesOrderItem->getGrossPrice());
-                $selectedItems[] = $salesOrderItemTransfer;
-            }
-
-            $paymentTransfer->setItems($selectedItems);
-        }
-
         $orderTransfer->setAmazonpayPayment($paymentTransfer);
-        $orderTransfer->setCustomer($customerTransfer);
 
         return $orderTransfer;
     }

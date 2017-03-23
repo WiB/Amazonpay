@@ -3,8 +3,6 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
 
 class AuthorizeOrderTransaction extends AbstractQuoteTransaction
 {
@@ -14,25 +12,13 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
     protected $apiResponse;
 
     /**
-     * @param AuthorizeOrderAdapter $executionAdapter
-     * @param AmazonpayConfig $config
-     */
-    public function __construct(
-        AuthorizeOrderAdapter $executionAdapter,
-        AmazonpayConfig $config
-    ) {
-        $this->executionAdapter = $executionAdapter;
-        $this->config = $config;
-    }
-
-    /**
      * @param QuoteTransfer $quoteTransfer
      *
      * @return QuoteTransfer
      */
     protected function generateAuthorizationReferenceIdForQuote(QuoteTransfer $quoteTransfer)
     {
-        return md5 (__CLASS__ . $quoteTransfer->getAmazonPayment()->getOrderReferenceId() . time());
+        return md5 (__CLASS__ . $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId() . time());
     }
 
     /**
@@ -42,14 +28,14 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->getAmazonPayment()->setAuthorizationReferenceId(
+        $quoteTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
             $this->generateAuthorizationReferenceIdForQuote($quoteTransfer)
         );
 
         $quoteTransfer = parent::execute($quoteTransfer);
 
-        if ($quoteTransfer->getAmazonPayment()->getResponseHeader()->getIsSuccess()) {
-            $quoteTransfer->getAmazonPayment()->setAuthorizationDetails(
+        if ($quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
+            $quoteTransfer->getAmazonpayPayment()->setAuthorizationDetails(
                 $this->apiResponse->getAuthorizationDetails()
             );
         }

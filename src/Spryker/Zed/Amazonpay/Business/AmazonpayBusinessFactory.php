@@ -4,17 +4,20 @@ namespace Spryker\Zed\Amazonpay\Business;
 use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\CancelOrderAdapter;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\CloseOrderAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AuthorizeOrderConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\CancelOrderConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\CloseOrderConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CloseOrderTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\HandleDeclinedOrderTransaction;
 use Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
@@ -63,17 +66,6 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerDataQuoteUpdater
-     */
-    protected function createCustomerDataQuoteUpdater()
-    {
-        return new CustomerDataQuoteUpdater(
-            $this->createObtainProfileInformationAdapter(),
-            $this->getConfig()
-        );
-    }
-
-    /**
      * @return ShipmentDataQuoteInitializer
      */
     public function createShipmentDataQuoteInitializer()
@@ -92,6 +84,29 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return CloseOrderTransaction
+     */
+    public function createCloseOrderTransaction()
+    {
+        return new CloseOrderTransaction(
+            $this->createCloseOrderAdapter(),
+            $this->getConfig(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return CustomerDataQuoteUpdater
+     */
+    protected function createCustomerDataQuoteUpdater()
+    {
+        return new CustomerDataQuoteUpdater(
+            $this->createObtainProfileInformationAdapter(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return PaymentDataQuoteUpdater
      */
     protected function createPaymentDataQuoteUpdater()
@@ -102,7 +117,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ConfirmOrderReferenceTransaction
      */
-    public function createConfirmOrderReferenceTransactionHandler()
+    public function createConfirmOrderReferenceTransaction()
     {
         $handler = new ConfirmOrderReferenceTransaction(
             $this->createConfirmOrderReferenceAmazonpayAdapter(),
@@ -119,7 +134,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return SetOrderReferenceDetailsTransaction
      */
-    public function createSetOrderReferenceTransactionHandler()
+    public function createSetOrderReferenceTransaction()
     {
         $handler = new SetOrderReferenceDetailsTransaction(
             $this->createSetOrderReferenceDetailsAmazonpayAdapter(),
@@ -136,7 +151,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return GetOrderReferenceDetailsTransaction
      */
-    public function createGetOrderReferenceDetailsTransactionHandler()
+    public function createGetOrderReferenceDetailsTransaction()
     {
         $handler = new GetOrderReferenceDetailsTransaction(
             $this->createGetOrderReferenceDetailsAmazonpayAdapter(),
@@ -153,7 +168,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return CancelOrderTransaction
      */
-    protected function createCancelOrderTransactionHandler()
+    protected function createCancelOrderTransaction()
     {
         $handler = new CancelOrderTransaction(
             $this->createGetOrderReferenceDetailsAmazonpayAdapter(),
@@ -170,7 +185,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return AuthorizeOrderTransaction
      */
-    protected function createAuthorizeOrderTransactionHandler()
+    protected function createAuthorizeOrderTransaction()
     {
         $handler = new AuthorizeOrderTransaction(
             $this->createAuthorizeOrderAdapter(),
@@ -203,14 +218,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ConfirmPurchaseTransactionCollection
      */
-    public function createConfirmPurchaseTransactionHandlerCollection()
+    public function createConfirmPurchaseTransactionCollection()
     {
         return new ConfirmPurchaseTransactionCollection(
             [
-                $this->createSetOrderReferenceTransactionHandler(),
-                $this->createConfirmOrderReferenceTransactionHandler(),
-                $this->createGetOrderReferenceDetailsTransactionHandler(),
-                $this->createAuthorizeOrderTransactionHandler(),
+                $this->createSetOrderReferenceTransaction(),
+                $this->createConfirmOrderReferenceTransaction(),
+                $this->createGetOrderReferenceDetailsTransaction(),
+                $this->createAuthorizeOrderTransaction(),
                 $this->createHandleDeclinedOrderTransaction()
             ]
         );
@@ -222,8 +237,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     protected function createHandleDeclinedOrderTransaction()
     {
         return new HandleDeclinedOrderTransaction(
-            $this->createGetOrderReferenceDetailsTransactionHandler(),
-            $this->createCancelOrderTransactionHandler()
+            $this->createGetOrderReferenceDetailsTransaction(),
+            $this->createCancelOrderTransaction()
         );
     }
 
@@ -287,12 +302,34 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return CloseOrderAdapter
+     */
+    protected function createCloseOrderAdapter()
+    {
+        return new CloseOrderAdapter(
+            $this->getConfig(),
+            $this->createCloseOrderConverter()
+        );
+    }
+
+    /**
+     * @return CancelOrderAdapter
+     */
     protected function createCancelOrderAdapter()
     {
         return new CancelOrderAdapter(
             $this->getConfig(),
             $this->createCancelOrderConverter()
         );
+    }
+
+    /**
+     * @return ObtainProfileInformationConverter
+     */
+    protected function createCloseOrderConverter()
+    {
+        return new CloseOrderConverter();
     }
 
     /**

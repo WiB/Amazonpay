@@ -14,10 +14,10 @@ class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->setOrderReferenceDetails([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonPayment()->getOrderReferenceId(),
-            'address_consent_token' => $quoteTransfer->getAmazonPayment()->getAddressConsentToken(),
+            'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            'address_consent_token' => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
             'amount' => $this->getAmount($quoteTransfer),
-            'seller_order_id' => $quoteTransfer->getAmazonPayment()->getSellerOrderId(),
+            'seller_order_id' => $quoteTransfer->getAmazonpayPayment()->getSellerOrderId(),
         ]);
 
         return $this->converter->convert($result);

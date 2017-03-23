@@ -1,6 +1,7 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Persistence;
 
+use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -9,5 +10,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class AmazonpayPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
+     */
+    public function createPaymentAmazonpayQuery()
+    {
+        return SpyPaymentAmazonpayQuery::create();
+    }
 
 }

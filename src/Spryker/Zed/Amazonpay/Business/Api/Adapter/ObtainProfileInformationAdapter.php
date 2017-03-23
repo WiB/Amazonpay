@@ -29,7 +29,7 @@ class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAd
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
-        $result = $this->client->getUserInfo($quoteTransfer->getAmazonPayment()->getAddressConsentToken());
+        $result = $this->client->getUserInfo($quoteTransfer->getAmazonpayPayment()->getAddressConsentToken());
 
         return $this->converter->convert($result);
     }

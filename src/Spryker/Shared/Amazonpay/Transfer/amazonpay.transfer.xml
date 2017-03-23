@@ -16,7 +16,12 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="amazonPayment" type="AmazonpayPayment"/>
+        <property name="amazonpayPayment" type="AmazonpayPayment"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int" />
+        <property name="amazonpayPayment" type="AmazonpayPayment" />
     </transfer>
 
     <transfer name="AmazonpayResponseConstraint">
@@ -48,6 +53,10 @@
     </transfer>
 
     <transfer name="CancelOrderAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+    </transfer>
+
+    <transfer name="CloseOrderAmazonpayResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
     </transfer>
 

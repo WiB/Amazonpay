@@ -36,17 +36,17 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
-        if (!$quoteTransfer->getAmazonPayment()->getAuthorizationDetails()->getIsDeclined()) {
+        if (!$quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined()) {
             return $quoteTransfer;
         }
 
-        if ($quoteTransfer->getAmazonPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
+        if ($quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
             return $quoteTransfer;
         }
 
         $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
-        if ($checkOrderStatus->getAmazonPayment()->getOrderReferenceStatus() == self::ORDER_REFERENCE_STATUS_OPEN)
+        if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus() == self::ORDER_REFERENCE_STATUS_OPEN)
         {
             $this->cancelOrderTransaction->execute($quoteTransfer);
         }

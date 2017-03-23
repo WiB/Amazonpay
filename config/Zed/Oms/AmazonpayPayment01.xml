@@ -12,7 +12,7 @@
         </states>
 
         <events>
-            <event name="close" manual="true" command="Amazonpay/Cancel" />
+            <event name="close" manual="true" command="Amazonpay/CloseOrder" />
             <event name="refund" manual="true" command="Amazonpay/Refund" />
         </events>
 

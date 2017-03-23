@@ -1,8 +1,8 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Communication;
 
+use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Amazonpay\PayoneDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
@@ -10,21 +10,14 @@ use Spryker\Zed\Amazonpay\PayoneDependencyProvider;
  */
 class AmazonpayCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToSalesInterface
      */
-    public function getOmsFacade()
+    public function getSalesFacade()
     {
-        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_OMS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundInterface
-     */
-    public function getRefundFacade()
-    {
-        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_REFUND);
+        return $this->getProvidedDependency(
+            AmazonpayDependencyProvider::FACADE_SALES
+        );
     }
 
 }

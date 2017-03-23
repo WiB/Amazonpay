@@ -1,13 +1,12 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business\Order;
 
+use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayOrderItem;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class Saver implements SaverInterface
 {
@@ -20,50 +19,31 @@ class Saver implements SaverInterface
      */
     public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $paymentEntity = $this->savePaymentForOrder(
-            $quoteTransfer->getPayment(),
+        $this->savePaymentForOrder(
+            $quoteTransfer->getAmazonpayPayment(),
             $checkoutResponseTransfer->getSaveOrder()
-        );
-
-        $this->savePaymentForOrderItems(
-            $checkoutResponseTransfer->getSaveOrder()->getOrderItems(),
-            $paymentEntity->getIdPaymentAmazonpay()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param AmazonpayPaymentTransfer $paymentTransfer
+     * @param SaveOrderTransfer $saveOrderTransfer
      *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */
-    protected function savePaymentForOrder(PaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer)
+    protected function savePaymentForOrder(AmazonpayPaymentTransfer $paymentTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $paymentEntity = new SpyPaymentAmazonpay();
-        // $paymentEntity->setRequestId($paymentTransfer)
-
+        $paymentEntity->setOrderReferenceId($paymentTransfer->getOrderReferenceId());
+        $paymentEntity->setOrderReferenceStatus($paymentTransfer->getOrderReferenceStatus());
+        $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
+        $paymentEntity->setAuthorizationReference($paymentTransfer->getAuthorizationReferenceId());
+        $paymentEntity->setAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAuthorizationId());
+        $paymentEntity->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $paymentEntity->setRequestId($paymentTransfer->getResponseHeader()->getRequestId());
+        $paymentEntity->save();
 
         return $paymentEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
-     * @param int $idPayment
-     *
-     * @return void
-     */
-    protected function savePaymentForOrderItems($orderItemTransfers, $idPayment)
-    {
-        foreach ($orderItemTransfers as $orderItemTransfer) {
-            $paymentOrderItemEntity = new SpyPaymentAmazonpayOrderItem();
-
-            $paymentOrderItemEntity
-                ->setFkPaymentAmazonpay($idPayment)
-                ->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
-            $paymentOrderItemEntity->setStatus(AmazonpayConstants::OMS_STATUS_NEW);
-
-            $paymentOrderItemEntity->save();
-        }
     }
 
 }
