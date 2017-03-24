@@ -22,5 +22,6 @@ interface AmazonpayConstants
     const OMS_STATUS_CAPTURED = 'captured';
     const OMS_STATUS_CANCELLED = 'cancelled';
     const OMS_STATUS_CLOSED = 'closed';
+    const OMS_STATUS_REFUNDED = 'refunded';
 
 }

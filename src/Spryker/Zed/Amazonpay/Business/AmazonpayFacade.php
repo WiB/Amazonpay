@@ -18,7 +18,10 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createQuoteDataInitializer()->update($quoteTransfer);
+        return $this->getFactory()
+            ->getQuoteUpdateFactory()
+            ->createQuoteDataInitializer()
+            ->update($quoteTransfer);
     }
 
     /**
@@ -28,7 +31,10 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createShippingAddressQuoteDataUpdater()->update($quoteTransfer);
+        return $this->getFactory()
+            ->getQuoteUpdateFactory()
+            ->createShippingAddressQuoteDataUpdater()
+            ->update($quoteTransfer);
     }
 
     /**
@@ -38,7 +44,10 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createShipmentDataQuoteUpdater()->update($quoteTransfer);
+        return $this->getFactory()
+            ->getQuoteUpdateFactory()
+            ->createShipmentDataQuoteUpdater()
+            ->update($quoteTransfer);
     }
 
     /**
@@ -48,7 +57,10 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createConfirmPurchaseTransactionCollection()->execute($quoteTransfer);
+        return $this->getFactory()
+            ->getTransactionFactory()
+            ->createConfirmPurchaseTransactionCollection()
+            ->execute($quoteTransfer);
     }
 
     /**
@@ -58,7 +70,23 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function closeOrder(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createCloseOrderTransaction()->execute($orderTransfer);
+        return $this->getFactory()
+            ->getTransactionFactory()
+            ->createCloseOrderTransaction()
+            ->execute($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    public function refundOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->getTransactionFactory()
+            ->createRefundOrderTransaction()
+            ->execute($orderTransfer);
     }
 
     /**
@@ -66,13 +94,15 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
+    public function saveOrderPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
         $this
             ->getFactory()
             ->createOrderSaver()

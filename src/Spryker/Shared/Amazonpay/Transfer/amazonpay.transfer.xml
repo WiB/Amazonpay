@@ -10,6 +10,7 @@
         <property name="addressConsentToken" type="string"/>
         <property name="authorizationReferenceId" type="string"/>
         <property name="captureReferenceId" type="string"/>
+        <property name="refundReferenceId" type="string"/>
         <property name="orderReferenceStatus" type="string"/>
         <property name="authorizationDetails" type="AmazonAuthorizationDetails"/>
         <property name="responseHeader" type="AmazonpayResponseHeader"/>
@@ -60,6 +61,11 @@
         <property name="header" type="AmazonpayResponseHeader"/>
     </transfer>
 
+    <transfer name="RefundOrderAmazonpayResponse">
+        <property name="header" type="AmazonpayResponseHeader"/>
+        <property name="refundDetails" type="AmazonpayRefundDetails"/>
+    </transfer>
+
     <transfer name="AmazonpayPrice">
         <property name="currencyCode" type="string"/>
         <property name="amount" type="string"/>
@@ -88,6 +94,14 @@
         <property name="softDescriptor" type="string" />
         <property name="isDeclined" type="bool"/>
         <property name="isPaymentMethodInvalid" type="bool"/>
+    </transfer>
+
+    <transfer name="AmazonpayRefundDetails">
+        <property name="AmazonCaptureId" type="string"/>
+        <property name="RefundReferenceId" type="string"/>
+        <property name="RefundAmount" type="AmazonpayPrice"/>
+        <property name="SellerRefundNote" type="string"/>
+        <property name="SoftDescriptor" type="string"/>
     </transfer>
 
     <transfer name="AuthorizeOrderAmazonpayResponse">

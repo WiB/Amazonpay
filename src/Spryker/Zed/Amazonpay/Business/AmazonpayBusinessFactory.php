@@ -2,36 +2,12 @@
 namespace Spryker\Zed\Amazonpay\Business;
 
 use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\CancelOrderAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\CloseOrderAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\AuthorizeOrderConverter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\CancelOrderConverter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\CloseOrderConverter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CloseOrderTransaction;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\HandleDeclinedOrderTransaction;
-use Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction;
-use Spryker\Zed\Amazonpay\Business\Quote\PrepareQuoteCollection;
-use Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteInitializer;
-use Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteUpdater;
-use Spryker\Zed\Amazonpay\Business\Quote\ShippingAddressDataQuoteUpdater;
+use Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Amazonpay\Business\Quote\PaymentDataQuoteUpdater;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmOrderReferenceTransaction;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\SetOrderReferenceDetailsTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
 
 /**
@@ -40,163 +16,30 @@ use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
  */
 class AmazonpayBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
-     * @return ShippingAddressDataQuoteUpdater
+     * @return TransactionFactory
      */
-    public function createShippingAddressQuoteDataUpdater()
+    public function getTransactionFactory()
     {
-        return new ShippingAddressDataQuoteUpdater(
-            $this->createSetOrderReferenceDetailsAmazonpayAdapter(),
-            $this->getConfig()
+        return new TransactionFactory(
+            $this->getAdapterFactory(),
+            $this->getConfig(),
+            $this->getQueryContainer(),
+            $this->createAmazonpayPaymentMethod()
         );
     }
 
     /**
-     * @return PrepareQuoteCollection
+     * @return QuoteUpdateFactory
      */
-    public function createQuoteDataInitializer()
+    public function getQuoteUpdateFactory()
     {
-        return new PrepareQuoteCollection(
-            [
-                $this->createCustomerDataQuoteUpdater(),
-                $this->createShipmentDataQuoteInitializer(),
-                $this->createPaymentDataQuoteUpdater(),
-            ]
-        );
-    }
-
-    /**
-     * @return ShipmentDataQuoteInitializer
-     */
-    public function createShipmentDataQuoteInitializer()
-    {
-        return new ShipmentDataQuoteInitializer();
-    }
-
-    /**
-     * @return ShipmentDataQuoteUpdater
-     */
-    public function createShipmentDataQuoteUpdater()
-    {
-        return new ShipmentDataQuoteUpdater(
+        return new QuoteUpdateFactory(
+            $this->getAdapterFactory(),
+            $this->getConfig(),
             $this->getShipmentFacade()
         );
-    }
-
-    /**
-     * @return CloseOrderTransaction
-     */
-    public function createCloseOrderTransaction()
-    {
-        return new CloseOrderTransaction(
-            $this->createCloseOrderAdapter(),
-            $this->getConfig(),
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return CustomerDataQuoteUpdater
-     */
-    protected function createCustomerDataQuoteUpdater()
-    {
-        return new CustomerDataQuoteUpdater(
-            $this->createObtainProfileInformationAdapter(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return PaymentDataQuoteUpdater
-     */
-    protected function createPaymentDataQuoteUpdater()
-    {
-        return new PaymentDataQuoteUpdater();
-    }
-
-    /**
-     * @return ConfirmOrderReferenceTransaction
-     */
-    public function createConfirmOrderReferenceTransaction()
-    {
-        $handler = new ConfirmOrderReferenceTransaction(
-            $this->createConfirmOrderReferenceAmazonpayAdapter(),
-            $this->getConfig()
-        );
-
-        $handler->registerMethodMapper(
-            $this->createAmazonpayPaymentMethod()
-        );
-
-        return $handler;
-    }
-
-    /**
-     * @return SetOrderReferenceDetailsTransaction
-     */
-    public function createSetOrderReferenceTransaction()
-    {
-        $handler = new SetOrderReferenceDetailsTransaction(
-            $this->createSetOrderReferenceDetailsAmazonpayAdapter(),
-            $this->getConfig()
-        );
-
-        $handler->registerMethodMapper(
-            $this->createAmazonpayPaymentMethod()
-        );
-
-        return $handler;
-    }
-
-    /**
-     * @return GetOrderReferenceDetailsTransaction
-     */
-    public function createGetOrderReferenceDetailsTransaction()
-    {
-        $handler = new GetOrderReferenceDetailsTransaction(
-            $this->createGetOrderReferenceDetailsAmazonpayAdapter(),
-            $this->getConfig()
-        );
-
-        $handler->registerMethodMapper(
-            $this->createAmazonpayPaymentMethod()
-        );
-
-        return $handler;
-    }
-
-    /**
-     * @return CancelOrderTransaction
-     */
-    protected function createCancelOrderTransaction()
-    {
-        $handler = new CancelOrderTransaction(
-            $this->createCancelOrderAdapter(),
-            $this->getConfig()
-        );
-
-        $handler->registerMethodMapper(
-            $this->createAmazonpayPaymentMethod()
-        );
-
-        return $handler;
-    }
-
-    /**
-     * @return AuthorizeOrderTransaction
-     */
-    protected function createAuthorizeOrderTransaction()
-    {
-        $handler = new AuthorizeOrderTransaction(
-            $this->createAuthorizeOrderAdapter(),
-            $this->getConfig()
-        );
-
-        $handler->registerMethodMapper(
-            $this->createAmazonpayPaymentMethod()
-        );
-
-        return $handler;
     }
 
     /**
@@ -204,6 +47,8 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
      */
     protected function getMoneyFacade()
     {
+        $this->getShipmentFacade();
+
         return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_MONEY);
     }
 
@@ -216,169 +61,21 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ConfirmPurchaseTransactionCollection
+     * @return AdapterFactory
      */
-    public function createConfirmPurchaseTransactionCollection()
+    protected function getAdapterFactory()
     {
-        return new ConfirmPurchaseTransactionCollection(
-            [
-                $this->createSetOrderReferenceTransaction(),
-                $this->createConfirmOrderReferenceTransaction(),
-                $this->createGetOrderReferenceDetailsTransaction(),
-                $this->createAuthorizeOrderTransaction(),
-                $this->createHandleDeclinedOrderTransaction()
-            ]
+        return new AdapterFactory(
+            $this->getConfig(), $this->getConverterFactory(), $this->getMoneyFacade()
         );
     }
 
     /**
-     * @return HandleDeclinedOrderTransaction
+     * @return ConverterFactory
      */
-    protected function createHandleDeclinedOrderTransaction()
+    protected function getConverterFactory()
     {
-        return new HandleDeclinedOrderTransaction(
-            $this->createGetOrderReferenceDetailsTransaction(),
-            $this->createCancelOrderTransaction()
-        );
-    }
-
-    /**
-     * @return ObtainProfileInformationAdapter
-     */
-    protected function createObtainProfileInformationAdapter()
-    {
-        return new ObtainProfileInformationAdapter(
-            $this->getConfig(),
-            $this->createObtainProfileInformationConverter(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return SetOrderReferenceDetailsAdapter
-     */
-    protected function createSetOrderReferenceDetailsAmazonpayAdapter()
-    {
-        return new SetOrderReferenceDetailsAdapter(
-            $this->getConfig(),
-            $this->createSetOrderReferenceDetailsConverter(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return ConfirmOrderReferenceAdapter
-     */
-    protected function createConfirmOrderReferenceAmazonpayAdapter()
-    {
-        return new ConfirmOrderReferenceAdapter(
-            $this->getConfig(),
-            $this->createConfirmOrderReferenceConverter(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return GetOrderReferenceDetailsAdapter
-     */
-    protected function createGetOrderReferenceDetailsAmazonpayAdapter()
-    {
-        return new GetOrderReferenceDetailsAdapter(
-            $this->getConfig(),
-            $this->createGetOrderReferenceDetailsConverter(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return AuthorizeOrderAdapter
-     */
-    protected function createAuthorizeOrderAdapter()
-    {
-        return new AuthorizeOrderAdapter(
-            $this->getConfig(),
-            $this->createAuthorizeOrderConverter(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return CloseOrderAdapter
-     */
-    protected function createCloseOrderAdapter()
-    {
-        return new CloseOrderAdapter(
-            $this->getConfig(),
-            $this->createCloseOrderConverter()
-        );
-    }
-
-    /**
-     * @return CancelOrderAdapter
-     */
-    protected function createCancelOrderAdapter()
-    {
-        return new CancelOrderAdapter(
-            $this->getConfig(),
-            $this->createCancelOrderConverter(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return CloseOrderConverter
-     */
-    protected function createCloseOrderConverter()
-    {
-        return new CloseOrderConverter();
-    }
-
-    /**
-     * @return ObtainProfileInformationConverter
-     */
-    protected function createObtainProfileInformationConverter()
-    {
-        return new ObtainProfileInformationConverter();
-    }
-
-    /**
-     * @return SetOrderReferenceDetailsConverter
-     */
-    protected function createSetOrderReferenceDetailsConverter()
-    {
-        return new SetOrderReferenceDetailsConverter();
-    }
-
-    /**
-     * @return ConfirmOrderReferenceConverter
-     */
-    protected function createConfirmOrderReferenceConverter()
-    {
-        return new ConfirmOrderReferenceConverter();
-    }
-
-    /**
-     * @return GetOrderReferenceDetailsConverter
-     */
-    protected function createGetOrderReferenceDetailsConverter()
-    {
-        return new GetOrderReferenceDetailsConverter();
-    }
-
-    /**
-     * @return AuthorizeOrderConverter
-     */
-    protected function createAuthorizeOrderConverter()
-    {
-        return new AuthorizeOrderConverter();
-    }
-
-    /**
-     * @return CancelOrderConverter
-     */
-    protected function createCancelOrderConverter()
-    {
-        return new CancelOrderConverter();
+        return new ConverterFactory();
     }
 
     /**

@@ -9,7 +9,7 @@
         <column name="seller_order_id" required="true" type="VARCHAR"/>
         <column name="order_reference_id" required="true" type="VARCHAR"/>
         <column name="order_reference_status" required="true" type="VARCHAR"/>
-        <column name="authorization_reference" type="VARCHAR"/>
+        <column name="authorization_reference_id" type="VARCHAR"/>
         <column name="authorization_id" type="VARCHAR"/>
         <column name="request_id" type="VARCHAR"/>
 
@@ -22,7 +22,7 @@
         </unique>
 
         <unique name="spy_payment_amazonpay-unique-reference">
-            <unique-column name="order_reference" />
+            <unique-column name="order_reference_id" />
         </unique>
 
         <behavior name="timestampable"/>

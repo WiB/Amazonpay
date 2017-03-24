@@ -6,7 +6,6 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
-use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayOrderItem;
 
 class Saver implements SaverInterface
 {
@@ -37,7 +36,7 @@ class Saver implements SaverInterface
         $paymentEntity->setOrderReferenceId($paymentTransfer->getOrderReferenceId());
         $paymentEntity->setOrderReferenceStatus($paymentTransfer->getOrderReferenceStatus());
         $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
-        $paymentEntity->setAuthorizationReference($paymentTransfer->getAuthorizationReferenceId());
+        $paymentEntity->setAuthorizationReferenceId($paymentTransfer->getAuthorizationReferenceId());
         $paymentEntity->setAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAuthorizationId());
         $paymentEntity->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $paymentEntity->setRequestId($paymentTransfer->getResponseHeader()->getRequestId());
