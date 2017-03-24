@@ -171,7 +171,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     protected function createCancelOrderTransaction()
     {
         $handler = new CancelOrderTransaction(
-            $this->createGetOrderReferenceDetailsAmazonpayAdapter(),
+            $this->createCancelOrderAdapter(),
             $this->getConfig()
         );
 
@@ -320,12 +320,13 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     {
         return new CancelOrderAdapter(
             $this->getConfig(),
-            $this->createCancelOrderConverter()
+            $this->createCancelOrderConverter(),
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @return ObtainProfileInformationConverter
+     * @return CloseOrderConverter
      */
     protected function createCloseOrderConverter()
     {

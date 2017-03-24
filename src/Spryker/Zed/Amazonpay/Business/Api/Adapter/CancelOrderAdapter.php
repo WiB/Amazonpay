@@ -13,9 +13,8 @@ class CancelOrderAdapter extends AbstractQuoteAdapter
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
-        $result = $this->client->authorize([
+        $result = $this->client->cancelOrderReference([
             'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            // 'authorization_reference_id' => $quoteTransfer->getAmazonPayment()->getAuthorizationReferenceId(),
         ]);
 
         return $this->converter->convert($result);
