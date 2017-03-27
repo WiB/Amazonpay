@@ -80,7 +80,7 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
         }
 
         if (!empty($result['IdList'])) {
-            $autorizationDetails->setIdList($result['IdList']);
+            $autorizationDetails->setIdList(array_values($result['IdList'])[0]);
         }
 
         if (!empty($result['SoftDecline'])) {

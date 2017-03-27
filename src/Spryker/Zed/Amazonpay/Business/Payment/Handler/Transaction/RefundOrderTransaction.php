@@ -32,11 +32,11 @@ class RefundOrderTransaction extends AbstractOrderTransaction
         $orderTransfer->getAmazonpayPayment()->setRefundReferenceId(
             $this->generateRefundReferenceId($orderTransfer)
         );
-
+        
         $orderTransfer = parent::execute($orderTransfer);
 
         if ($this->apiResponse->getHeader()->getIsSuccess()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CLOSED);
+            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_REFUNDED);
             $this->paymentEntity->save();
         }
 

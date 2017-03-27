@@ -1,6 +1,7 @@
 <?php
 namespace Spryker\Yves\Amazonpay;
 
+use Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -10,6 +11,7 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_SHIPMENT = 'shipment client';
     const CLIENT_CHECKOUT = 'checkout client';
     const CLIENT_CALCULATION = 'calculation client';
+    const PLUGIN_CHECKOUT_BREADCRUMB = 'plugin checkout breadcrumb';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,6 +34,10 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::CLIENT_CALCULATION] = function () use ($container) {
             return $container->getLocator()->calculation()->client();
+        };
+
+        $container[self::PLUGIN_CHECKOUT_BREADCRUMB] = function () use ($container) {
+            return new CheckoutBreadcrumbPlugin();
         };
 
         return $container;

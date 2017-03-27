@@ -4,6 +4,8 @@ namespace Spryker\Zed\Amazonpay\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -74,6 +76,31 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
             ->getTransactionFactory()
             ->createCloseOrderTransaction()
             ->execute($orderTransfer);
+    }
+
+    /**
+     * @param array $salesOrderItems
+     * @param SpySalesOrder $salesOrderEntity
+     *
+     * @return RefundTransfer
+     */
+    public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
+    {
+        return $this->getFactory()
+            ->createRefundFacade()
+            ->calculateRefund($salesOrderItems, $salesOrderEntity);
+    }
+
+    /**
+     * @param RefundTransfer $refundTransfer
+     *
+     * @return bool
+     */
+    public function saveRefund(RefundTransfer $refundTransfer)
+    {
+        return $this->getFactory()
+            ->createRefundFacade()
+            ->saveRefund($refundTransfer);
     }
 
     /**

@@ -32,8 +32,13 @@ class PaymentController extends AbstractController
         $quote = $this->getClient()->handleCartWithAmazonpay($quote);
         $this->getFactory()->getQuoteClient()->setQuote($quote);
 
+        $stepBreadcrumbsTransfer = $this->getFactory()
+            ->getCheckoutBreadcrumbPlugin()
+            ->generateStepBreadcrumbs($quote);
+
         return [
-            'quoteTransfer' => $quote
+            'quoteTransfer' => $quote,
+            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
         ];
     }
 
@@ -162,7 +167,13 @@ class PaymentController extends AbstractController
     {
         $this->getFactory()->getQuoteClient()->clearQuote();
 
-        return [];
+        $stepBreadcrumbsTransfer = $this->getFactory()
+            ->getCheckoutBreadcrumbPlugin()
+            ->generateStepBreadcrumbs($this->getFactory()->getQuoteClient()->getQuote());
+
+        return [
+            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
+        ];
     }
 
 }

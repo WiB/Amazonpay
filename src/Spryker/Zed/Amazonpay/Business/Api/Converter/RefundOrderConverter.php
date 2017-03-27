@@ -27,13 +27,12 @@ class RefundOrderConverter extends AbstractResponseParserConverter
         $result = $this->extractResult($responseParser)['RefundDetails'];
 
         $refundDetails = new AmazonpayRefundDetailsTransfer();
-        $refundDetails->setAmazonCaptureId($result['AmazonCaptureId']);
+        $refundDetails->setRefundId($result['AmazonRefundId']);
         $refundDetails->setRefundReferenceId($result['RefundReferenceId']);
-        $refundDetails->setRefundReferenceId($result['RefundAmount']);
-
-        if (!empty($result['SellerRefundNote'])) {
-            $refundDetails->setRefundReferenceId($result['SellerRefundNote']);
-        }
+        $refundDetails->setRefundAmount($this->convertPriceToTransfer(
+            $result['RefundAmount']
+        ));
+        $refundDetails->setStatus($result['RefundStatus']['State']);
 
         if (!empty($result['SellerRefundNote'])) {
             $refundDetails->setRefundReferenceId($result['SellerRefundNote']);

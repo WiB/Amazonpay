@@ -7,6 +7,7 @@ use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
 use Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
 
@@ -43,6 +44,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return AmazonpayToRefundInterface
+     */
+    public function createRefundFacade()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_REFUND);
+    }
+
+    /**
      * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
      */
     protected function getMoneyFacade()
@@ -60,7 +69,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_SHIPMENT);
     }
 
-    /**
+   /**
      * @return AdapterFactory
      */
     protected function getAdapterFactory()

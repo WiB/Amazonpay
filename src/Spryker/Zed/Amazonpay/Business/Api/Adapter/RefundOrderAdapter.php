@@ -14,11 +14,15 @@ class RefundOrderAdapter extends AbstractOrderAdapter
      */
     public function call(OrderTransfer $orderTransfer)
     {
+        $refundAmount = $this->moneyFacade->convertIntegerToDecimal(
+            $orderTransfer->getTotals()->getRefundTotal()
+        );
+
         $result = $this->client->refund([
             'amazon_order_reference_id' => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            'amazon_capture_id' => $orderTransfer->getAmazonpayPayment()->getAuthorizationReferenceId(),
+            'amazon_capture_id' => $orderTransfer->getAmazonpayPayment()->getCaptureId(),
             'refund_reference_id' => $orderTransfer->getAmazonpayPayment()->getRefundReferenceId(),
-            'refund_amount' => $orderTransfer->getTotals()->getGrandTotal()
+            'refund_amount' => $refundAmount
         ]);
 
         return $this->converter->convert($result);

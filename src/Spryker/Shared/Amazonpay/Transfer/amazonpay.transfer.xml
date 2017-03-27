@@ -7,6 +7,7 @@
         <property name="fkSalesOrder" type="int" />
         <property name="orderReferenceId" type="string"/>
         <property name="sellerOrderId" type="string"/>
+        <property name="captureId" type="string"/>
         <property name="addressConsentToken" type="string"/>
         <property name="authorizationReferenceId" type="string"/>
         <property name="captureReferenceId" type="string"/>
@@ -97,11 +98,11 @@
     </transfer>
 
     <transfer name="AmazonpayRefundDetails">
-        <property name="AmazonCaptureId" type="string"/>
+        <property name="RefundId" type="string"/>
         <property name="RefundReferenceId" type="string"/>
         <property name="RefundAmount" type="AmazonpayPrice"/>
         <property name="SellerRefundNote" type="string"/>
-        <property name="SoftDescriptor" type="string"/>
+        <property name="Status" type="string"/>
     </transfer>
 
     <transfer name="AuthorizeOrderAmazonpayResponse">

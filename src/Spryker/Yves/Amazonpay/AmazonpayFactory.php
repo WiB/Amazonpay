@@ -50,4 +50,13 @@ class AmazonpayFactory extends AbstractFactory
         return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_CALCULATION);
     }
 
+    /**
+     * @return \Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin
+     */
+    public function getCheckoutBreadcrumbPlugin()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::PLUGIN_CHECKOUT_BREADCRUMB);
+    }
+
+
 }

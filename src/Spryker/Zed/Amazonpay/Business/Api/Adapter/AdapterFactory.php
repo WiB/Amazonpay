@@ -100,7 +100,8 @@ class AdapterFactory
     {
         return new CloseOrderAdapter(
             $this->config,
-            $this->converterFactory->createCloseOrderConverter()
+            $this->converterFactory->createCloseOrderConverter(),
+            $this->moneyFacade
         );
     }
 

@@ -38,6 +38,7 @@ class Saver implements SaverInterface
         $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
         $paymentEntity->setAuthorizationReferenceId($paymentTransfer->getAuthorizationReferenceId());
         $paymentEntity->setAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAuthorizationId());
+        $paymentEntity->setCaptureId($paymentTransfer->getAuthorizationDetails()->getIdList());
         $paymentEntity->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $paymentEntity->setRequestId($paymentTransfer->getResponseHeader()->getRequestId());
         $paymentEntity->save();
