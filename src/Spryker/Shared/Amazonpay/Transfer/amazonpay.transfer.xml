@@ -36,6 +36,8 @@
         <property name="isSuccess" type="bool" />
         <property name="requestId" type="string" />
         <property name="constraints" type="AmazonpayResponseConstraint[]" singular="constraint" />
+        <property name="errorCode" type="string" />
+        <property name="errorMessage" type="string" />
     </transfer>
 
     <transfer name="SetOrderReferenceDetailsAmazonpayResponse">

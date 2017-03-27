@@ -17,11 +17,9 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     protected $resultKeyName;
 
     /**
-     * @param ResponseParser $responseParser
-     *
-     * @return array
+     * @return string
      */
-    protected abstract function extractResult(ResponseParser $responseParser);
+    protected abstract function getResponseType();
 
     /**
      * @param ResponseParser $responseParser
@@ -58,15 +56,22 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
 
         $header = new AmazonpayResponseHeaderTransfer();
         $header->setIsSuccess($this->isSuccess($responseParser));
-
-        if ($constraints) {
-            $header->setConstraints($constraints);
-        }
-
         $header->setStatusCode($statusCode);
 
         if ($metadata) {
             $header->setRequestId($metadata['RequestId']);
+        }
+
+        if (!empty($responseParser->toArray()['Error'])) {
+            $header->setErrorMessage($responseParser->toArray()['Error']['Message']);
+            $header->setErrorCode($responseParser->toArray()['Error']['Code']);
+            $header->setRequestId($responseParser->toArray()['RequestId']);
+
+            return $header;
+        }
+
+        if ($constraints) {
+            $header->setConstraints($constraints);
         }
 
         return $header;
@@ -81,6 +86,20 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
         return
             $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
             && empty($this->extractConstraints($responseParser));
+    }
+
+    /**
+     * @param ResponseParser $responseParser
+     *
+     * @return array
+     */
+    protected function extractResult(ResponseParser $responseParser)
+    {
+        $responseType = $this->getResponseType();
+
+        return !empty($responseParser->toArray()[$responseType])
+            ? $responseParser->toArray()[$responseType]
+            : [];
     }
 
     /**

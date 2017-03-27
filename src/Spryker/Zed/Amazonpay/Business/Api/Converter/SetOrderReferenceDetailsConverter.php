@@ -7,15 +7,11 @@ use PayWithAmazon\ResponseParser;
 class SetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
     /**
-     * @param ResponseParser $responseParser
-     *
-     * @return array
+     * @return string
      */
-    protected function extractResult(ResponseParser $responseParser)
+    protected function getResponseType()
     {
-        return empty($responseParser->toArray()['SetOrderReferenceDetailsResult'])
-            ? []
-            : $responseParser->toArray()['SetOrderReferenceDetailsResult'];
+        return 'SetOrderReferenceDetailsResult';
     }
 
     /**

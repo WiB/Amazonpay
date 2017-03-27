@@ -4,6 +4,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
 
@@ -24,6 +25,16 @@ class TransactionFactory
      */
     protected $amazonpayQueryContainer;
 
+    /**
+     * @var Amazonpay
+     */
+    protected $amazonpayPaymentMethod;
+
+    /**
+     * @var TransactionLogger
+     */
+    protected $transactionLogger;
+
     public function __construct(
         AdapterFactory $adapterFactory,
         AmazonpayConfig $config,
@@ -32,6 +43,7 @@ class TransactionFactory
     ) {
         $this->adapterFactory = $adapterFactory;
         $this->config = $config;
+        $this->transactionLogger = new TransactionLogger($config->getErrorReportLevel());
         $this->amazonpayQueryContainer = $amazonpayQueryContainer;
         $this->amazonpayPaymentMethod = $amazonpayPaymentMethod;
     }
@@ -43,7 +55,8 @@ class TransactionFactory
     {
         $handler = new ConfirmOrderReferenceTransaction(
             $this->adapterFactory->createConfirmOrderReferenceAmazonpayAdapter(),
-            $this->config
+            $this->config,
+            $this->transactionLogger
         );
 
         $handler->registerMethodMapper(
@@ -60,7 +73,8 @@ class TransactionFactory
     {
         $handler = new SetOrderReferenceDetailsTransaction(
             $this->adapterFactory->createSetOrderReferenceDetailsAmazonpayAdapter(),
-            $this->config
+            $this->config,
+            $this->transactionLogger
         );
 
         $handler->registerMethodMapper(
@@ -77,7 +91,8 @@ class TransactionFactory
     {
         $handler = new GetOrderReferenceDetailsTransaction(
             $this->adapterFactory->createGetOrderReferenceDetailsAmazonpayAdapter(),
-            $this->config
+            $this->config,
+            $this->transactionLogger
         );
 
         $handler->registerMethodMapper(
@@ -94,7 +109,8 @@ class TransactionFactory
     {
         $handler = new CancelOrderTransaction(
             $this->adapterFactory->createCancelOrderAdapter(),
-            $this->config
+            $this->config,
+            $this->transactionLogger
         );
 
         $handler->registerMethodMapper(
@@ -111,7 +127,8 @@ class TransactionFactory
     {
         $handler = new AuthorizeOrderTransaction(
             $this->adapterFactory->createAuthorizeOrderAdapter(),
-            $this->config
+            $this->config,
+            $this->transactionLogger
         );
 
         $handler->registerMethodMapper(
@@ -129,6 +146,7 @@ class TransactionFactory
         return new CloseOrderTransaction(
             $this->adapterFactory->createCloseOrderAdapter(),
             $this->config,
+            $this->transactionLogger,
             $this->amazonpayQueryContainer,
             $this->amazonpayPaymentMethod
         );
@@ -142,6 +160,7 @@ class TransactionFactory
         return new RefundOrderTransaction(
             $this->adapterFactory->createRefundOrderAdapter(),
             $this->config,
+            $this->transactionLogger,
             $this->amazonpayQueryContainer,
             $this->amazonpayPaymentMethod
         );

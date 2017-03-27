@@ -14,6 +14,7 @@ abstract class AbstractQuoteTransaction extends AbstractTransaction implements Q
     {
         $this->apiResponse = $this->executionAdapter->call($quoteTransfer);
         $quoteTransfer->getAmazonpayPayment()->setResponseHeader($this->apiResponse->getHeader());
+        $this->transactionsLogger->log($this->apiResponse->getHeader());
 
         return $quoteTransfer;
     }

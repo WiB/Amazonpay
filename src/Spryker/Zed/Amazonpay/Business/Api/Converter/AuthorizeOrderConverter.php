@@ -12,28 +12,12 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
     const PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
 
     /**
-     * @param ResponseParser $responseParser
-     *
-     * @return array
+     * @return string
      */
-    protected function extractResult(ResponseParser $responseParser)
+    protected function getResponseType()
     {
-        return $responseParser->toArray()['AuthorizeResult'];
+        return 'AuthorizeResult';
     }
-
-//    /**
-//     * @param ResponseParser $responseParser
-//     * @return bool
-//     */
-//    protected function isSuccess(ResponseParser $responseParser)
-//    {
-//        $authDetails = $this->extractResult($responseParser)['AuthorizationDetails'];
-//
-//        return
-//            $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
-//            && !empty($authDetails['AuthorizationStatus']['State'])
-//            && $authDetails['AuthorizationStatus']['State'] != self::AUTH_STATUS_DECLINED;
-//    }
 
     /**
      * @param ResponseParser $responseParser

@@ -6,6 +6,7 @@ use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
 
 abstract class AbstractOrderTransaction extends AbstractTransaction implements OrderTransactionInterface
 {
@@ -22,9 +23,10 @@ abstract class AbstractOrderTransaction extends AbstractTransaction implements O
     public function __construct(
         AbstractAdapter $executionAdapter,
         AmazonpayConfig $config,
+        TransactionLogger $transactionLogger,
         AmazonpayQueryContainerInterface $amazonpayQueryContainer
     ) {
-        parent::__construct($executionAdapter, $config);
+        parent::__construct($executionAdapter, $config, $transactionLogger);
 
         $this->queryContainer = $amazonpayQueryContainer;
     }
@@ -38,6 +40,7 @@ abstract class AbstractOrderTransaction extends AbstractTransaction implements O
     {
         $this->apiResponse = $this->executionAdapter->call($orderTransfer);
         $orderTransfer->getAmazonpayPayment()->setResponseHeader($this->apiResponse->getHeader());
+        $this->transactionsLogger->log($this->apiResponse->getHeader());
         $this->paymentEntity =
             $this->queryContainer->queryPaymentByOrderReferenceId(
                     $orderTransfer->getAmazonpayPayment()->getOrderReferenceId()

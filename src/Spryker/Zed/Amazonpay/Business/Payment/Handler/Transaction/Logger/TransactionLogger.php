@@ -1,9 +1,8 @@
 <?php
-namespace Spryker\Zed\Amazonpay\Business\Payment\Handler;
+namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger;
 
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayApiLog;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TransactionLogger
 {
@@ -25,37 +24,39 @@ class TransactionLogger
     }
 
     /**
-     * @param AbstractTransfer $responseTransfer
+     * @param AmazonpayResponseHeaderTransfer $headerTransfer
      *
      * @return bool
      */
-    protected function isLoggable(AbstractTransfer $responseTransfer)
+    protected function isLoggable(AmazonpayResponseHeaderTransfer $headerTransfer)
     {
         if ($this->reportLevel === self::REPORT_LEVEL_ALL) {
             return true;
         };
 
         if ($this->reportLevel === self::REPORT_LEVEL_DISABLED) {
-            return true;
+            return false;
         };
 
         if ($this->reportLevel === self::REPORT_LEVEL_ERRORS_ONLY) {
-            return !$responseTransfer->getHeader()->isSuccess();
+            return !$headerTransfer->getIsSuccess();
         }
     }
-    
-    public function log(AbstractTransfer $responseTransfer) 
-    {
-        /** @var AmazonpayResponseHeaderTransfer $responseTransfer */
-        $header = $responseTransfer->getHeader();
 
-        if (!$this->isLoggable($responseTransfer)) {
+    /**
+     * @param AmazonpayResponseHeaderTransfer $headerTransfer
+     */
+    public function log(AmazonpayResponseHeaderTransfer $headerTransfer)
+    {
+        if (!$this->isLoggable($headerTransfer)) {
             return;
         }
 
         $logEntity = new SpyPaymentAmazonpayApiLog();
-        $logEntity->setStatusCode($header->getStatusCode());
-        $logEntity->setRequestId($header->getRequestId());
-
+        $logEntity->setStatusCode($headerTransfer->getStatusCode());
+        $logEntity->setRequestId($headerTransfer->getRequestId());
+        $logEntity->setErrorMessage($headerTransfer->getErrorMessage());
+        $logEntity->setErrorCode($headerTransfer->getErrorCode());
+        $logEntity->save();
     }
 }

@@ -153,8 +153,14 @@ class PaymentController extends AbstractController
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
 
+        $stepBreadcrumbsTransfer = $this->getFactory()
+            ->getCheckoutBreadcrumbPlugin()
+            ->generateStepBreadcrumbs($quote);
+
+
         return [
-            'quoteTransfer' => $quote
+            'quoteTransfer' => $quote,
+            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
         ];
     }
 

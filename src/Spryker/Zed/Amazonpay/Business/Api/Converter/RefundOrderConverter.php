@@ -8,13 +8,11 @@ use PayWithAmazon\ResponseParser;
 class RefundOrderConverter extends AbstractResponseParserConverter
 {
     /**
-     * @param ResponseParser $responseParser
-     *
-     * @return array
+     * @return string
      */
-    protected function extractResult(ResponseParser $responseParser)
+    protected function getResponseType()
     {
-        return $responseParser->toArray()['RefundResult'];
+        return 'RefundResult';
     }
 
     /**

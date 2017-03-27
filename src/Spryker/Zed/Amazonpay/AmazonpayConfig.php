@@ -71,4 +71,12 @@ class AmazonpayConfig extends AbstractBundleConfig
         return (bool) $this->get(AmazonpayConstants::SANDBOX);
     }
 
+    /**
+     * @return string
+     */
+    public function getErrorReportLevel()
+    {
+        return $this->get(AmazonpayConstants::ERROR_REPORT_LEVEL);
+    }
+
 }

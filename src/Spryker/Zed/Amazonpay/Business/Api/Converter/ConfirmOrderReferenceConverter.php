@@ -7,13 +7,11 @@ use PayWithAmazon\ResponseParser;
 class ConfirmOrderReferenceConverter extends AbstractResponseParserConverter
 {
     /**
-     * @param ResponseParser $responseParser
-     *
-     * @return array
+     * @return string
      */
-    protected function extractResult(ResponseParser $responseParser)
+    protected function getResponseType()
     {
-        return $responseParser->toArray()['ConfirmOrderReferenceResult'];
+        return 'ConfirmOrderReferenceResult';
     }
 
     /**
