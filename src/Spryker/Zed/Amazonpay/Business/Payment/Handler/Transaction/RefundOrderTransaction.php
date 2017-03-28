@@ -3,12 +3,13 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\CloseOrderAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class RefundOrderTransaction extends AbstractOrderTransaction
 {
     /**
-     * @var CloseOrderAmazonpayResponseTransfer
+     * @var RefundOrderAmazonpayResponseTransfer
      */
     protected $apiResponse;
 
@@ -37,6 +38,7 @@ class RefundOrderTransaction extends AbstractOrderTransaction
 
         if ($this->apiResponse->getHeader()->getIsSuccess()) {
             $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_REFUNDED);
+            $this->paymentEntity->setRefundId($this->apiResponse->getRefundDetails()->getRefundId());
             $this->paymentEntity->save();
         }
 

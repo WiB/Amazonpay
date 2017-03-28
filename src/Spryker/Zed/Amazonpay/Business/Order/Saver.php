@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class Saver implements SaverInterface
 {
@@ -34,7 +35,7 @@ class Saver implements SaverInterface
     {
         $paymentEntity = new SpyPaymentAmazonpay();
         $paymentEntity->setOrderReferenceId($paymentTransfer->getOrderReferenceId());
-        $paymentEntity->setOrderReferenceStatus($paymentTransfer->getOrderReferenceStatus());
+        $paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_NEW);
         $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
         $paymentEntity->setAuthorizationReferenceId($paymentTransfer->getAuthorizationReferenceId());
         $paymentEntity->setAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAuthorizationId());
