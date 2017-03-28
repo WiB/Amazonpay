@@ -4,6 +4,7 @@ namespace Spryker\Zed\Amazonpay\Dependency\Facade;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Refund\Business\RefundFacadeInterface;
 
 class AmazonpayToRefundBridge implements AmazonpayToRefundInterface
 {
@@ -13,9 +14,9 @@ class AmazonpayToRefundBridge implements AmazonpayToRefundInterface
     protected $refundFacade;
 
     /**
-     * @param RefundFacade $refundFacade
+     * @param RefundFacadeInterface $refundFacade
      */
-    public function __construct(RefundFacade $refundFacade)
+    public function __construct(RefundFacadeInterface $refundFacade)
     {
         $this->refundFacade = $refundFacade;
     }

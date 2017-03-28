@@ -19,7 +19,7 @@ class PaymentController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return []
+     * @return array
      */
     public function checkoutAction(Request $request)
     {
@@ -58,7 +58,7 @@ class PaymentController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return []
+     * @return array
      */
     public function getShipmentMethodsAction(Request $request)
     {
@@ -75,7 +75,7 @@ class PaymentController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return []
+     * @return array
      */
     public function updateShipmentMethodAction(Request $request)
     {
@@ -115,7 +115,7 @@ class PaymentController extends AbstractController
                     return $this->redirectResponseInternal(AmazonpayControllerProvider::SUCCESS);
                 }
 
-                //@todo implement proper error handling (if neccessary)
+                //@todo implement proper error handling (if necessary)
                 return new Response('Persisting Order Error');
             }
 
@@ -147,7 +147,7 @@ class PaymentController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return []
+     * @return array
      */
     public function changePaymentMethodAction(Request $request)
     {

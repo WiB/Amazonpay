@@ -5,9 +5,20 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 
 class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
 {
+    /**
+     * @var SetOrderReferenceDetailsAdapter
+     */
+    protected $executionAdapter;
+
+    /**
+     * @var AmazonpayConfig
+     */
+    protected $config;
+
     /**
      * @var SetOrderReferenceDetailsAmazonpayResponseTransfer
      */

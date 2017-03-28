@@ -22,6 +22,7 @@ class AbstractTransaction extends AbstractPaymentHandler
     /**
      * @param AbstractAdapter $executionAdapter
      * @param AmazonpayConfig $config
+     * @param TransactionLogger $transactionLogger
      */
     public function __construct(
         AbstractAdapter $executionAdapter,

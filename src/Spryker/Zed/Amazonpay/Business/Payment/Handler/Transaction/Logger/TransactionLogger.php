@@ -8,7 +8,7 @@ class TransactionLogger
 {
     const REPORT_LEVEL_ALL = 'ALL';
     const REPORT_LEVEL_ERRORS_ONLY = 'ERRORS_ONLY';
-    const REPORT_LEVEL_DISABLED = 'DSABLED';
+    const REPORT_LEVEL_DISABLED = 'DISABLED';
 
     /**
      * @var int
@@ -28,7 +28,7 @@ class TransactionLogger
      *
      * @return bool
      */
-    protected function isLoggable(AmazonpayResponseHeaderTransfer $headerTransfer)
+    protected function isLoggingEnabled(AmazonpayResponseHeaderTransfer $headerTransfer)
     {
         if ($this->reportLevel === self::REPORT_LEVEL_ALL) {
             return true;
@@ -41,6 +41,8 @@ class TransactionLogger
         if ($this->reportLevel === self::REPORT_LEVEL_ERRORS_ONLY) {
             return !$headerTransfer->getIsSuccess();
         }
+
+        return false;
     }
 
     /**
@@ -48,7 +50,7 @@ class TransactionLogger
      */
     public function log(AmazonpayResponseHeaderTransfer $headerTransfer)
     {
-        if (!$this->isLoggable($headerTransfer)) {
+        if (!$this->isLoggingEnabled($headerTransfer)) {
             return;
         }
 

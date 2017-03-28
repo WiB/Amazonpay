@@ -1,7 +1,6 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\CloseOrderAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;

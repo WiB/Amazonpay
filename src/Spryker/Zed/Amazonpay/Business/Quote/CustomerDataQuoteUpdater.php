@@ -1,17 +1,28 @@
 <?php
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerAmazonpayResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface;
 
 class CustomerDataQuoteUpdater implements QuoteUpdaterInterface
 {
     /**
-     * @var CustomerAmazonpayResponseTransfer
+     * @var CustomerTransfer
      */
     protected $apiResponse;
+
+    /**
+     * @var ObtainProfileInformationAdapter
+     */
+    protected $executionAdapter;
+
+    /**
+     * @var AmazonpayConfig
+     */
+    protected $config;
 
     /**
      * @param QuoteAdapterInterface $executionAdapter

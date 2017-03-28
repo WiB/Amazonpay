@@ -3,7 +3,7 @@ namespace Spryker\Zed\Amazonpay\Dependency\Facade;
 
 use Propel\Runtime\Collection\ObjectCollection;
 
-interface AmazonToOmsInterface
+interface AmazonpayToOmsInterface
 {
 
     /**

@@ -15,6 +15,8 @@ class AmazonpayToShipmentBridge implements AmazonpayToShipmentInterface
 
     /**
      * @param int $idMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {

@@ -28,62 +28,62 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
     {
         $result = $this->extractResult($responseParser)['AuthorizationDetails'];
 
-        $autorizationDetails = new AmazonAuthorizationDetailsTransfer();
-        $autorizationDetails->setAuthorizationId($result['AmazonAuthorizationId']);
-        $autorizationDetails->setAuthorizationReference($result['AuthorizationReferenceId']);
+        $authorizationDetails = new AmazonAuthorizationDetailsTransfer();
+        $authorizationDetails->setAuthorizationId($result['AmazonAuthorizationId']);
+        $authorizationDetails->setAuthorizationReference($result['AuthorizationReferenceId']);
 
         if (!empty($result['AuthorizationAmount'])) {
-            $autorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['AuthorizationAmount']));
+            $authorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['AuthorizationAmount']));
         }
 
         if (!empty($result['CapturedAmount'])) {
-            $autorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['CapturedAmount']));
+            $authorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['CapturedAmount']));
         }
 
         if (!empty($result['AuthorizationFee'])) {
-            $autorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['AuthorizationFee']));
+            $authorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['AuthorizationFee']));
         }
 
         if (!empty($result['AuthorizationStatus'])) {
             $authStatus = new AmazonpayAuthorizationStatusTransfer();
             $authStatus->setLastUpdateTimestamp($result['AuthorizationStatus']['LastUpdateTimestamp']);
             $authStatus->setState($result['AuthorizationStatus']['State']);
-            $autorizationDetails->setAuthorizationStatus($authStatus);
+            $authorizationDetails->setAuthorizationStatus($authStatus);
 
-            $autorizationDetails->setIsDeclined(
+            $authorizationDetails->setIsDeclined(
                 $result['AuthorizationStatus']['State'] === self::AUTH_STATUS_DECLINED
             );
 
-            $autorizationDetails->setIsPaymentMethodInvalid(
+            $authorizationDetails->setIsPaymentMethodInvalid(
                 $result['AuthorizationStatus']['ReasonCode'] === self::PAYMENT_METHOD_INVALID
             );
         }
 
         if (!empty($result['ExpirationTimestamp'])) {
-            $autorizationDetails->setExpirationTimestamp($result['ExpirationTimestamp']);
+            $authorizationDetails->setExpirationTimestamp($result['ExpirationTimestamp']);
         }
 
         if (!empty($result['IdList'])) {
-            $autorizationDetails->setIdList(array_values($result['IdList'])[0]);
+            $authorizationDetails->setIdList(array_values($result['IdList'])[0]);
         }
 
         if (!empty($result['SoftDecline'])) {
-            $autorizationDetails->setSoftDecline($result['SoftDecline']);
+            $authorizationDetails->setSoftDecline($result['SoftDecline']);
         }
 
         if (!empty($result['CaptureNow'])) {
-            $autorizationDetails->setCaptureNow($result['CaptureNow']);
+            $authorizationDetails->setCaptureNow($result['CaptureNow']);
         }
 
         if (!empty($result['SellerAuthorizationNote'])) {
-            $autorizationDetails->setSellerAuthorizationNote($result['CaptureNow']);
+            $authorizationDetails->setSellerAuthorizationNote($result['CaptureNow']);
         }
 
         if (!empty($result['CreationTimestamp'])) {
-            $autorizationDetails->setCreationTimestamp($result['CreationTimestamp']);
+            $authorizationDetails->setCreationTimestamp($result['CreationTimestamp']);
         }
 
-        return $autorizationDetails;
+        return $authorizationDetails;
     }
 
     /**
