@@ -1,38 +1,44 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class RefundOrderTransaction extends AbstractOrderTransaction
 {
+
     /**
-     * @var RefundOrderAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer
      */
     protected $apiResponse;
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function generateRefundReferenceId(OrderTransfer $orderTransfer)
     {
-        return md5 (__CLASS__ . $orderTransfer->getAmazonpayPayment()->getOrderReferenceId() . time());
+        return md5(__CLASS__ . $orderTransfer->getAmazonpayPayment()->getOrderReferenceId() . time());
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function execute(OrderTransfer $orderTransfer)
     {
         $orderTransfer->getAmazonpayPayment()->setRefundReferenceId(
             $this->generateRefundReferenceId($orderTransfer)
         );
-        
+
         $orderTransfer = parent::execute($orderTransfer);
 
         if ($this->apiResponse->getHeader()->getIsSuccess()) {

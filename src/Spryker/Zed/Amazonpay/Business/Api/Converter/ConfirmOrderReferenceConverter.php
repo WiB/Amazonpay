@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\ConfirmOrderReferenceAmazonpayResponseTransfer;
@@ -6,6 +12,7 @@ use PayWithAmazon\ResponseParser;
 
 class ConfirmOrderReferenceConverter extends AbstractResponseParserConverter
 {
+
     /**
      * @return string
      */
@@ -15,9 +22,9 @@ class ConfirmOrderReferenceConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return ConfirmOrderReferenceAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfirmOrderReferenceAmazonpayResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {
@@ -26,4 +33,5 @@ class ConfirmOrderReferenceConverter extends AbstractResponseParserConverter
 
         return $responseTransfer;
     }
+
 }

@@ -1,32 +1,43 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface;
-use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge;
 
 class QuoteUpdateFactory
 {
+
     /**
-     * @var AdapterFactory
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory
      */
     protected $adapterFactory;
 
     /**
-     * @var AmazonpayConfig
+     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
      */
     protected $config;
 
     /**
-     * @var ShipmentFacadeInterface
+     * @var \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
      */
     protected $shipmentFacade;
 
+    /**
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory $adapterFactory
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge $shipmentFacade
+     */
     public function __construct(
         AdapterFactory $adapterFactory,
         AmazonpayConfig $config,
-        AmazonpayToShipmentInterface $shipmentFacade
+        AmazonpayToShipmentBridge $shipmentFacade
     ) {
         $this->adapterFactory = $adapterFactory;
         $this->config = $config;
@@ -34,7 +45,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return ShippingAddressDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\ShippingAddressDataQuoteUpdater
      */
     public function createShippingAddressQuoteDataUpdater()
     {
@@ -45,7 +56,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return PrepareQuoteCollection
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\PrepareQuoteCollection
      */
     public function createQuoteDataInitializer()
     {
@@ -59,7 +70,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return ShipmentDataQuoteInitializer
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteInitializer
      */
     public function createShipmentDataQuoteInitializer()
     {
@@ -67,7 +78,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return ShipmentDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteUpdater
      */
     public function createShipmentDataQuoteUpdater()
     {
@@ -77,7 +88,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return CustomerDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater
      */
     protected function createCustomerDataQuoteUpdater()
     {
@@ -88,7 +99,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return PaymentDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\PaymentDataQuoteUpdater
      */
     protected function createPaymentDataQuoteUpdater()
     {

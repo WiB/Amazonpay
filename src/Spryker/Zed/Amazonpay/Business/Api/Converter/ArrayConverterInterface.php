@@ -1,14 +1,20 @@
 <?php
-namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 interface ArrayConverterInterface
 {
+
     /**
      * @param array $response
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function convert(array $response);
+
 }

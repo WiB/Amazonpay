@@ -1,32 +1,37 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter;
 
 class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
 {
+
     /**
-     * @var SetOrderReferenceDetailsAdapter
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter
      */
     protected $executionAdapter;
 
     /**
-     * @var AmazonpayConfig
+     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
      */
     protected $config;
 
     /**
-     * @var SetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer
      */
     protected $apiResponse;
 
     /**
-     * @param QuoteAdapterInterface $executionAdapter
-     * @param AmazonpayConfig $config
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
      */
     public function __construct(
         QuoteAdapterInterface $executionAdapter,
@@ -37,9 +42,9 @@ class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function update(QuoteTransfer $quoteTransfer)
     {
@@ -51,4 +56,5 @@ class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
 
         return $quoteTransfer;
     }
+
 }

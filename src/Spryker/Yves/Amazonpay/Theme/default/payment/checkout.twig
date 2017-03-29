@@ -4,6 +4,12 @@
     <h3>{{ 'checkout.step.summary.title' | trans }}</h3>
 {% endblock %}
 
+{% block breadcrumbItems %}
+    <li><a href="/">{{ 'global.home' | trans }}</a></li>
+    <li><a href="{{ url('cart') }}">{{ 'cart.cart'|trans }}</a></li>
+    <li>{{ 'checkout.amazonpay'|trans }}</li>
+{% endblock %}
+
 {% block content %}
     <div class="row xlarge-unstack">
         <div class="small-12 xlarge-3 columns">

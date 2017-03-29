@@ -1,25 +1,32 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
 {
+
     const ORDER_REFERENCE_STATUS_OPEN = 'Open';
 
     /**
-     * @var GetOrderReferenceDetailsTransaction
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction
      */
     protected $getOrderReferenceDetailsTransaction;
 
     /**
-     * @var CancelOrderTransaction
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction
      */
     protected $cancelOrderTransaction;
 
     /**
-     * @param GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction
-     * @param CancelOrderTransaction $cancelOrderTransaction
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction $cancelOrderTransaction
      */
     public function __construct(
         GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction,
@@ -32,7 +39,7 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
@@ -46,11 +53,11 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
 
         $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
-        if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus() == self::ORDER_REFERENCE_STATUS_OPEN)
-        {
+        if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus() === self::ORDER_REFERENCE_STATUS_OPEN) {
             $this->cancelOrderTransaction->execute($quoteTransfer);
         }
 
         return $quoteTransfer;
     }
+
 }

@@ -1,21 +1,26 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler;
 
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
 use Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException;
 
 abstract class AbstractPaymentHandler
 {
 
     /**
-     * @var AbstractAdapter
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter
      */
     protected $executionAdapter;
 
     /**
-     * @var AmazonpayConfig
+     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
      */
     protected $config;
 
@@ -25,8 +30,8 @@ abstract class AbstractPaymentHandler
     protected $methodMappers = [];
 
     /**
-     * @param AbstractAdapter $executionAdapter
-     * @param AmazonpayConfig $config
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter $executionAdapter
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
      */
     public function __construct(
         AbstractAdapter $executionAdapter,
@@ -69,6 +74,5 @@ abstract class AbstractPaymentHandler
 
         return $this->methodMappers[$methodName];
     }
-
 
 }

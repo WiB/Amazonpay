@@ -1,20 +1,26 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Dependency\Facade;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Business\RefundFacadeInterface;
 
 class AmazonpayToRefundBridge implements AmazonpayToRefundInterface
 {
+
     /**
-     * @var RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @param RefundFacadeInterface $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacadeInterface $refundFacade
      */
     public function __construct(RefundFacadeInterface $refundFacade)
     {
@@ -23,17 +29,17 @@ class AmazonpayToRefundBridge implements AmazonpayToRefundInterface
 
     /**
      * @param array $salesOrderItems
-     * @param SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
     {
-       return $this->refundFacade->calculateRefund($salesOrderItems, $salesOrderEntity);
+        return $this->refundFacade->calculateRefund($salesOrderItems, $salesOrderEntity);
     }
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return bool
      */

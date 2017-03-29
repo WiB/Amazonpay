@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonAuthorizationDetailsTransfer;
@@ -8,6 +14,7 @@ use PayWithAmazon\ResponseParser;
 
 class AuthorizeOrderConverter extends AbstractResponseParserConverter
 {
+
     const AUTH_STATUS_DECLINED = 'Declined';
     const PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
 
@@ -20,9 +27,9 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AmazonAuthorizationDetailsTransfer
+     * @return \Generated\Shared\Transfer\AmazonAuthorizationDetailsTransfer
      */
     protected function extractAuthorizationDetails(ResponseParser $responseParser)
     {
@@ -87,9 +94,9 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AuthorizeOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {
@@ -98,5 +105,6 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
         $responseTransfer->setAuthorizationDetails($this->extractAuthorizationDetails($responseParser));
 
         return $responseTransfer;
-   }
+    }
+
 }

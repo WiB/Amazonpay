@@ -1,26 +1,39 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface;
-use ArrayObject;
 
 class ShipmentDataQuoteUpdater implements QuoteUpdaterInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface
+     */
     protected $shipmentFacade;
 
+    /**
+     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface $shipmentFacade
+     */
     public function __construct(AmazonpayToShipmentInterface $shipmentFacade)
     {
         $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * 
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function update(QuoteTransfer $quoteTransfer)
     {
@@ -35,9 +48,9 @@ class ShipmentDataQuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function updateExpenses(QuoteTransfer $quoteTransfer)
     {
@@ -57,9 +70,9 @@ class ShipmentDataQuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer)
     {

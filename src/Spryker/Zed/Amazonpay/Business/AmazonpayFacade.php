@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -13,10 +19,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
@@ -27,9 +36,11 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
     {
@@ -40,9 +51,11 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
     {
@@ -53,9 +66,11 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
@@ -66,9 +81,11 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @api
      *
-     * @return OrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function closeOrder(OrderTransfer $orderTransfer)
     {
@@ -79,34 +96,40 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param array $salesOrderItems
-     * @param SpySalesOrder $salesOrderEntity
+     * @api
      *
-     * @return RefundTransfer
+     * @param array $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
     {
         return $this->getFactory()
-            ->createRefundFacade()
+            ->getRefundFacade()
             ->calculateRefund($salesOrderItems, $salesOrderEntity);
     }
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {
         return $this->getFactory()
-            ->createRefundFacade()
+            ->getRefundFacade()
             ->saveRefund($refundTransfer);
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @api
      *
-     * @return OrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function refundOrder(OrderTransfer $orderTransfer)
     {
@@ -121,8 +144,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      *
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */

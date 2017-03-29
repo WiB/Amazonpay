@@ -23,6 +23,4 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
         return $container;
     }
 
-
-
 }

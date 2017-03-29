@@ -1,15 +1,21 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer;
 
 class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return SetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
@@ -22,4 +28,5 @@ class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 
         return $this->converter->convert($result);
     }
+
 }

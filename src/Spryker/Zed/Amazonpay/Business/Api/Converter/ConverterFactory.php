@@ -1,11 +1,17 @@
 <?php
-namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 class ConverterFactory
 {
+
     /**
-     * @return CloseOrderConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\CloseOrderConverter
      */
     public function createCloseOrderConverter()
     {
@@ -13,7 +19,7 @@ class ConverterFactory
     }
 
     /**
-     * @return ObtainProfileInformationConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ObtainProfileInformationConverter
      */
     public function createObtainProfileInformationConverter()
     {
@@ -21,7 +27,7 @@ class ConverterFactory
     }
 
     /**
-     * @return SetOrderReferenceDetailsConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\SetOrderReferenceDetailsConverter
      */
     public function createSetOrderReferenceDetailsConverter()
     {
@@ -29,7 +35,7 @@ class ConverterFactory
     }
 
     /**
-     * @return ConfirmOrderReferenceConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ConfirmOrderReferenceConverter
      */
     public function createConfirmOrderReferenceConverter()
     {
@@ -37,7 +43,7 @@ class ConverterFactory
     }
 
     /**
-     * @return GetOrderReferenceDetailsConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\GetOrderReferenceDetailsConverter
      */
     public function createGetOrderReferenceDetailsConverter()
     {
@@ -45,7 +51,7 @@ class ConverterFactory
     }
 
     /**
-     * @return AuthorizeOrderConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\AuthorizeOrderConverter
      */
     public function createAuthorizeOrderConverter()
     {
@@ -53,7 +59,7 @@ class ConverterFactory
     }
 
     /**
-     * @return CancelOrderConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\CancelOrderConverter
      */
     public function createCancelOrderConverter()
     {
@@ -61,7 +67,7 @@ class ConverterFactory
     }
 
     /**
-     * @return RefundOrderConverter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\RefundOrderConverter
      */
     public function createRefundOrderConverter()
     {

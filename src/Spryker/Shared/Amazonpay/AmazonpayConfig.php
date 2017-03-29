@@ -1,11 +1,18 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Shared\Amazonpay;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\Store;
 
 class AmazonpayConfig extends AbstractBundleConfig
 {
+
     /**
      * @return string
      */
@@ -75,7 +82,7 @@ class AmazonpayConfig extends AbstractBundleConfig
      */
     public function isSandbox()
     {
-        return (bool) $this->get(AmazonpayConstants::SANDBOX);
+        return (bool)$this->get(AmazonpayConstants::SANDBOX);
     }
 
 }

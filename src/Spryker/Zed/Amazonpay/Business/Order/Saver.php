@@ -1,10 +1,16 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Order;
 
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
@@ -26,8 +32,8 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param AmazonpayPaymentTransfer $paymentTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\AmazonpayPaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */

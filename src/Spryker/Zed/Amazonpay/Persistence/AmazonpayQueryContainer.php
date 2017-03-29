@@ -1,7 +1,12 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Persistence;
 
-use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -9,12 +14,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AmazonpayQueryContainer extends AbstractQueryContainer implements AmazonpayQueryContainerInterface
 {
+
     /**
      * @api
      *
      * @param string $orderReferenceId
      *
-     * @return SpyPaymentAmazonpayQuery
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
      */
     public function queryPaymentByOrderReferenceId($orderReferenceId)
     {
@@ -22,10 +28,11 @@ class AmazonpayQueryContainer extends AbstractQueryContainer implements Amazonpa
             ->queryPayments()
             ->filterByOrderReferenceId($orderReferenceId);
     }
+
     /**
      * @api
      *
-     * @return SpyPaymentAmazonpayQuery
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
      */
     protected function queryPayments()
     {

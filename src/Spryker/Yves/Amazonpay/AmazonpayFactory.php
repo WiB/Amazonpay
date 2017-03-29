@@ -1,17 +1,20 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Amazonpay;
 
-use Spryker\Client\Calculation\CalculationClient;
-use Spryker\Client\Checkout\CheckoutClient;
-use Spryker\Client\Quote\QuoteClient;
-use Spryker\Client\Shipment\ShipmentClient;
 use Spryker\Shared\Amazonpay\AmazonpayConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class AmazonpayFactory extends AbstractFactory
 {
+
     /**
-     * @return QuoteClient
+     * @return \Spryker\Client\Quote\QuoteClient
      */
     public function getQuoteClient()
     {
@@ -19,7 +22,7 @@ class AmazonpayFactory extends AbstractFactory
     }
 
     /**
-     * @return CheckoutClient
+     * @return \Spryker\Client\Checkout\CheckoutClient
      */
     public function getCheckoutClient()
     {
@@ -27,7 +30,7 @@ class AmazonpayFactory extends AbstractFactory
     }
 
     /**
-     * @return AmazonpayConfig
+     * @return \Spryker\Shared\Amazonpay\AmazonpayConfig
      */
     public function getConfig()
     {
@@ -35,7 +38,7 @@ class AmazonpayFactory extends AbstractFactory
     }
 
     /**
-     * @return ShipmentClient
+     * @return \Spryker\Client\Shipment\ShipmentClient
      */
     public function getShipmentClient()
     {
@@ -43,20 +46,11 @@ class AmazonpayFactory extends AbstractFactory
     }
 
     /**
-     * @return CalculationClient
+     * @return \Spryker\Client\Calculation\CalculationClient
      */
     public function getCalculationClient()
     {
         return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_CALCULATION);
     }
-
-    /**
-     * @return \Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin
-     */
-    public function getCheckoutBreadcrumbPlugin()
-    {
-        return $this->getProvidedDependency(AmazonpayDependencyProvider::PLUGIN_CHECKOUT_BREADCRUMB);
-    }
-
 
 }

@@ -1,23 +1,28 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Amazonpay\Controller;
 
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
-use Pyz\Yves\Cart\Plugin\Provider\CartControllerProvider;
 use Spryker\Yves\Amazonpay\Plugin\Provider\AmazonpayControllerProvider;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use Spryker\Yves\Amazonpay\AmazonpayFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AmazonpayFactory getFactory()
+ * @method \Spryker\Yves\Amazonpay\AmazonpayFactory getFactory()
  * @method \Spryker\Client\Amazonpay\AmazonpayClient getClient()
  */
 class PaymentController extends AbstractController
 {
+
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -32,20 +37,15 @@ class PaymentController extends AbstractController
         $quote = $this->getClient()->handleCartWithAmazonpay($quote);
         $this->getFactory()->getQuoteClient()->setQuote($quote);
 
-        $stepBreadcrumbsTransfer = $this->getFactory()
-            ->getCheckoutBreadcrumbPlugin()
-            ->generateStepBreadcrumbs($quote);
-
         return [
             'quoteTransfer' => $quote,
-            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
         ];
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function setOrderReferenceAction(Request $request)
     {
@@ -56,7 +56,7 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -73,14 +73,14 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
     public function updateShipmentMethodAction(Request $request)
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
-        $quote->getShipment()->setShipmentSelection((int) $request->request->get('shipment_method_id'));
+        $quote->getShipment()->setShipmentSelection((int)$request->request->get('shipment_method_id'));
         $quote = $this->getClient()->addSelectedShipmentMethodToQuote($quote);
         $quote = $this->getFactory()->getCalculationClient()->recalculate($quote);
         $this->getFactory()->getQuoteClient()->setQuote($quote);
@@ -91,9 +91,9 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirmPurchaseAction(Request $request)
     {
@@ -141,11 +141,11 @@ class PaymentController extends AbstractController
     {
         $this->addErrorMessage($this->getApplication()->trans('amazonpay.payment.failed'));
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal('cart');
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -153,19 +153,13 @@ class PaymentController extends AbstractController
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
 
-        $stepBreadcrumbsTransfer = $this->getFactory()
-            ->getCheckoutBreadcrumbPlugin()
-            ->generateStepBreadcrumbs($quote);
-
-
         return [
             'quoteTransfer' => $quote,
-            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
         ];
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -173,13 +167,7 @@ class PaymentController extends AbstractController
     {
         $this->getFactory()->getQuoteClient()->clearQuote();
 
-        $stepBreadcrumbsTransfer = $this->getFactory()
-            ->getCheckoutBreadcrumbPlugin()
-            ->generateStepBreadcrumbs($this->getFactory()->getQuoteClient()->getQuote());
-
-        return [
-            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
-        ];
+        return [];
     }
 
 }

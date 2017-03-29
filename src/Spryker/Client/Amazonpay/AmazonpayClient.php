@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\Amazonpay;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,7 +21,8 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
      *
      * @api
      *
-     * @method AmazonpayFactory getFactory()
+     * @method \Spryker\Client\Amazonpay\AmazonpayFactory getFactory()
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -27,9 +33,11 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
     {
@@ -37,9 +45,11 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
     {
@@ -47,9 +57,11 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @api
      *
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {

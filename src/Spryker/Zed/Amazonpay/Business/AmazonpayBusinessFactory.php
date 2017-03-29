@@ -1,15 +1,20 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business;
 
 use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
-use Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
+use Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
@@ -19,7 +24,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TransactionFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory
      */
     public function getTransactionFactory()
     {
@@ -32,7 +37,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return QuoteUpdateFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory
      */
     public function getQuoteUpdateFactory()
     {
@@ -44,9 +49,9 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AmazonpayToRefundInterface
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundInterface
      */
-    public function createRefundFacade()
+    public function getRefundFacade()
     {
         return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_REFUND);
     }
@@ -56,8 +61,6 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
      */
     protected function getMoneyFacade()
     {
-        $this->getShipmentFacade();
-
         return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_MONEY);
     }
 
@@ -70,17 +73,19 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
    /**
-     * @return AdapterFactory
-     */
+    * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory
+    */
     protected function getAdapterFactory()
     {
         return new AdapterFactory(
-            $this->getConfig(), $this->getConverterFactory(), $this->getMoneyFacade()
+            $this->getConfig(),
+            $this->getConverterFactory(),
+            $this->getMoneyFacade()
         );
     }
 
     /**
-     * @return ConverterFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory
      */
     protected function getConverterFactory()
     {
@@ -88,7 +93,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Amazonpay
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay
      */
     protected function createAmazonpayPaymentMethod()
     {

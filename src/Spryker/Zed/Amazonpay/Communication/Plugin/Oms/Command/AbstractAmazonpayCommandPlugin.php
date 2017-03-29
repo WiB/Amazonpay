@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command;
 
+use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
-use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
 
 /**
  * @method \Spryker\Zed\Amazonpay\Business\AmazonpayFacade getFacade()
@@ -53,7 +53,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */

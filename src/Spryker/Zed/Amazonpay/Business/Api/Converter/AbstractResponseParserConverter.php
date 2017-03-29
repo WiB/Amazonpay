@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AddressTransfer;
@@ -9,6 +15,7 @@ use PayWithAmazon\ResponseParser;
 
 abstract class AbstractResponseParserConverter extends AbstractConverter implements ResponseParserConverterInterface
 {
+
     const STATUS_CODE_SUCCESS = 200;
 
     /**
@@ -19,10 +26,10 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     /**
      * @return string
      */
-    protected abstract function getResponseType();
+    abstract protected function getResponseType();
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
      * @return array
      */
@@ -34,19 +41,19 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
      * @return int
      */
     protected function extractStatusCode(ResponseParser $responseParser)
     {
-        return (int) $responseParser->toArray()['ResponseStatus'];
+        return (int)$responseParser->toArray()['ResponseStatus'];
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AmazonpayResponseHeaderTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer
      */
     protected function extractHeader(ResponseParser $responseParser)
     {
@@ -78,7 +85,8 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
      * @return bool
      */
     protected function isSuccess(ResponseParser $responseParser)
@@ -89,7 +97,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
      * @return array
      */
@@ -103,9 +111,9 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AmazonpayResponseConstraintTransfer[]
+     * @return \Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer[]
      */
     protected function extractConstraints(ResponseParser $responseParser)
     {
@@ -117,7 +125,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
 
         $constraintTransfers = [];
 
-        if (sizeof($result['OrderReferenceDetails']['Constraints']) === 1) {
+        if (count($result['OrderReferenceDetails']['Constraints']) === 1) {
             $constraints = array_values($result['OrderReferenceDetails']['Constraints']);
         } else {
             $constraints = $result['OrderReferenceDetails']['Constraints'];
@@ -135,9 +143,9 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function extractShippingAddress(ResponseParser $responseParser)
     {
@@ -156,7 +164,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     /**
      * @param array $addressData
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function convertAddressToTransfer(array $addressData)
     {
@@ -200,7 +208,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     /**
      * @param array $priceData
      *
-     * @return AmazonpayPriceTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayPriceTransfer
      */
     protected function convertPriceToTransfer(array $priceData)
     {

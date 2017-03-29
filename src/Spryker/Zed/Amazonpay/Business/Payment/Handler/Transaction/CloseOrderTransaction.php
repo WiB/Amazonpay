@@ -1,21 +1,27 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\CloseOrderAmazonpayResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class CloseOrderTransaction extends AbstractOrderTransaction
 {
+
     /**
-     * @var CloseOrderAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\CloseOrderAmazonpayResponseTransfer
      */
     protected $apiResponse;
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function execute(OrderTransfer $orderTransfer)
     {

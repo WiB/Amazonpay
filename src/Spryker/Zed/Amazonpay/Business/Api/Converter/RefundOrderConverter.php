@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpayRefundDetailsTransfer;
@@ -7,6 +13,7 @@ use PayWithAmazon\ResponseParser;
 
 class RefundOrderConverter extends AbstractResponseParserConverter
 {
+
     /**
      * @return string
      */
@@ -16,9 +23,9 @@ class RefundOrderConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AmazonpayRefundDetailsTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayRefundDetailsTransfer
      */
     protected function extractRefundDetails(ResponseParser $responseParser)
     {
@@ -40,9 +47,9 @@ class RefundOrderConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return RefundOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {

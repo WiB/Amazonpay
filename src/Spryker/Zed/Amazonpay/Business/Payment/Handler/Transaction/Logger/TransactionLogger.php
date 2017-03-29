@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger;
 
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
@@ -6,6 +12,7 @@ use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayApiLog;
 
 class TransactionLogger
 {
+
     const REPORT_LEVEL_ALL = 'ALL';
     const REPORT_LEVEL_ERRORS_ONLY = 'ERRORS_ONLY';
     const REPORT_LEVEL_DISABLED = 'DISABLED';
@@ -16,7 +23,7 @@ class TransactionLogger
     protected $reportLevel;
 
     /**
-     * @param $reportLevel
+     * @param string $reportLevel
      */
     public function __construct($reportLevel)
     {
@@ -24,7 +31,7 @@ class TransactionLogger
     }
 
     /**
-     * @param AmazonpayResponseHeaderTransfer $headerTransfer
+     * @param \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer $headerTransfer
      *
      * @return bool
      */
@@ -46,7 +53,9 @@ class TransactionLogger
     }
 
     /**
-     * @param AmazonpayResponseHeaderTransfer $headerTransfer
+     * @param \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer $headerTransfer
+     *
+     * @return void
      */
     public function log(AmazonpayResponseHeaderTransfer $headerTransfer)
     {
@@ -61,4 +70,5 @@ class TransactionLogger
         $logEntity->setErrorCode($headerTransfer->getErrorCode());
         $logEntity->save();
     }
+
 }

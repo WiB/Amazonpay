@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\Amazonpay\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -6,6 +12,7 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class AmazonpayStub implements AmazonpayStubInterface
 {
+
     /**
      * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
@@ -20,7 +27,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
@@ -30,7 +37,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
@@ -40,7 +47,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
@@ -53,7 +60,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Amazonpay\Plugin\Provider;
 
 use Silex\Application;
@@ -6,8 +12,9 @@ use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider;
 
 class AmazonpayControllerProvider extends YvesControllerProvider
 {
+
     const CHECKOUT = 'amazonpay_checkout';
-    const CONFIRM_PURCHASE =  'amazonpay_confirm_purchase';
+    const CONFIRM_PURCHASE = 'amazonpay_confirm_purchase';
     const SUCCESS = 'amazonpay_success';
     const CHANGE_PAYMENT_METHOD = 'amazonpay_change_payment_method';
     const PAYMENT_FAILED = 'amazonpay_payment_failed';
@@ -43,4 +50,5 @@ class AmazonpayControllerProvider extends YvesControllerProvider
         $this->createController('/amazonpay/checkout-widget', self::CHECKOUT_WIDGET, 'Amazonpay', 'Widget', 'checkoutWidget');
         $this->createController('/amazonpay/wallet-widget', self::WALLET_WIDGET, 'Amazonpay', 'Widget', 'walletWidget');
     }
+
 }

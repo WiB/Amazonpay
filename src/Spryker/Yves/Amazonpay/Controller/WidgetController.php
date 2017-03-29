@@ -1,19 +1,28 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Yves\Amazonpay\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use Spryker\Yves\Amazonpay\AmazonpayFactory;
 
 /**
- * @method AmazonpayFactory getFactory()
+ * @method \Spryker\Yves\Amazonpay\AmazonpayFactory getFactory()
  * @method \Spryker\Client\Amazonpay\AmazonpayClient getClient()
  */
 class WidgetController extends AbstractController
 {
+
+    /**
+     * @return array
+     */
     public function payButtonAction()
     {
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
-        $logout =  $quote->getAmazonpayPayment()
+        $logout = $quote->getAmazonpayPayment()
                    && $quote->getAmazonpayPayment()->getAuthorizationDetails()
                    && $quote->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined();
 
@@ -21,23 +30,26 @@ class WidgetController extends AbstractController
             'amazonConfig' => $this->getFactory()->getConfig(),
             'logout' => $logout,
         ];
-
     }
 
+    /**
+     * @return array
+     */
     public function checkoutWidgetAction()
     {
         return [
-            'amazonConfig' => $this->getFactory()->getConfig()
+            'amazonConfig' => $this->getFactory()->getConfig(),
         ];
-
     }
 
+    /**
+     * @return array
+     */
     public function walletWidgetAction()
     {
         return [
-            'amazonConfig' => $this->getFactory()->getConfig()
+            'amazonConfig' => $this->getFactory()->getConfig(),
         ];
-
     }
 
 }

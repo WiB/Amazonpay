@@ -1,40 +1,52 @@
 <?php
-namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
-use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
+use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer;
 
 class TransactionFactory
 {
+
     /**
-     * @var AdapterFactory
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory
      */
     protected $adapterFactory;
 
     /**
-     * @var AmazonpayConfig
+     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
      */
     protected $config;
 
     /**
-     * @var AmazonpayQueryContainer
+     * @var \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer
      */
     protected $amazonpayQueryContainer;
 
     /**
-     * @var Amazonpay
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay
      */
     protected $amazonpayPaymentMethod;
 
     /**
-     * @var TransactionLogger
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger
      */
     protected $transactionLogger;
 
+    /**
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory $adapterFactory
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer $amazonpayQueryContainer
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay $amazonpayPaymentMethod
+     */
     public function __construct(
         AdapterFactory $adapterFactory,
         AmazonpayConfig $config,
@@ -49,7 +61,7 @@ class TransactionFactory
     }
 
     /**
-     * @return ConfirmOrderReferenceTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmOrderReferenceTransaction
      */
     public function createConfirmOrderReferenceTransaction()
     {
@@ -67,7 +79,7 @@ class TransactionFactory
     }
 
     /**
-     * @return SetOrderReferenceDetailsTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\SetOrderReferenceDetailsTransaction
      */
     public function createSetOrderReferenceTransaction()
     {
@@ -85,7 +97,7 @@ class TransactionFactory
     }
 
     /**
-     * @return GetOrderReferenceDetailsTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction
      */
     public function createGetOrderReferenceDetailsTransaction()
     {
@@ -103,7 +115,7 @@ class TransactionFactory
     }
 
     /**
-     * @return CancelOrderTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction
      */
     public function createCancelOrderTransaction()
     {
@@ -121,7 +133,7 @@ class TransactionFactory
     }
 
     /**
-     * @return AuthorizeOrderTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\AuthorizeOrderTransaction
      */
     public function createAuthorizeOrderTransaction()
     {
@@ -139,7 +151,7 @@ class TransactionFactory
     }
 
     /**
-     * @return CloseOrderTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CloseOrderTransaction
      */
     public function createCloseOrderTransaction()
     {
@@ -153,7 +165,7 @@ class TransactionFactory
     }
 
     /**
-     * @return RefundOrderTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\RefundOrderTransaction
      */
     public function createRefundOrderTransaction()
     {
@@ -167,7 +179,7 @@ class TransactionFactory
     }
 
     /**
-     * @return HandleDeclinedOrderTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\HandleDeclinedOrderTransaction
      */
     public function createHandleDeclinedOrderTransaction()
     {
@@ -178,7 +190,7 @@ class TransactionFactory
     }
 
     /**
-     * @return ConfirmPurchaseTransactionCollection
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection
      */
     public function createConfirmPurchaseTransactionCollection()
     {
@@ -188,8 +200,9 @@ class TransactionFactory
                 $this->createConfirmOrderReferenceTransaction(),
                 $this->createGetOrderReferenceDetailsTransaction(),
                 $this->createAuthorizeOrderTransaction(),
-                $this->createHandleDeclinedOrderTransaction()
+                $this->createHandleDeclinedOrderTransaction(),
             ]
         );
     }
+
 }

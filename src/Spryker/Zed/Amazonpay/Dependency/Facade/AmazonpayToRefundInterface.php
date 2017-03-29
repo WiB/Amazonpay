@@ -1,23 +1,31 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Dependency\Facade;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Generated\Shared\Transfer\RefundTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface AmazonpayToRefundInterface
 {
+
     /**
      * @param array $salesOrderItems
-     * @param SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return RefundTransfer
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer);
+
 }

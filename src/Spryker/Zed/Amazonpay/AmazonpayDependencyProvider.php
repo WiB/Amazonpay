@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay;
 
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyBridge;
@@ -10,6 +16,7 @@ use Spryker\Zed\Kernel\Container;
 
 class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_MONEY = 'money facade';
     const FACADE_SHIPMENT = 'shipment facade';
     const FACADE_SALES = 'sales facade';

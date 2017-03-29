@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Communication;
 
 use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
@@ -10,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class AmazonpayCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
      * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToSalesInterface
      */

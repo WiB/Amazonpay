@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AddressTransfer;
@@ -7,6 +13,7 @@ use PayWithAmazon\ResponseParser;
 
 class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
+
     /**
      * @return string
      */
@@ -16,7 +23,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
      * @return mixed
      */
@@ -26,9 +33,9 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function extractBillingAddress(ResponseParser $responseParser)
     {
@@ -45,9 +52,9 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return GetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\GetOrderReferenceDetailsAmazonpayResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {
@@ -59,4 +66,5 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 
         return $responseTransfer;
     }
+
 }
