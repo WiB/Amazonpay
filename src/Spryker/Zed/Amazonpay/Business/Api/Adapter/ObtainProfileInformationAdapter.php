@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface;
 
 class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAdapterInterface
 {
@@ -21,11 +21,11 @@ class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAd
 
     /**
      * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter $converter
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $converter
      */
     public function __construct(
         AmazonpayConfig $config,
-        AbstractArrayConverter $converter
+        ArrayConverterInterface $converter
     ) {
         parent::__construct($config);
 

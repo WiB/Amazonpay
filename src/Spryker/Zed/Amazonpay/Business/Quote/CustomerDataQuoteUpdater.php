@@ -8,17 +8,11 @@
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
+use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface;
 
 class CustomerDataQuoteUpdater implements QuoteUpdaterInterface
 {
-
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected $apiResponse;
-
     /**
      * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter
      */
@@ -31,11 +25,11 @@ class CustomerDataQuoteUpdater implements QuoteUpdaterInterface
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
      */
     public function __construct(
         QuoteAdapterInterface $executionAdapter,
-        AmazonpayConfig $config
+        AmazonpayConfigInterface $config
     ) {
         $this->executionAdapter = $executionAdapter;
         $this->config = $config;
@@ -48,8 +42,9 @@ class CustomerDataQuoteUpdater implements QuoteUpdaterInterface
      */
     public function update(QuoteTransfer $quoteTransfer)
     {
-        $this->apiResponse = $this->executionAdapter->call($quoteTransfer);
-        $quoteTransfer->setCustomer($this->apiResponse);
+        $quoteTransfer->setCustomer(
+            $this->executionAdapter->call($quoteTransfer)
+        );
 
         //@todo as long as we don't have proper social login via amazon, let's do this:
         $quoteTransfer->getCustomer()->setIsGuest(true);

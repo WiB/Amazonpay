@@ -10,7 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger;
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayApiLog;
 
-class TransactionLogger
+class TransactionLogger implements TransactionLoggerInterface
 {
 
     const REPORT_LEVEL_ALL = 'ALL';

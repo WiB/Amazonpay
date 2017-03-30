@@ -11,11 +11,14 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundOrderAdapter extends AbstractOrderAdapter
 {
+    const AMAZON_CAPTURE_ID = 'amazon_capture_id';
+    const REFUND_REFERENCE_ID = 'refund_reference_id';
+    const REFUND_AMOUNT = 'refund_amount';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer
      */
     public function call(OrderTransfer $orderTransfer)
     {
@@ -24,10 +27,10 @@ class RefundOrderAdapter extends AbstractOrderAdapter
         );
 
         $result = $this->client->refund([
-            'amazon_order_reference_id' => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            'amazon_capture_id' => $orderTransfer->getAmazonpayPayment()->getCaptureId(),
-            'refund_reference_id' => $orderTransfer->getAmazonpayPayment()->getRefundReferenceId(),
-            'refund_amount' => $refundAmount,
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            static::AMAZON_CAPTURE_ID => $orderTransfer->getAmazonpayPayment()->getCaptureId(),
+            static::REFUND_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getRefundReferenceId(),
+            static::REFUND_AMOUNT => $refundAmount,
         ]);
 
         return $this->converter->convert($result);

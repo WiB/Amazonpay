@@ -5,10 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Amazonpay\Business\Exception;
+namespace Spryker\Zed\Amazonpay\Business\Payment\Method;
 
-use Exception;
 
-class NoMethodMapperException extends Exception
+interface AmazonpayInterface
 {
+    /**
+     * @return string
+     */
+    public function getMethodName();
+
 }

@@ -15,6 +15,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @api
+ *
  * @method \Spryker\Zed\Amazonpay\Business\AmazonpayBusinessFactory getFactory()
  */
 class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface

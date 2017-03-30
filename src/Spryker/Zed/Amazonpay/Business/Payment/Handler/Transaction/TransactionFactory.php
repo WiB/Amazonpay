@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
-use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
-use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer;
+use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;
+use Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface;
+use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
 
-class TransactionFactory
+class TransactionFactory implements TransactionFactoryInterface
 {
 
     /**
@@ -22,40 +22,42 @@ class TransactionFactory
     protected $adapterFactory;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
+     * @var \Spryker\Zed\Amazonpay\AmazonpayConfigInterface
      */
     protected $config;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer
+     * @var \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface
      */
     protected $amazonpayQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface
      */
     protected $amazonpayPaymentMethod;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface
      */
     protected $transactionLogger;
 
     /**
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory $adapterFactory
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
-     * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer $amazonpayQueryContainer
-     * @param \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay $amazonpayPaymentMethod
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface $adapterFactory
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface $transactionLogger
+     * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface $amazonpayPaymentMethod
      */
     public function __construct(
-        AdapterFactory $adapterFactory,
-        AmazonpayConfig $config,
-        AmazonpayQueryContainer $amazonpayQueryContainer,
-        Amazonpay $amazonpayPaymentMethod
+        AdapterFactoryInterface $adapterFactory,
+        AmazonpayConfigInterface $config,
+        TransactionLoggerInterface $transactionLogger,
+        AmazonpayQueryContainerInterface $amazonpayQueryContainer,
+        AmazonpayInterface $amazonpayPaymentMethod
     ) {
         $this->adapterFactory = $adapterFactory;
         $this->config = $config;
-        $this->transactionLogger = new TransactionLogger($config->getErrorReportLevel());
+        $this->transactionLogger = $transactionLogger;
         $this->amazonpayQueryContainer = $amazonpayQueryContainer;
         $this->amazonpayPaymentMethod = $amazonpayPaymentMethod;
     }

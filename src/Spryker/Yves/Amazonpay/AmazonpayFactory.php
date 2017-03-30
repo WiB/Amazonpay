@@ -10,7 +10,7 @@ namespace Spryker\Yves\Amazonpay;
 use Spryker\Shared\Amazonpay\AmazonpayConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 
-class AmazonpayFactory extends AbstractFactory
+class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterface
 {
 
     /**

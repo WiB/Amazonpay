@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Method;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
-class Amazonpay
+class Amazonpay implements AmazonpayInterface
 {
 
     /**

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpayRefundDetailsTransfer;
-use Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer;
+use Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
 class RefundOrderConverter extends AbstractResponseParserConverter
@@ -49,11 +49,11 @@ class RefundOrderConverter extends AbstractResponseParserConverter
     /**
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return \Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {
-        $responseTransfer = new RefundOrderAmazonpayResponseTransfer();
+        $responseTransfer = new AmazonpayRefundOrderResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
         $responseTransfer->setRefundDetails($this->extractRefundDetails($responseParser));
 

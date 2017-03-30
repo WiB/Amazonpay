@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonAuthorizationDetailsTransfer;
 use Generated\Shared\Transfer\AmazonpayAuthorizationStatusTransfer;
-use Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer;
+use Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
 class AuthorizeOrderConverter extends AbstractResponseParserConverter
@@ -96,11 +96,11 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
     /**
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return \Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {
-        $responseTransfer = new AuthorizeOrderAmazonpayResponseTransfer();
+        $responseTransfer = new AmazonpayAuthorizeOrderResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
         $responseTransfer->setAuthorizationDetails($this->extractAuthorizationDetails($responseParser));
 

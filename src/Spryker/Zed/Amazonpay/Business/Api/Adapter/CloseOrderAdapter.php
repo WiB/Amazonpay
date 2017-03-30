@@ -15,12 +15,12 @@ class CloseOrderAdapter extends AbstractOrderAdapter
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\CloseOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayCloseOrderResponseTransfer
      */
     public function call(OrderTransfer $orderTransfer)
     {
         $result = $this->client->closeOrderReference([
-            'amazon_order_reference_id' => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
         ]);
 
         return $this->converter->convert($result);

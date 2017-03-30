@@ -36,7 +36,7 @@ interface AmazonpayStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return mixed
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer);
 

@@ -13,6 +13,8 @@ interface AmazonpayClientInterface
 {
 
     /**
+     * Set initial order data to quote
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -22,6 +24,8 @@ interface AmazonpayClientInterface
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer);
 
     /**
+     * Handles address selection
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -31,6 +35,8 @@ interface AmazonpayClientInterface
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * Handles shipment method selection
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -40,6 +46,8 @@ interface AmazonpayClientInterface
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * Places an order
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

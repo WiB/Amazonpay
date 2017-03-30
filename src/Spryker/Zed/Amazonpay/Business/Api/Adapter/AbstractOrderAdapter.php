@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractResponseParserConverter;
+use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
 abstract class AbstractOrderAdapter extends AbstractAdapter implements OrderAdapterInterface
 {
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractResponseParserConverter
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
      */
     protected $converter;
 
@@ -25,13 +25,13 @@ abstract class AbstractOrderAdapter extends AbstractAdapter implements OrderAdap
     protected $moneyFacade;
 
     /**
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractResponseParserConverter $converter
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
      */
     public function __construct(
-        AmazonpayConfig $config,
-        AbstractResponseParserConverter $converter,
+        AmazonpayConfigInterface $config,
+        ResponseParserConverterInterface $converter,
         AmazonpayToMoneyInterface $moneyFacade
     ) {
         parent::__construct($config);

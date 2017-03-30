@@ -14,7 +14,7 @@ class CloseOrderTransaction extends AbstractOrderTransaction
 {
 
     /**
-     * @var \Generated\Shared\Transfer\CloseOrderAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\AmazonpayCloseOrderResponseTransfer
      */
     protected $apiResponse;
 

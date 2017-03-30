@@ -17,7 +17,7 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
 {
 
     /**
-     * Places the order
+     * Set initial order data to quote
      *
      * @api
      *
@@ -33,6 +33,8 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
+     * Handles address selection
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -45,6 +47,8 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
+     * Handles shipment method selection
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -57,11 +61,13 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
+     * Places an order
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {

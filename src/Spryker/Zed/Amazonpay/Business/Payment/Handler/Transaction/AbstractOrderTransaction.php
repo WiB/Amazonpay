@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
+use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
 
 abstract class AbstractOrderTransaction extends AbstractTransaction implements OrderTransactionInterface
@@ -27,20 +27,30 @@ abstract class AbstractOrderTransaction extends AbstractTransaction implements O
     protected $paymentEntity;
 
     /**
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
-     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger $transactionLogger
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface $transactionLogger
      * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
      */
     public function __construct(
-        AbstractAdapter $executionAdapter,
-        AmazonpayConfig $config,
-        TransactionLogger $transactionLogger,
+        OrderAdapterInterface $executionAdapter,
+        AmazonpayConfigInterface $config,
+        TransactionLoggerInterface $transactionLogger,
         AmazonpayQueryContainerInterface $amazonpayQueryContainer
     ) {
         parent::__construct($executionAdapter, $config, $transactionLogger);
 
         $this->queryContainer = $amazonpayQueryContainer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return string
+     */
+    protected function generateOperationReferenceId(OrderTransfer $orderTransfer)
+    {
+        return uniqid($orderTransfer->getAmazonpayPayment()->getOrderReferenceId());
     }
 
     /**

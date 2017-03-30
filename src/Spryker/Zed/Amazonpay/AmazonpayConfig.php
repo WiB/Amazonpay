@@ -11,7 +11,7 @@ use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class AmazonpayConfig extends AbstractBundleConfig
+class AmazonpayConfig extends AbstractBundleConfig implements AmazonpayConfigInterface
 {
 
     /**

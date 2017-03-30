@@ -15,12 +15,12 @@ class CancelOrderAdapter extends AbstractQuoteAdapter
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CancelOrderAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayCancelOrderResponseTransfer
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->cancelOrderReference([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
         ]);
 
         return $this->converter->convert($result);

@@ -17,16 +17,6 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function generateSellerIdForQuote(QuoteTransfer $quoteTransfer)
-    {
-        return md5(__CLASS__ . $quoteTransfer->getAmazonpayPayment()->getAuthorizationReferenceId() . time());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function execute(QuoteTransfer $quoteTransfer)
     {
         // handling suspended case
@@ -38,7 +28,7 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
         }
 
         $quoteTransfer->getAmazonpayPayment()->setSellerOrderId(
-            $this->generateSellerIdForQuote($quoteTransfer)
+            $this->generateOperationReferenceId($quoteTransfer)
         );
 
         return parent::execute($quoteTransfer);

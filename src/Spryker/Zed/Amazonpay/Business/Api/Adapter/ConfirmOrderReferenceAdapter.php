@@ -11,17 +11,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ConfirmOrderReferenceAdapter extends AbstractQuoteAdapter
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfirmOrderReferenceAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayConfirmOrderReferenceResponseTransfer
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->confirmOrderReference([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            'amount' => $this->getAmount($quoteTransfer),
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            AbstractAdapter::AMAZON_AMOUNT => $this->getAmount($quoteTransfer),
         ]);
 
         return $this->converter->convert($result);

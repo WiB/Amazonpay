@@ -13,19 +13,9 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
 {
 
     /**
-     * @var \Generated\Shared\Transfer\AuthorizeOrderAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer
      */
     protected $apiResponse;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function generateAuthorizationReferenceIdForQuote(QuoteTransfer $quoteTransfer)
-    {
-        return md5(__CLASS__ . $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId() . time());
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -35,7 +25,7 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
     public function execute(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
-            $this->generateAuthorizationReferenceIdForQuote($quoteTransfer)
+            $this->generateOperationReferenceId($quoteTransfer)
         );
 
         $quoteTransfer = parent::execute($quoteTransfer);

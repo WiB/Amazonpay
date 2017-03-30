@@ -14,19 +14,9 @@ class RefundOrderTransaction extends AbstractOrderTransaction
 {
 
     /**
-     * @var \Generated\Shared\Transfer\RefundOrderAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer
      */
     protected $apiResponse;
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function generateRefundReferenceId(OrderTransfer $orderTransfer)
-    {
-        return md5(__CLASS__ . $orderTransfer->getAmazonpayPayment()->getOrderReferenceId() . time());
-    }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -36,7 +26,7 @@ class RefundOrderTransaction extends AbstractOrderTransaction
     public function execute(OrderTransfer $orderTransfer)
     {
         $orderTransfer->getAmazonpayPayment()->setRefundReferenceId(
-            $this->generateRefundReferenceId($orderTransfer)
+            $this->generateOperationReferenceId($orderTransfer)
         );
 
         $orderTransfer = parent::execute($orderTransfer);

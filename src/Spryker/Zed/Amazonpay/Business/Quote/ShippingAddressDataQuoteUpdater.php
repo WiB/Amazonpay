@@ -25,7 +25,7 @@ class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
     protected $config;
 
     /**
-     * @var \Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\AmazonpaySetOrderReferenceDetailsResponseTransfer
      */
     protected $apiResponse;
 

@@ -11,6 +11,7 @@ use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
 use Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory;
@@ -24,20 +25,21 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactoryInterface
      */
     public function getTransactionFactory()
     {
         return new TransactionFactory(
             $this->getAdapterFactory(),
             $this->getConfig(),
+            $this->createTransactionLogger(),
             $this->getQueryContainer(),
             $this->createAmazonpayPaymentMethod()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactoryInterface
      */
     public function getQuoteUpdateFactory()
     {
@@ -65,7 +67,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge
      */
     protected function getShipmentFacade()
     {
@@ -73,7 +75,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
    /**
-    * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory
+    * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface
     */
     protected function getAdapterFactory()
     {
@@ -93,7 +95,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface
      */
     protected function createAmazonpayPaymentMethod()
     {
@@ -106,6 +108,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     public function createOrderSaver()
     {
         return new Saver();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface
+     */
+    public function createTransactionLogger()
+    {
+        return new TransactionLogger($this->getConfig()->getErrorReportLevel());
     }
 
 }

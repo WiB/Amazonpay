@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
  * @method \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface getQueryContainer()
  */
-class AmazonpayCommunicationFactory extends AbstractCommunicationFactory
+class AmazonpayCommunicationFactory extends AbstractCommunicationFactory implements AmazonpayCommunicationFactoryInterface
 {
 
     /**

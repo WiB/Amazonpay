@@ -15,13 +15,13 @@ class GetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\GetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayGetOrderReferenceDetailsResponseTransfer
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->getOrderReferenceDetails([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            'address_consent_token' => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            AbstractAdapter::AMAZON_ADDRESS_CONSENT_TOKEN => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
         ]);
 
         return $this->converter->convert($result);

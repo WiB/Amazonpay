@@ -15,6 +15,16 @@ abstract class AbstractQuoteTransaction extends AbstractTransaction implements Q
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return string
+     */
+    protected function generateOperationReferenceId(QuoteTransfer $quoteTransfer)
+    {
+        return uniqid($quoteTransfer->getAmazonpayPayment()->getOrderReferenceId());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(QuoteTransfer $quoteTransfer)

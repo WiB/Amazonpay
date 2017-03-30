@@ -11,19 +11,20 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 {
+    const SELLER_ORDER_ID = 'seller_order_id';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpaySetOrderReferenceDetailsResponseTransfer
      */
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->setOrderReferenceDetails([
-            'amazon_order_reference_id' => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            'address_consent_token' => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
-            'amount' => $this->getAmount($quoteTransfer),
-            'seller_order_id' => $quoteTransfer->getAmazonpayPayment()->getSellerOrderId(),
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            AbstractAdapter::AMAZON_ADDRESS_CONSENT_TOKEN => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
+            AbstractAdapter::AMAZON_AMOUNT => $this->getAmount($quoteTransfer),
+            static::SELLER_ORDER_ID => $quoteTransfer->getAmazonpayPayment()->getSellerOrderId(),
         ]);
 
         return $this->converter->convert($result);

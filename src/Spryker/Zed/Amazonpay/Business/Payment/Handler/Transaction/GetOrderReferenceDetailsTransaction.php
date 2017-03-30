@@ -13,7 +13,7 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
 {
 
     /**
-     * @var \Generated\Shared\Transfer\GetOrderReferenceDetailsAmazonpayResponseTransfer
+     * @var \Generated\Shared\Transfer\AmazonpayGetOrderReferenceDetailsResponseTransfer
      */
     protected $apiResponse;
 

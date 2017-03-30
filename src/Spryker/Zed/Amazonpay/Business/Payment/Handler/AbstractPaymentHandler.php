@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
-use Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException;
+use Spryker\Zed\Amazonpay\Business\Exception\InvalidPaymentMethodException;
 
 abstract class AbstractPaymentHandler
 {
@@ -62,14 +62,14 @@ abstract class AbstractPaymentHandler
     /**
      * @param string $methodName
      *
-     * @throws \Spryker\Zed\Amazonpay\Business\Exception\NoMethodMapperException
+     * @throws \Spryker\Zed\Amazonpay\Business\Exception\InvalidPaymentMethodException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay
      */
     protected function getMethodMapper($methodName)
     {
         if (isset($this->methodMappers[$methodName]) === false) {
-            throw new NoMethodMapperException('The method mapper is not registered.');
+            throw new InvalidPaymentMethodException('The method mapper is not registered.');
         }
 
         return $this->methodMappers[$methodName];

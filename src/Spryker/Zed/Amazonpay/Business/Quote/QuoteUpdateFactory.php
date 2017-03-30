@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge;
+use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface;
 
-class QuoteUpdateFactory
+class QuoteUpdateFactory implements QuoteUpdateFactoryInterface
 {
 
     /**
@@ -30,14 +30,14 @@ class QuoteUpdateFactory
     protected $shipmentFacade;
 
     /**
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory $adapterFactory
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
-     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge $shipmentFacade
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface $adapterFactory
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface $shipmentFacade
      */
     public function __construct(
-        AdapterFactory $adapterFactory,
-        AmazonpayConfig $config,
-        AmazonpayToShipmentBridge $shipmentFacade
+        AdapterFactoryInterface $adapterFactory,
+        AmazonpayConfigInterface $config,
+        AmazonpayToShipmentInterface $shipmentFacade
     ) {
         $this->adapterFactory = $adapterFactory;
         $this->config = $config;
@@ -45,7 +45,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\ShippingAddressDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface
      */
     public function createShippingAddressQuoteDataUpdater()
     {
@@ -56,7 +56,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\PrepareQuoteCollection
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface
      */
     public function createQuoteDataInitializer()
     {
@@ -70,7 +70,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteInitializer
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface
      */
     public function createShipmentDataQuoteInitializer()
     {
@@ -78,7 +78,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\ShipmentDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface
      */
     public function createShipmentDataQuoteUpdater()
     {
@@ -88,7 +88,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\CustomerDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface
      */
     protected function createCustomerDataQuoteUpdater()
     {
@@ -99,7 +99,7 @@ class QuoteUpdateFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Quote\PaymentDataQuoteUpdater
+     * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface
      */
     protected function createPaymentDataQuoteUpdater()
     {

@@ -40,31 +40,31 @@
         <property name="errorMessage" type="string" />
     </transfer>
 
-    <transfer name="SetOrderReferenceDetailsAmazonpayResponse">
+    <transfer name="AmazonpaySetOrderReferenceDetailsResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
         <property name="shippingAddress" type="Address"/>
     </transfer>
 
-    <transfer name="ConfirmOrderReferenceAmazonpayResponse">
+    <transfer name="AmazonpayConfirmOrderReferenceResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
     </transfer>
 
-    <transfer name="GetOrderReferenceDetailsAmazonpayResponse">
+    <transfer name="AmazonpayGetOrderReferenceDetailsResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
         <property name="orderReferenceStatus" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="billingAddress" type="Address"/>
     </transfer>
 
-    <transfer name="CancelOrderAmazonpayResponse">
+    <transfer name="AmazonpayCancelOrderResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
     </transfer>
 
-    <transfer name="CloseOrderAmazonpayResponse">
+    <transfer name="AmazonpayCloseOrderResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
     </transfer>
 
-    <transfer name="RefundOrderAmazonpayResponse">
+    <transfer name="AmazonpayRefundOrderResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
         <property name="refundDetails" type="AmazonpayRefundDetails"/>
     </transfer>
@@ -107,7 +107,7 @@
         <property name="Status" type="string"/>
     </transfer>
 
-    <transfer name="AuthorizeOrderAmazonpayResponse">
+    <transfer name="AmazonpayAuthorizeOrderResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
         <property name="authorizationDetails" type="AmazonAuthorizationDetails"/>
     </transfer>
