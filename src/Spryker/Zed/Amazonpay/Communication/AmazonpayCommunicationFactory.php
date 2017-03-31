@@ -27,4 +27,12 @@ class AmazonpayCommunicationFactory extends AbstractCommunicationFactory impleme
         );
     }
 
+    /**
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundInterface
+     */
+    public function getRefundFacade()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_REFUND);
+    }
+
 }

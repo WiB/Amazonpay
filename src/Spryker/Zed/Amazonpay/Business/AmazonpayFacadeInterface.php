@@ -22,6 +22,9 @@ interface AmazonpayFacadeInterface
 {
 
     /**
+     * Specification
+     * - Updates quote after user clicks Amazon Pay bundle
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -31,6 +34,9 @@ interface AmazonpayFacadeInterface
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification
+     * - Updates quote with address chosen by user via amazonpay widget
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -40,6 +46,9 @@ interface AmazonpayFacadeInterface
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification
+     * - Updates quote with shipment method chosen by user
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -49,6 +58,9 @@ interface AmazonpayFacadeInterface
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification
+     * - places an order and do necessary API calls to Amazon Pay
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -58,6 +70,9 @@ interface AmazonpayFacadeInterface
     public function confirmPurchase(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification
+     * - send an API call to Amazon that order is closed
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -67,6 +82,9 @@ interface AmazonpayFacadeInterface
     public function closeOrder(OrderTransfer $orderTransfer);
 
     /**
+     * Specification
+     * - calculates the refund amount
+     *
      * @api
      *
      * @param array $salesOrderItems
@@ -77,6 +95,9 @@ interface AmazonpayFacadeInterface
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
 
     /**
+     * Specification
+     * - saves refund information to the database
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
@@ -86,6 +107,9 @@ interface AmazonpayFacadeInterface
     public function saveRefund(RefundTransfer $refundTransfer);
 
     /**
+     * Specification:
+     * - makes an API call and sends calculated amount to Amazon Pay
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -95,6 +119,9 @@ interface AmazonpayFacadeInterface
     public function refundOrder(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Persists an order in the database
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

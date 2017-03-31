@@ -15,11 +15,16 @@ class RefundOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
 
     /**
      * @inheritdoc
+     *
+     *
+     *
      */
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         $orderTransfer = $this->getOrderTransfer($orderEntity);
-        $refundTransfer = $this->getFacade()
+
+        $refundTransfer = $this->getFactory()
+            ->getRefundFacade()
             ->calculateRefund($salesOrderItems, $orderEntity);
 
         $orderTransfer->getTotals()->setRefundTotal(
@@ -29,7 +34,8 @@ class RefundOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
         $orderTransfer = $this->getFacade()->refundOrder($orderTransfer);
 
         if ($orderTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
-            $this->getFacade()
+            $this->getFactory()
+                ->getRefundFacade()
                 ->saveRefund($refundTransfer);
         }
 
