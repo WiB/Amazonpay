@@ -1,18 +1,28 @@
+<script>
+    var amazonpayConfig = {
+        clientId: "{{ amazonpayConfig.clientId }}",
+        sellerId: "{{ amazonpayConfig.sellerId }}",
+        logout: {{ logout }},
+        redirectUrl: "{{ path('amazonpay_checkout', {'amazonpay': 'amazonpay'}) }}"
+    };
+</script>
+
 <div id="AmazonPayButton" align="center"></div>
 <script>
     window.onAmazonLoginReady = function() {
-        {% if logout %}
+        if (amazonpayConfig.logout) {
             amazon.Login.logout();
-        {% endif %}
-        amazon.Login.setClientId('{{ amazonConfig.clientId }}');
+        }
+
+        amazon.Login.setClientId(amazonpayConfig.clientId);
     };
 
-    window.onAmazonPaymentsReady = function(){
+    window.onAmazonPaymentsReady = function() {
         // render the button here
         var authRequest;
         var addressConsentToken;
 
-        OffAmazonPayments.Button('AmazonPayButton', '{{ amazonConfig.sellerId }}', {
+        OffAmazonPayments.Button('AmazonPayButton', amazonpayConfig.sellerId, {
             type:  'PwA',
             color: 'Gold',
             size:  'medium',
@@ -31,7 +41,7 @@
                 if (!referenceId) {
                     errorHandler(new Error('referenceId missing'));
                 } else {
-                    window.location = '{{ path('amazonpay_checkout', {'amazonpay': 'amazonpay'}) }}' + '?reference_id=' +
+                    window.location = amazonpayConfig.redirectUrl + '?reference_id=' +
                         orderReference.getAmazonOrderReferenceId() +
                         "&access_token=" + addressConsentToken;
                 }
@@ -42,4 +52,3 @@
 <script async="async"
         src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
 </script>
-

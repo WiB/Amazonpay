@@ -27,8 +27,8 @@ class WidgetController extends AbstractController
                    && $quote->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined();
 
         return [
-            'amazonConfig' => $this->getFactory()->getConfig(),
-            'logout' => $logout,
+            'amazonpayConfig' => $this->getFactory()->getConfig(),
+            'logout' => (int) $logout,
         ];
     }
 
@@ -38,7 +38,7 @@ class WidgetController extends AbstractController
     public function checkoutWidgetAction()
     {
         return [
-            'amazonConfig' => $this->getFactory()->getConfig(),
+            'amazonpayConfig' => $this->getFactory()->getConfig(),
         ];
     }
 
@@ -48,7 +48,7 @@ class WidgetController extends AbstractController
     public function walletWidgetAction()
     {
         return [
-            'amazonConfig' => $this->getFactory()->getConfig(),
+            'amazonpayConfig' => $this->getFactory()->getConfig(),
         ];
     }
 

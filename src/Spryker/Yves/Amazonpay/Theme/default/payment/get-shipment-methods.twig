@@ -1,22 +1,25 @@
 {% for shipmentMethod in shipmentMethods %}
     <ul>
-        <input type="radio" id="shipment_method_{{ shipmentMethod.idShipmentMethod }}" name="shipment_method" value="{{ shipmentMethod.idShipmentMethod }}" />
-        <label for="shipment_method_{{ shipmentMethod.idShipmentMethod }}">{{ shipmentMethod.name }}</label>
+        <input type="radio" id="amazonpayShipmentMethod_{{ shipmentMethod.idShipmentMethod }}" name="amazonpayShipmentMethod" value="{{ shipmentMethod.idShipmentMethod }}" />
+        <label for="amazonpayShipmentMethod_{{ shipmentMethod.idShipmentMethod }}">{{ shipmentMethod.name }}</label>
     </ul>
 {% endfor %}
 <script>
+    amazonpayConfig.updateShipmentMethodUrl = "{{ path('amazonpay_update_shipment_method') }}";
+</script>
+<script>
     $(function() {
-        $('input[name=shipment_method]').change(function () {
-            $('#amazonpay_place_order_link').attr('disabled', true);
-            $('#amazonpay_summery_information').load(
-                '{{ path('amazonpay_update_shipment_method') }}',
+        $('input[name=amazonpayShipmentMethod]').change(function () {
+            $('#amazonpayPlaceOrderLink').attr('disabled', true);
+            $('#amazonpaySummeryInformation').load(
+                amazonpayConfig.updateShipmentMethodUrl,
                 {'shipment_method_id': $(this).val()},
                 function() {
-                    $('#amazonpay_place_order_link').attr('disabled', false);
+                    $('#amazonpayPlaceOrderLink').attr('disabled', false);
                 }
             );
         });
 
-        $('input[name=shipment_method]:first').click();
+        $('input[name=amazonpayShipmentMethod]:first').click();
     });
 </script>

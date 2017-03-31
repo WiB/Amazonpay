@@ -1,38 +1,30 @@
 <!-- Place this code in your HTML where you would like the wallet widget to appear. -->
-<div id="walletWidgetDiv"> </div>
+<div id="amazonpayWalletWidgetDiv"> </div>
 
-<style>
-    #walletWidgetDiv {
-        min-width: 300px;
-        width: 100%;
-        max-width: 900px;
-        min-height: 228px;
-        height: 240px;
-        max-height: 400px;
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> {#@todo shouldn't be done this way#}
+<script>
+    var amazonpayConfig = {
+        clientId: "{{ amazonpayConfig.clientId }}",
+        sellerId: "{{ amazonpayConfig.sellerId }}"
+    };
+</script>
+
 <script>
     window.onAmazonLoginReady = function() {
-        amazon.Login.setClientId('{{ amazonConfig.clientId }}');
+        amazon.Login.setClientId(amazonpayConfig.clientId);
     };
 
     window.onAmazonPaymentsReady = function() {
         new OffAmazonPayments.Widgets.Wallet({
-            sellerId: '{{ amazonConfig.sellerId }}',
+            sellerId: amazonpayConfig.sellerId,
             scope: 'profile postal_code payments:widget payments:shipping_address',
             onPaymentSelect: function(orderReference) {
-                $('#amazonpay_place_order_link').attr('disabled', false);
+                $('#amazonpayPlaceOrderLink').attr('disabled', false);
             },
             design: {
                 designMode: 'responsive'
             },
             onError: function(error) {
             }
-        }).bind("walletWidgetDiv");
+        }).bind("amazonpayWalletWidgetDiv");
     };
-</script>
-
-<script async="async"
-        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
 </script>

@@ -1,63 +1,53 @@
 <!-- Place this code in your HTML where you would like the address widget to appear. -->
-<div id="addressBookWidgetDiv"> </div>
+<div id="amazonpayAddressBookWidgetDiv"> </div>
 
 <!-- Place this code in your HTML where you would like the wallet widget to appear. -->
-<div id="walletWidgetDiv"> </div>
+<div id="amazonpayWalletWidgetDiv"> </div>
 
-<style>
-    #addressBookWidgetDiv {
-        min-width: 300px;
-        width: 100%;
-        max-width: 900px;
-        min-height: 228px;
-        height: 240px;
-        max-height: 400px;
-    }
-
-    #walletWidgetDiv {
-        min-width: 300px;
-        width: 100%;
-        max-width: 900px;
-        min-height: 228px;
-        height: 240px;
-        max-height: 400px;
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> {#@todo shouldn't be done this way#}
+<script>
+    var amazonpayConfig = {
+        clientId: "{{ amazonpayConfig.clientId }}",
+        sellerId: "{{ amazonpayConfig.sellerId }}",
+        setOrderReferencetUrl: "{{ path('amazonpay_set_order_reference') }}",
+        getShipmentMethodsUrl: "{{ path('amazonpay_get_shipment_methods') }}"
+    };
+</script>
 <script>
     window.onAmazonLoginReady = function() {
-        amazon.Login.setClientId('{{ amazonConfig.clientId }}');
+        amazon.Login.setClientId(amazonpayConfig.sellerId);
     };
 
     window.onAmazonPaymentsReady = function() {
         new OffAmazonPayments.Widgets.AddressBook({
-            sellerId: '{{ amazonConfig.sellerId }}',
+            sellerId: amazonpayConfig.sellerId,
             scope: 'profile postal_code payments:widget payments:shipping_address payments:billing_address',
             language: 'en-GB',
             onOrderReferenceCreate: function(orderReference) {
                 // Here is where you can grab the Order Reference ID.
                 var aoid = orderReference.getAmazonOrderReferenceId();
 
-                $.post(
-                    '{{ path('amazonpay_set_order_reference') }}',
-                    {'reference_id': aoid},
-                    function (data) {
-                        console.log(data);
-                    }
-                );
+                $(function() {
+                    $.post(
+                        amazonpayConfig.setOrderReferencetUrl,
+                        {'reference_id': aoid}
+                    );
+                });
             },
             onAddressSelect: function(orderReference) {
-                $('#amazonpay_place_order_link').attr('disabled', true);
-                $('#shipment_methods').html('Please wait...');
-                $('#shipment_methods').load(
-                    '{{ path('amazonpay_get_shipment_methods') }}',
-                    function( response, status, xhr ) {
-                        if ( status == "error" ) {
-                            var msg = "Sorry but there was an error: ";
-                            $( "#shipment_methods" ).html( msg + xhr.status + " " + xhr.statusText );
+                $(function() {
+                    $('#amazonpayPlaceOrderLink').attr('disabled', true);
+                    var shipmentMethodsBlock = $('#shipmentMethods');
+                    shipmentMethodsBlock.html('Please wait...');
+                    shipmentMethodsBlock.load(
+                        amazonpayConfig.getShipmentMethodsUrl,
+                        function( response, status, xhr ) {
+                            if ( status === "error" ) {
+                                var msg = "Sorry but there was an error: ";
+                                $( "#shipment_methods" ).html( msg + xhr.status + " " + xhr.statusText );
+                            }
                         }
-                    }
-                );
+                    );
+                });
             },
             design: {
                 designMode: 'responsive'
@@ -68,10 +58,10 @@
             },
             onError: function(error) {
             }
-        }).bind("addressBookWidgetDiv");
+        }).bind("amazonpayAddressBookWidgetDiv");
 
         new OffAmazonPayments.Widgets.Wallet({
-            sellerId: '{{ amazonConfig.sellerId }}',
+            sellerId: amazonpayConfig.sellerId,
             scope: 'profile postal_code payments:widget payments:shipping_address',
             onPaymentSelect: function(orderReference) {
                 // Replace this code with the action that you want to perform
@@ -85,10 +75,6 @@
             },
             onError: function(error) {
             }
-        }).bind("walletWidgetDiv");
+        }).bind("amazonpayWalletWidgetDiv");
     };
-</script>
-
-<script async="async"
-        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
 </script>
