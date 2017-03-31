@@ -21,16 +21,16 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
  * @method \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer getQueryContainer()
  */
-class AmazonpayBusinessFactory extends AbstractBusinessFactory
+class AmazonpayBusinessFactory extends AbstractBusinessFactory implements AmazonpayBusinessFactoryInterface
 {
 
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactoryInterface
      */
-    public function getTransactionFactory()
+    public function createTransactionFactory()
     {
         return new TransactionFactory(
-            $this->getAdapterFactory(),
+            $this->createAdapterFactory(),
             $this->getConfig(),
             $this->createTransactionLogger(),
             $this->getQueryContainer(),
@@ -41,10 +41,10 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactoryInterface
      */
-    public function getQuoteUpdateFactory()
+    public function createQuoteUpdateFactory()
     {
         return new QuoteUpdateFactory(
-            $this->getAdapterFactory(),
+            $this->createAdapterFactory(),
             $this->getConfig(),
             $this->getShipmentFacade()
         );
@@ -77,11 +77,11 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
    /**
     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface
     */
-    protected function getAdapterFactory()
+    protected function createAdapterFactory()
     {
         return new AdapterFactory(
             $this->getConfig(),
-            $this->getConverterFactory(),
+            $this->createConverterFactory(),
             $this->getMoneyFacade()
         );
     }
@@ -89,7 +89,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory
      */
-    protected function getConverterFactory()
+    protected function createConverterFactory()
     {
         return new ConverterFactory();
     }

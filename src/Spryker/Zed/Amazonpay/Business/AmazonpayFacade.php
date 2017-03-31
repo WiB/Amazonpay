@@ -32,7 +32,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->getQuoteUpdateFactory()
+            ->createQuoteUpdateFactory()
             ->createQuoteDataInitializer()
             ->update($quoteTransfer);
     }
@@ -47,7 +47,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->getQuoteUpdateFactory()
+            ->createQuoteUpdateFactory()
             ->createShippingAddressQuoteDataUpdater()
             ->update($quoteTransfer);
     }
@@ -62,7 +62,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->getQuoteUpdateFactory()
+            ->createQuoteUpdateFactory()
             ->createShipmentDataQuoteUpdater()
             ->update($quoteTransfer);
     }
@@ -77,7 +77,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->getTransactionFactory()
+            ->createTransactionFactory()
             ->createConfirmPurchaseTransactionCollection()
             ->execute($quoteTransfer);
     }
@@ -92,7 +92,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     public function closeOrder(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
-            ->getTransactionFactory()
+            ->createTransactionFactory()
             ->createCloseOrderTransaction()
             ->execute($orderTransfer);
     }
@@ -136,7 +136,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     public function refundOrder(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
-            ->getTransactionFactory()
+            ->createTransactionFactory()
             ->createRefundOrderTransaction()
             ->execute($orderTransfer);
     }

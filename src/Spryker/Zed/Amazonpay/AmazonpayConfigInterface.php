@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: dmitrikadykov
- * Date: 30/03/2017
- * Time: 12:19
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Amazonpay;
 
-
 interface AmazonpayConfigInterface
 {
+
     /**
      * @return string
      */

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Method;
 
-
 interface AmazonpayInterface
 {
+
     /**
      * @return string
      */

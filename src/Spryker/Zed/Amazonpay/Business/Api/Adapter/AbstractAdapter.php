@@ -12,6 +12,7 @@ use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 
 abstract class AbstractAdapter
 {
+
     const AMAZON_ORDER_REFERENCE_ID = 'amazon_order_reference_id';
     const AMAZON_ADDRESS_CONSENT_TOKEN = 'address_consent_token';
     const AMAZON_AMOUNT = 'amount';

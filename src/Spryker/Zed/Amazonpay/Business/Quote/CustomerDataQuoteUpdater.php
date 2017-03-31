@@ -13,6 +13,7 @@ use Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface;
 
 class CustomerDataQuoteUpdater implements QuoteUpdaterInterface
 {
+
     /**
      * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter
      */

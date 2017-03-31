@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 {
+
     const SELLER_ORDER_ID = 'seller_order_id';
 
     /**

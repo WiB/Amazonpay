@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-
 interface TransactionFactoryInterface
 {
+
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmOrderReferenceTransaction
      */
@@ -54,5 +54,5 @@ interface TransactionFactoryInterface
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection
      */
     public function createConfirmPurchaseTransactionCollection();
-}
 
+}

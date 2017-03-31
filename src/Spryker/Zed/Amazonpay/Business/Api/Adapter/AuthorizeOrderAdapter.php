@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class AuthorizeOrderAdapter extends AbstractQuoteAdapter
 {
+
     const AUTHORIZATION_AMOUNT = 'authorization_amount';
     const AUTHORIZATION_REFERENCE_ID = 'authorization_reference_id';
     const TRANSACTION_TIMEOUT = 'transaction_timeout';

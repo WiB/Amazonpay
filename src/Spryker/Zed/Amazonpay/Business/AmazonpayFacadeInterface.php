@@ -95,7 +95,7 @@ interface AmazonpayFacadeInterface
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
 
     /**
-     * Specification
+     * Specification:
      * - saves refund information to the database
      *
      * @api

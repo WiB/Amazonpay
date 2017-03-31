@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ConfirmOrderReferenceAdapter extends AbstractQuoteAdapter
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

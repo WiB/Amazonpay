@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundOrderAdapter extends AbstractOrderAdapter
 {
+
     const AMAZON_CAPTURE_ID = 'amazon_capture_id';
     const REFUND_REFERENCE_ID = 'refund_reference_id';
     const REFUND_AMOUNT = 'refund_amount';

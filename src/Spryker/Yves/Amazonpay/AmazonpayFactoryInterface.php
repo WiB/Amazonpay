@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: dmitrikadykov
- * Date: 29/03/2017
- * Time: 17:42
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Yves\Amazonpay;
 
-
 interface AmazonpayFactoryInterface
 {
+
     /**
      * @return \Spryker\Client\Quote\QuoteClient
      */

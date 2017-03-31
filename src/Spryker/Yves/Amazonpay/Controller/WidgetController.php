@@ -28,7 +28,7 @@ class WidgetController extends AbstractController
 
         return [
             'amazonpayConfig' => $this->getFactory()->getConfig(),
-            'logout' => (int) $logout,
+            'logout' => (int)$logout,
         ];
     }
 

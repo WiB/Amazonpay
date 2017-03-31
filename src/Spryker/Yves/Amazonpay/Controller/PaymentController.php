@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PaymentController extends AbstractController
 {
+
     const URL_PARAM_REFRENCE_ID = 'reference_id';
     const URL_PARAM_ACCESS_TOKEN = 'access_token';
     const URL_PARAM_SHIPMENT_METHOD_ID = 'shipment_method_id';

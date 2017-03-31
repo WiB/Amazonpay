@@ -44,10 +44,7 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-
         $container = $this->addRefundFacade($container);
-
-
         $container[self::FACADE_SALES] = function (Container $container) {
             return new AmazonpayToSalesBridge($container->getLocator()->sales()->facade());
         };
