@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<statemachine
+        xmlns="spryker:oms-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
+
+    <process name="AmazonpayPayment01" main="true">
+        <states>
+            <state name="new" reserved="true"/>
+            <state name="closed" reserved="true"/>
+            <state name="refunded"/>
+        </states>
+
+        <events>
+            <event name="close" manual="true" command="Amazonpay/CloseOrder" />
+            <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
+        </events>
+
+        <transitions>
+            <transition condition="Amazonpay/IsClosed" happy="true">
+                <source>new</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefunded">
+                <source>new</source>
+                <target>refunded</target>
+                <event>refund</event>
+            </transition>
+
+            <transition  condition="Amazonpay/IsRefunded">
+                <source>closed</source>
+                <target>refunded</target>
+                <event>refund</event>
+            </transition>
+        </transitions>
+    </process>
+
+</statemachine>
