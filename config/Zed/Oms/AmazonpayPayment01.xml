@@ -7,33 +7,114 @@
     <process name="AmazonpayPayment01" main="true">
         <states>
             <state name="new" reserved="true"/>
+
+            <state name="auth_pending" reserved="true"/>
+            <state name="auth_open" reserved="true"/>
+            <state name="auth_declined"/>
+
+            <state name="capture_pending" reserved="true"/>
+            <state name="capture_completed" reserved="true"/>
+            <state name="capture_declined"/>
+
+            <state name="refund_pending"/>
+            <state name="refund_completed"/>
+            <state name="refund_declined"/>
+
             <state name="closed" reserved="true"/>
-            <state name="refunded"/>
         </states>
 
         <events>
+            <event name="update_new_order_status" manual="true" command="Amazonpay/UpdateNewOrderStatus" />
+            <event name="update_authorization_status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
+            <event name="capture" manual="true" command="Amazonpay/Capture" />
             <event name="close" manual="true" command="Amazonpay/CloseOrder" />
             <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
         </events>
 
         <transitions>
-            <transition condition="Amazonpay/IsClosed" happy="true">
+            <!-- from new -->
+            <transition condition="Amazonpay/IsAuthPending" happy="true">
                 <source>new</source>
+                <target>auth_pending</target>
+                <event>update_new_order_status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsAuthOpen" happy="true">
+                <source>new</source>
+                <target>auth_open</target>
+                <event>update_new_order_status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
+                <source>new</source>
+                <target>capture_completed</target>
+                <event>update_new_order_status</event>
+            </transition>
+
+            <!-- from auth_pending -->
+            <transition condition="Amazonpay/IsAuthOpen" happy="true">
+                <source>auth_pending</source>
+                <target>auth_open</target>
+                <event>update_authorization_status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsAuthDeclined">
+                <source>auth_pending</source>
+                <target>auth_declined</target>
+                <event>update_authorization_status</event>
+            </transition>
+
+            <!-- capture -->
+            <transition condition="Amazonpay/IsCapturePending" happy="true">
+                <source>auth_open</source>
+                <target>capture_pending</target>
+                <event>capture</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
+                <source>auth_open</source>
+                <target>capture_completed</target>
+                <event>capture</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsCaptureDeclined" happy="true">
+                <source>auth_open</source>
+                <target>capture_declined</target>
+                <event>capture</event>
+            </transition>
+
+            <!-- from capture_completed -->
+            <transition condition="Amazonpay/IsRefundPending" happy="true">
+                <source>capture_completed</source>
+                <target>refund_pending</target>
+                <event>refund</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefundCompleted" happy="true">
+                <source>capture_completed</source>
+                <target>refund_completed</target>
+                <event>refund</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefundDeclined">
+                <source>capture_completed</source>
+                <target>refund_declined</target>
+                <event>refund</event>
+            </transition>
+
+            <!-- close -->
+            <transition condition="Amazonpay/IsClosed" happy="true">
+                <source>capture_completed</source>
                 <target>closed</target>
                 <event>close</event>
             </transition>
 
-            <transition condition="Amazonpay/IsRefunded">
-                <source>new</source>
-                <target>refunded</target>
-                <event>refund</event>
+            <transition condition="Amazonpay/IsClosed" happy="true">
+                <source>refund_completed</source>
+                <target>closed</target>
+                <event>close</event>
             </transition>
 
-            <transition  condition="Amazonpay/IsRefunded">
-                <source>closed</source>
-                <target>refunded</target>
-                <event>refund</event>
-            </transition>
         </transitions>
     </process>
 

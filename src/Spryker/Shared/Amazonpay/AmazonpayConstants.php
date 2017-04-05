@@ -20,6 +20,8 @@ interface AmazonpayConstants
     const STORE_NAME = 'STORE_NAME';
     const CURRENCY_CODE = 'EUR';
     const ERROR_REPORT_LEVEL = 'ERROR_REPORT_LEVEL';
+    const CAPTURE_NOW = 'CAPTURE_NOW';
+    const AUTH_TRANSACTION_TIMEOUT = 'AUTH_TRANSACTION_TIMEOUT';
 
     const PAYMENT_METHOD = 'Amazon Pay';
     const PROVIDER_NAME = 'Amazon Pay';
@@ -30,6 +32,17 @@ interface AmazonpayConstants
     const OMS_STATUS_CAPTURED = 'captured';
     const OMS_STATUS_CANCELLED = 'cancelled';
     const OMS_STATUS_CLOSED = 'closed';
-    const OMS_STATUS_REFUNDED = 'refunded';
+
+    const OMS_STATUS_AUTH_PENDING = 'auth_pending';
+    const OMS_STATUS_AUTH_DECLINED = 'auth_declined';
+    const OMS_STATUS_AUTH_OPEN = 'auth_open';
+
+    const OMS_STATUS_CAPTURE_PENDING = 'capture_pending';
+    const OMS_STATUS_CAPTURE_DECLINED = 'capture_declined';
+    const OMS_STATUS_CAPTURE_COMPLETED = 'capture_completed';
+
+    const OMS_STATUS_REFUND_PENDING = 'refund_pending';
+    const OMS_STATUS_REFUND_DECLINED = 'refund_declined';
+    const OMS_STATUS_REFUND_COMPLETED = 'refund_completed';
 
 }

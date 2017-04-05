@@ -86,4 +86,20 @@ class AmazonpayConfig extends AbstractBundleConfig implements AmazonpayConfigInt
         return $this->get(AmazonpayConstants::ERROR_REPORT_LEVEL);
     }
 
+    /**
+     * @return bool
+     */
+    public function getCaptureNow()
+    {
+        return (bool)$this->get(AmazonpayConstants::CAPTURE_NOW);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAuthTransactionTimeout()
+    {
+        return $this->get(AmazonpayConstants::AUTH_TRANSACTION_TIMEOUT);
+    }
+
 }

@@ -55,4 +55,14 @@ interface AmazonpayConfigInterface
      */
     public function getErrorReportLevel();
 
+    /**
+     * @return bool
+     */
+    public function getCaptureNow();
+
+    /**
+     * @return int
+     */
+    public function getAuthTransactionTimeout();
+
 }

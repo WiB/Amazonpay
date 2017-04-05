@@ -138,6 +138,11 @@ class PaymentController extends AbstractController
         return $this->getFailedRedirectResponse();
     }
 
+    public function endpointAction()
+    {
+
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

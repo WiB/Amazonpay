@@ -61,9 +61,13 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
                 $result['AuthorizationStatus']['State'] === self::AUTH_STATUS_DECLINED
             );
 
-            $authorizationDetails->setIsPaymentMethodInvalid(
-                $result['AuthorizationStatus']['ReasonCode'] === self::PAYMENT_METHOD_INVALID
-            );
+            if (!empty($result['AuthorizationStatus']['ReasonCode'])) {
+                $authorizationDetails->setIsPaymentMethodInvalid(
+                    $result['AuthorizationStatus']['ReasonCode'] === self::PAYMENT_METHOD_INVALID
+                );
+            } else {
+                $authorizationDetails->setIsPaymentMethodInvalid(false);
+            }
         }
 
         if (!empty($result['ExpirationTimestamp'])) {

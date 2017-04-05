@@ -15,9 +15,6 @@ class RefundOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
 
     /**
      * @inheritdoc
-     *
-     *
-     *
      */
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {

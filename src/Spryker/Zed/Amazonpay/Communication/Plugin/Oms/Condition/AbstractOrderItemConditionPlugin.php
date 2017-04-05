@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
-class IsRefundedConditionPlugin implements ConditionInterface
+abstract class AbstractOrderItemConditionPlugin implements ConditionInterface
 {
+    abstract protected function getConditionalStatus();
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
@@ -22,7 +22,7 @@ class IsRefundedConditionPlugin implements ConditionInterface
     public function check(SpySalesOrderItem $orderItem)
     {
         return $orderItem->getOrder()->getSpyPaymentAmazonpays()->getFirst()->getOrderReferenceStatus()
-                    === AmazonpayConstants::OMS_STATUS_REFUND_PENDING;
+            === $this->getConditionalStatus();
     }
 
 }

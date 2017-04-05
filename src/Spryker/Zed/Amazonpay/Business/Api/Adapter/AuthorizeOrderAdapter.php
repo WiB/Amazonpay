@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
 class AuthorizeOrderAdapter extends AbstractQuoteAdapter
 {
@@ -16,6 +19,25 @@ class AuthorizeOrderAdapter extends AbstractQuoteAdapter
     const AUTHORIZATION_REFERENCE_ID = 'authorization_reference_id';
     const TRANSACTION_TIMEOUT = 'transaction_timeout';
     const CAPTURE_NOW = 'capture_now';
+
+    /**
+     * @var bool
+     */
+    protected $captureNow;
+
+    /**
+     * @var int
+     */
+    protected $transactionTimeout;
+
+    public function __construct(
+        AmazonpayConfigInterface $config, ResponseParserConverterInterface $converter, AmazonpayToMoneyInterface $moneyFacade)
+    {
+        parent::__construct($config, $converter, $moneyFacade);
+
+        $this->captureNow = $config->getCaptureNow();
+        $this->transactionTimeout = $config->getAuthTransactionTimeout();
+    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -28,8 +50,8 @@ class AuthorizeOrderAdapter extends AbstractQuoteAdapter
             AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
             static::AUTHORIZATION_AMOUNT => $this->getAmount($quoteTransfer),
             static::AUTHORIZATION_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getAuthorizationReferenceId(),
-            static::TRANSACTION_TIMEOUT => 0,
-            static::CAPTURE_NOW => true,
+            static::TRANSACTION_TIMEOUT => $this->transactionTimeout,
+            static::CAPTURE_NOW => $this->captureNow,
         ]);
 
         return $this->converter->convert($result);
