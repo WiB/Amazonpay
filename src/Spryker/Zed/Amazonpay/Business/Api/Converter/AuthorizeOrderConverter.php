@@ -37,7 +37,7 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
 
         $authorizationDetails = new AmazonAuthorizationDetailsTransfer();
         $authorizationDetails->setAuthorizationId($result['AmazonAuthorizationId']);
-        $authorizationDetails->setAuthorizationReference($result['AuthorizationReferenceId']);
+        $authorizationDetails->setAuthorizationReferenceId($result['AuthorizationReferenceId']);
 
         if (!empty($result['AuthorizationAmount'])) {
             $authorizationDetails->setAuthorizationAmount($this->convertPriceToTransfer($result['AuthorizationAmount']));

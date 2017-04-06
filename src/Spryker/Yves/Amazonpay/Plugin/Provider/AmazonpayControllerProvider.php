@@ -14,6 +14,7 @@ class AmazonpayControllerProvider extends YvesControllerProvider
 {
 
     const CHECKOUT = 'amazonpay_checkout';
+    const ENDPOINT = 'amazonpay_endpoint';
     const CONFIRM_PURCHASE = 'amazonpay_confirm_purchase';
     const SUCCESS = 'amazonpay_success';
     const CHANGE_PAYMENT_METHOD = 'amazonpay_change_payment_method';
@@ -34,6 +35,7 @@ class AmazonpayControllerProvider extends YvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
+        // www
         $this->createController('/amazonpay/checkout', self::CHECKOUT, 'Amazonpay', 'Payment', 'checkout');
         $this->createController('/amazonpay/confirm/purchase', self::CONFIRM_PURCHASE, 'Amazonpay', 'Payment', 'confirmPurchase');
         $this->createController('/amazonpay/success', self::SUCCESS, 'Amazonpay', 'Payment', 'success');
@@ -49,6 +51,10 @@ class AmazonpayControllerProvider extends YvesControllerProvider
         $this->createController('/amazonpay/paybutton', self::PAYBUTTON, 'Amazonpay', 'Widget', 'payButton');
         $this->createController('/amazonpay/checkout-widget', self::CHECKOUT_WIDGET, 'Amazonpay', 'Widget', 'checkoutWidget');
         $this->createController('/amazonpay/wallet-widget', self::WALLET_WIDGET, 'Amazonpay', 'Widget', 'walletWidget');
+
+        // endpoint
+        $this->createController('/amazonpay/endpoint', self::ENDPOINT, 'Amazonpay', 'Payment', 'endpoint');
+
     }
 
 }

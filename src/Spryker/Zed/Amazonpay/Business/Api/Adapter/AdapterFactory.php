@@ -8,8 +8,11 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactory;
+use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactoryInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
+use PayWithAmazon\IpnHandler;
 
 class AdapterFactory implements AdapterFactoryInterface
 {
@@ -62,7 +65,7 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createSetOrderReferenceDetailsAmazonpayAdapter()
     {
         return new SetOrderReferenceDetailsAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createSetOrderReferenceDetailsConverter(),
             $this->moneyFacade
         );
@@ -74,7 +77,7 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createConfirmOrderReferenceAmazonpayAdapter()
     {
         return new ConfirmOrderReferenceAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createConfirmOrderReferenceConverter(),
             $this->moneyFacade
         );
@@ -86,7 +89,7 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createGetOrderReferenceDetailsAmazonpayAdapter()
     {
         return new GetOrderReferenceDetailsAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createGetOrderReferenceDetailsConverter(),
             $this->moneyFacade
         );
@@ -98,9 +101,10 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createAuthorizeOrderAdapter()
     {
         return new AuthorizeOrderAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createAuthorizeOrderConverter(),
-            $this->moneyFacade
+            $this->moneyFacade,
+            $this->config
         );
     }
 
@@ -110,7 +114,7 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createCloseOrderAdapter()
     {
         return new CloseOrderAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createCloseOrderConverter(),
             $this->moneyFacade
         );
@@ -122,7 +126,7 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createCancelOrderAdapter()
     {
         return new CancelOrderAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createCancelOrderConverter(),
             $this->moneyFacade
         );
@@ -134,9 +138,30 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createRefundOrderAdapter()
     {
         return new RefundOrderAdapter(
-            $this->config,
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createRefundOrderConverter(),
             $this->moneyFacade
+        );
+    }
+
+    /**
+     * @return AmazonpaySdkAdapterFactoryInterface
+     */
+    protected function createSdkAdapterFactory()
+    {
+        return new AmazonpaySdkAdapterFactory();
+    }
+
+    /**
+     * @param array $headers
+     * @param string $body
+     *
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\IpnRequestAdapter
+     */
+    public function createHttpToIpnRequestAdapter(array $headers, $body)
+    {
+        return new  IpnRequestAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayIpnHandler($headers, $body)
         );
     }
 

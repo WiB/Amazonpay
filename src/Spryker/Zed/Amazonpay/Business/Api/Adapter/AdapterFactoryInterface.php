@@ -50,4 +50,12 @@ interface AdapterFactoryInterface
      */
     public function createRefundOrderAdapter();
 
+    /**
+     * @param array $headers
+     * @param string $body
+     *
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\IpnRequestAdapter
+     */
+    public function createHttpToIpnRequestAdapter(array $headers, $body);
+
 }

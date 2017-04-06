@@ -11,10 +11,10 @@ interface ArrayConverterInterface
 {
 
     /**
-     * @param array $response
+     * @param array $data
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function convert(array $response);
+    public function convert(array $data);
 
 }

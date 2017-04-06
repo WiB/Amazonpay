@@ -74,4 +74,9 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
         return $this->getFactory()->createZedStub()->confirmPurchase($quoteTransfer);
     }
 
+    public function handleIpnRequest()
+    {
+
+    }
+
 }

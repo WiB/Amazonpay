@@ -45,4 +45,7 @@ interface AmazonpayConstants
     const OMS_STATUS_REFUND_DECLINED = 'refund_declined';
     const OMS_STATUS_REFUND_COMPLETED = 'refund_completed';
 
+    const IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE = 'PaymentAuthorize';
+
+
 }

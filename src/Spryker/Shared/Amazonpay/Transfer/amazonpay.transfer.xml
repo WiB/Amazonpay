@@ -83,7 +83,7 @@
     <transfer name="AmazonAuthorizationDetails">
         <property name="authorizationBillingAddress" type="Address" />
         <property name="authorizationId" type="string" />
-        <property name="authorizationReference" type="string" />
+        <property name="authorizationReferenceId" type="string" />
         <property name="sellerAuthorizationNote" type="string" />
         <property name="authorizationAmount" type="AmazonpayPrice" />
         <property name="capturedAmount" type="AmazonpayPrice" />
@@ -110,6 +110,16 @@
     <transfer name="AmazonpayAuthorizeOrderResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
         <property name="authorizationDetails" type="AmazonAuthorizationDetails"/>
+    </transfer>
+
+    <transfer name="AmazonpayIpnPaymentAuthorizeRequest">
+        <property name="NotificationReferenceId" type="string"/>
+        <property name="SellerId" type="string" />
+        <property name="ReleaseEnvironment" type="string" />
+        <property name="AuthorizationDetails" type="AmazonAuthorizationDetails" />
+        <property name="Type" type="string" />
+        <property name="MessageId" type="string" />
+        <property name="TopicArn" type="string" />
     </transfer>
 
 </transfers>

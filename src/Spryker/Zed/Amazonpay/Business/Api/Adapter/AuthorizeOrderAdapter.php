@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use PayWithAmazon\Client;
 use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
@@ -31,9 +32,12 @@ class AuthorizeOrderAdapter extends AbstractQuoteAdapter
     protected $transactionTimeout;
 
     public function __construct(
-        AmazonpayConfigInterface $config, ResponseParserConverterInterface $converter, AmazonpayToMoneyInterface $moneyFacade)
-    {
-        parent::__construct($config, $converter, $moneyFacade);
+        Client $client,
+        ResponseParserConverterInterface $converter,
+        AmazonpayToMoneyInterface $moneyFacade,
+        AmazonpayConfigInterface $config
+    ) {
+        parent::__construct($client, $converter, $moneyFacade);
 
         $this->captureNow = $config->getCaptureNow();
         $this->transactionTimeout = $config->getAuthTransactionTimeout();
