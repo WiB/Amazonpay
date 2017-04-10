@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
  * @api
@@ -133,5 +134,25 @@ interface AmazonpayFacadeInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     );
+
+    /**
+     * Specification:
+     * - Converts amazon-specific income data into Transfer Object
+     * Concrete transfer objecte depens on income data
+     *
+     * @param array $headers
+     * @param $body
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function convertAmazonpayIpnRequest(array $headers, $body);
+
+    /**
+     * Specification:
+     * - Handles $ipnRequestTransfer object
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequestTransfer
+     */
+    public function handleAmazonpayIpnRequest(AbstractTransfer $ipnRequestTransfer);
 
 }

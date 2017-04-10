@@ -28,6 +28,7 @@ class IpnPaymentAuthorizeRequestConverter extends AbstractArrayConverter
         $ipnPaymentAuthorizeRequestTransfer->setAuthorizationDetails($authDetailsTransfer);
         $ipnPaymentAuthorizeRequestTransfer->setMessageId($request['MessageId']);
         $ipnPaymentAuthorizeRequestTransfer->setNotificationReferenceId($request['NotificationReferenceId']);
+        $ipnPaymentAuthorizeRequestTransfer->setNotificationType($request['NotificationType']);
         $ipnPaymentAuthorizeRequestTransfer->setReleaseEnvironment($request['ReleaseEnvironment']);
         $ipnPaymentAuthorizeRequestTransfer->setSellerId($request['SellerId']);
         $ipnPaymentAuthorizeRequestTransfer->setTopicArn($request['TopicArn']);

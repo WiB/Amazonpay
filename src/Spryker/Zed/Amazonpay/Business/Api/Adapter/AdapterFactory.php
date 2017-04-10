@@ -156,12 +156,13 @@ class AdapterFactory implements AdapterFactoryInterface
      * @param array $headers
      * @param string $body
      *
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\IpnRequestAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\IpnRequestAdapterInterface
      */
-    public function createHttpToIpnRequestAdapter(array $headers, $body)
+    public function createIpnRequestAdapter(array $headers, $body)
     {
-        return new  IpnRequestAdapter(
-            $this->createSdkAdapterFactory()->createAmazonpayIpnHandler($headers, $body)
+        return new IpnRequestAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayIpnHandler($headers, $body),
+            $this->converterFactory->createIpnArrayConverter()
         );
     }
 

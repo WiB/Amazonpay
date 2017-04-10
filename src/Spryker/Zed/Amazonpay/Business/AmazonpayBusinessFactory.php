@@ -11,6 +11,7 @@ use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Business\Order\Saver;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
@@ -51,6 +52,18 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
     }
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactory
+     */
+    public function createIpnFactory()
+    {
+        return new IpnFactory(
+            $this->getOmsFacade(),
+            $this->getQueryContainer(),
+            $this->createAdapterFactory()->createIpnRequestAdapter($headers, $body)
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundInterface
      */
     public function getRefundFacade()
@@ -67,6 +80,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
     }
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface
+     */
+    protected function getOmsFacade()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_OMS);
+    }
+
+    /**
      * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge
      */
     protected function getShipmentFacade()
@@ -77,7 +98,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
    /**
     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface
     */
-    protected function createAdapterFactory()
+    public function createAdapterFactory()
     {
         return new AdapterFactory(
             $this->getConfig(),

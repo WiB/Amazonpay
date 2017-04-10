@@ -56,6 +56,6 @@ interface AdapterFactoryInterface
      *
      * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\IpnRequestAdapter
      */
-    public function createHttpToIpnRequestAdapter(array $headers, $body);
+    public function createIpnRequestAdapter(array $headers, $body);
 
 }

@@ -114,6 +114,7 @@
 
     <transfer name="AmazonpayIpnPaymentAuthorizeRequest">
         <property name="NotificationReferenceId" type="string"/>
+        <property name="NotificationType" type="string"/>
         <property name="SellerId" type="string" />
         <property name="ReleaseEnvironment" type="string" />
         <property name="AuthorizationDetails" type="AmazonAuthorizationDetails" />

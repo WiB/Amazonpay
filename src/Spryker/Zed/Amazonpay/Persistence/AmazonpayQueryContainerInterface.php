@@ -21,4 +21,13 @@ interface AmazonpayQueryContainerInterface extends QueryContainerInterface
      */
     public function queryPaymentByOrderReferenceId($orderReferenceId);
 
+    /**
+     * @api
+     *
+     * @param string $authorizationReferenceId
+     *
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
+     */
+    public function queryPaymentByAuthorizationReferenceId($authorizationReferenceId);
+
 }

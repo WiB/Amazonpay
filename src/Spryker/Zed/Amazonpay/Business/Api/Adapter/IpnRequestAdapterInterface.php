@@ -10,6 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 interface IpnRequestAdapterInterface
 {
+
     /**
      * @param array $headers
      * @param string $body

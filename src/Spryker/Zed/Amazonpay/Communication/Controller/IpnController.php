@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Amazonpay\Communication\Controller;
 
-use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use PayWithAmazon\IpnHandler;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Zed\Amazonpay\Business\AmazonpayFacade getFacade()
+ */
 class IpnController extends AbstractController
 {
     /**
@@ -18,13 +20,17 @@ class IpnController extends AbstractController
      */
     public function endpointAction()
     {
+        // it's better to have some class for the to lines bellow
         $headers = getallheaders();
         $body = file_get_contents('php://input');
 
-        $ipnHandler = new IpnHandler($headers, $body);
-        file_put_contents('ipn.txt', json_encode($ipnHandler->toArray()));
-        file_put_contents('headers.txt', serialize($headers));
-        file_put_contents('body.txt', serialize($body));
+        $ipnRequestTransfer = $this->getFacade()->convertAmazonpayIpnRequest($headers, $body);
+        $this->getFacade()->handleAmazonpayIpnRequest($ipnRequestTransfer);
+
+//        $ipnHandler = new IpnHandler($headers, $body);
+//        file_put_contents('ipn.txt', json_encode($ipnHandler->toArray()));
+//        file_put_contents('headers.txt', serialize($headers));
+//        file_put_contents('body.txt', serialize($body));
 
         return new Response('Request has been processed');
     }

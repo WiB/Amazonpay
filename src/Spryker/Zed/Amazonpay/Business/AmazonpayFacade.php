@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -159,6 +160,32 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
             ->getFactory()
             ->createOrderSaver()
             ->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * @param array $headers
+     * @param $body
+     *
+     * @return AbstractTransfer
+     */
+    public function convertAmazonpayIpnRequest(array $headers, $body)
+    {
+        $this->getFactory()
+            ->createAdapterFactory()
+            ->createIpnRequestAdapter($headers, $body)
+            ->getIpnRequest($headers, $body);
+    }
+
+    /**
+     * @param AbstractTransfer $ipnRequestTransfer
+     */
+    public function handleAmazonpayIpnRequest(AbstractTransfer $ipnRequestTransfer)
+    {
+        $this->getFactory()
+            ->createIpnFactory()
+            ->createIpnRequestFactory()
+            ->createConcreteIpnRequestHandler($ipnRequestTransfer)
+            ->handle($ipnRequestTransfer);
     }
 
 }

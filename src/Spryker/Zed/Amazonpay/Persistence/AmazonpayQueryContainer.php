@@ -32,6 +32,20 @@ class AmazonpayQueryContainer extends AbstractQueryContainer implements Amazonpa
     /**
      * @api
      *
+     * @param string $authorizationReferenceId
+     *
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
+     */
+    public function queryPaymentByAuthorizationReferenceId($authorizationReferenceId)
+    {
+        return $this
+            ->queryPayments()
+            ->filterByAuthorizationReferenceId($authorizationReferenceId);
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
      */
     protected function queryPayments()

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnArrayConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnConverterFactory;
+
 class ConverterFactory
 {
 
@@ -72,6 +75,24 @@ class ConverterFactory
     public function createRefundOrderConverter()
     {
         return new RefundOrderConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnConverterFactoryInterface
+     */
+    public function createIpnConverterFactory()
+    {
+        return new IpnConverterFactory();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface
+     */
+    public function createIpnArrayConverter()
+    {
+        return new IpnArrayConverter(
+            $this->createIpnConverterFactory()
+        );
     }
 
 }
