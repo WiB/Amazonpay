@@ -58,8 +58,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
     {
         return new IpnFactory(
             $this->getOmsFacade(),
-            $this->getQueryContainer(),
-            $this->createAdapterFactory()->createIpnRequestAdapter($headers, $body)
+            $this->getQueryContainer()
         );
     }
 

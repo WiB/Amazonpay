@@ -36,6 +36,11 @@ interface TransactionFactoryInterface
     public function createAuthorizeOrderTransaction();
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CaptureOrderTransaction
+     */
+    public function createCaptureOrderTransaction();
+
+    /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CloseOrderTransaction
      */
     public function createCloseOrderTransaction();

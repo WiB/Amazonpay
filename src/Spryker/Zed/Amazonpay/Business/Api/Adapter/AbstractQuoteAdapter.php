@@ -16,16 +16,6 @@ abstract class AbstractQuoteAdapter extends AbstractAdapter implements QuoteAdap
 {
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractResponseParserConverter
-     */
-    protected $converter;
-
-    /**
-     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
-     */
-    protected $moneyFacade;
-
-    /**
      * @param \PayWithAmazon\Client $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
@@ -39,18 +29,6 @@ abstract class AbstractQuoteAdapter extends AbstractAdapter implements QuoteAdap
 
         $this->converter = $converter;
         $this->moneyFacade = $moneyFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return float
-     */
-    protected function getAmount(QuoteTransfer $quoteTransfer)
-    {
-        return $this->moneyFacade->convertIntegerToDecimal(
-            $quoteTransfer->requireTotals()->getTotals()->getGrandTotal()
-        );
     }
 
 }

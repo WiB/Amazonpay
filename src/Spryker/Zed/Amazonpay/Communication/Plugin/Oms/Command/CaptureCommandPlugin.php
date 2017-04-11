@@ -18,6 +18,11 @@ class CaptureCommandPlugin extends AbstractAmazonpayCommandPlugin
      */
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
+        // no partial closing should be possible
+        if (count($orderEntity->getItems()) === count($salesOrderItems)) {
+            $this->getFacade()->captureOrder($this->getOrderTransfer($orderEntity));
+        }
+
         return [];
     }
 

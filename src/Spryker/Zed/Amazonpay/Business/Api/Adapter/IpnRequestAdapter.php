@@ -33,12 +33,9 @@ class IpnRequestAdapter implements IpnRequestAdapterInterface
     }
 
     /**
-     * @param array $headers
-     * @param string $body
-     *
      * @return AbstractTransfer
      */
-    public function getIpnRequest($headers, $body)
+    public function getIpnRequest()
     {
         return $this->ipnArrayConverter->convert(
             $this->ipnHandler->toArray()

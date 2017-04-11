@@ -12,11 +12,8 @@ interface IpnRequestAdapterInterface
 {
 
     /**
-     * @param array $headers
-     * @param string $body
-     *
      * @return array
      */
-    public function getIpnRequest($headers, $body);
+    public function getIpnRequest();
 
 }

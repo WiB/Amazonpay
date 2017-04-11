@@ -24,7 +24,7 @@
         </states>
 
         <events>
-            <event name="update_new_order_status" manual="true" command="Amazonpay/UpdateNewOrderStatus" />
+            <event name="update_new_order_status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
             <event name="update_authorization_status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
             <event name="capture" manual="true" command="Amazonpay/Capture" />
             <event name="close" manual="true" command="Amazonpay/CloseOrder" />
@@ -62,6 +62,19 @@
                 <source>auth_pending</source>
                 <target>auth_declined</target>
                 <event>update_authorization_status</event>
+            </transition>
+
+            <!-- from capture_pending -->
+            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
+                <source>capture_pending</source>
+                <target>capture_completed</target>
+                <event>capture</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsCaptureDeclined">
+                <source>capture_pending</source>
+                <target>capture_declined</target>
+                <event>capture</event>
             </transition>
 
             <!-- capture -->

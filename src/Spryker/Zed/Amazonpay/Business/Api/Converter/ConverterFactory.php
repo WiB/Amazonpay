@@ -64,6 +64,14 @@ class ConverterFactory
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
      */
+    public function createCaptureOrderConverter()
+    {
+        return new CaptureOrderConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
+     */
     public function createCancelOrderConverter()
     {
         return new CancelOrderConverter();

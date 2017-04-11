@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use PayWithAmazon\Client;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractAdapter
 {
@@ -22,12 +23,35 @@ abstract class AbstractAdapter
     protected $client;
 
     /**
+     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
+     */
+    protected $converter;
+
+    /**
      * @param \PayWithAmazon\Client $client
      */
     public function __construct(
         Client $client
     ) {
         $this->client = $client;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @method
+     *
+     * @return float
+     */
+    protected function getAmount(AbstractTransfer $abstractTransfer)
+    {
+        return $this->moneyFacade->convertIntegerToDecimal(
+            $abstractTransfer->requireTotals()->getTotals()->getGrandTotal()
+        );
     }
 
 }

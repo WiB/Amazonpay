@@ -53,9 +53,8 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createObtainProfileInformationAdapter()
     {
         return new ObtainProfileInformationAdapter(
-            $this->config,
-            $this->converterFactory->createObtainProfileInformationConverter(),
-            $this->moneyFacade
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createObtainProfileInformationConverter()
         );
     }
 
@@ -100,9 +99,22 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     public function createAuthorizeOrderAdapter()
     {
-        return new AuthorizeOrderAdapter(
+        return new AuthorizeOrderQuoteAdapter(
             $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createAuthorizeOrderConverter(),
+            $this->moneyFacade,
+            $this->config
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
+     */
+    public function createCaptureOrderAdapter()
+    {
+        return new CaptureOrderAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createCaptureOrderConverter(),
             $this->moneyFacade,
             $this->config
         );

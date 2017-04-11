@@ -31,7 +31,7 @@ interface AdapterFactoryInterface
     public function createGetOrderReferenceDetailsAmazonpayAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderQuoteAdapter
      */
     public function createAuthorizeOrderAdapter();
 

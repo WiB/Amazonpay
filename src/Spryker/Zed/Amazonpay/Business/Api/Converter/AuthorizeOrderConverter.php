@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-use Generated\Shared\Transfer\AmazonAuthorizationDetailsTransfer;
-use Generated\Shared\Transfer\AmazonpayAuthorizationStatusTransfer;
+use Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer;
+use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
@@ -16,6 +16,8 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
 {
 
     const AUTH_STATUS_DECLINED = 'Declined';
+    const AUTH_STATUS_PENDING = 'Pending';
+    const AUTH_STATUS_OPEN = 'Open';
     const PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
 
     /**
@@ -29,14 +31,14 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
     /**
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return \Generated\Shared\Transfer\AmazonAuthorizationDetailsTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer
      */
     protected function extractAuthorizationDetails(ResponseParser $responseParser)
     {
         $result = $this->extractResult($responseParser)['AuthorizationDetails'];
 
-        $authorizationDetails = new AmazonAuthorizationDetailsTransfer();
-        $authorizationDetails->setAuthorizationId($result['AmazonAuthorizationId']);
+        $authorizationDetails = new AmazonpayAuthorizationDetailsTransfer();
+        $authorizationDetails->setAmazonAuthorizationId($result['AmazonAuthorizationId']);
         $authorizationDetails->setAuthorizationReferenceId($result['AuthorizationReferenceId']);
 
         if (!empty($result['AuthorizationAmount'])) {
@@ -52,13 +54,21 @@ class AuthorizeOrderConverter extends AbstractResponseParserConverter
         }
 
         if (!empty($result['AuthorizationStatus'])) {
-            $authStatus = new AmazonpayAuthorizationStatusTransfer();
+            $authStatus = new AmazonpayStatusTransfer();
             $authStatus->setLastUpdateTimestamp($result['AuthorizationStatus']['LastUpdateTimestamp']);
             $authStatus->setState($result['AuthorizationStatus']['State']);
             $authorizationDetails->setAuthorizationStatus($authStatus);
 
             $authorizationDetails->setIsDeclined(
                 $result['AuthorizationStatus']['State'] === self::AUTH_STATUS_DECLINED
+            );
+
+            $authorizationDetails->setIsPending(
+                $result['AuthorizationStatus']['State'] === self::AUTH_STATUS_PENDING
+            );
+
+            $authorizationDetails->setIsOpen(
+                $result['AuthorizationStatus']['State'] === self::AUTH_STATUS_OPEN
             );
 
             if (!empty($result['AuthorizationStatus']['ReasonCode'])) {

@@ -13,7 +13,7 @@ use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
-class AuthorizeOrderAdapter extends AbstractQuoteAdapter
+class AuthorizeOrderQuoteAdapter extends AbstractQuoteAdapter
 {
 
     const AUTHORIZATION_AMOUNT = 'authorization_amount';

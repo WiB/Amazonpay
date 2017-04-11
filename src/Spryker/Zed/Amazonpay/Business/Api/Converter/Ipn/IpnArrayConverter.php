@@ -36,7 +36,7 @@ class IpnArrayConverter extends AbstractArrayConverter
      */
     public function convert(array $ipnRequest)
     {
-        $this->ipnConverterFactory->createIpnRequestConverter($ipnRequest)->convert($ipnRequest);
+        return $this->ipnConverterFactory->createIpnRequestConverter($ipnRequest)->convert($ipnRequest);
     }
 
 }

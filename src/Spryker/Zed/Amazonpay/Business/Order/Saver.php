@@ -41,16 +41,42 @@ class Saver implements SaverInterface
     {
         $paymentEntity = new SpyPaymentAmazonpay();
         $paymentEntity->setOrderReferenceId($paymentTransfer->getOrderReferenceId());
-        $paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_NEW);
+        $paymentEntity->setOrderReferenceStatus(
+            $this->getOrderStatus($paymentTransfer)
+        );
         $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
         $paymentEntity->setAuthorizationReferenceId($paymentTransfer->getAuthorizationReferenceId());
-        $paymentEntity->setAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAuthorizationId());
-        $paymentEntity->setCaptureId($paymentTransfer->getAuthorizationDetails()->getIdList());
+        $paymentEntity->setAmazonAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAmazonAuthorizationId());
+        $paymentEntity->setAmazonCaptureId($paymentTransfer->getAuthorizationDetails()->getIdList());
         $paymentEntity->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $paymentEntity->setRequestId($paymentTransfer->getResponseHeader()->getRequestId());
         $paymentEntity->save();
 
         return $paymentEntity;
+    }
+
+    /**
+     * @param AmazonpayPaymentTransfer $paymentTransfer
+     *
+     * @return string
+     */
+    protected function getOrderStatus(AmazonpayPaymentTransfer $paymentTransfer)
+    {
+        if ($paymentTransfer->getAuthorizationDetails()->getIdList()) {
+            return AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED;
+        }
+
+        if ($paymentTransfer->getAuthorizationDetails()->getIsDeclined()) {
+            return AmazonpayConstants::OMS_STATUS_AUTH_DECLINED;
+        }
+
+        if ($paymentTransfer->getAuthorizationDetails()->getIsPending()) {
+            return AmazonpayConstants::OMS_STATUS_AUTH_PENDING;
+        }
+
+        if ($paymentTransfer->getAuthorizationDetails()->getIsOpen()) {
+            return AmazonpayConstants::OMS_STATUS_AUTH_OPEN;
+        }
     }
 
 }

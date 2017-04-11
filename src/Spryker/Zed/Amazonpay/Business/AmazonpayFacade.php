@@ -84,6 +84,19 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    public function captureOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createTransactionFactory()
+            ->createCaptureOrderTransaction()
+            ->execute($orderTransfer);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -170,10 +183,10 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      */
     public function convertAmazonpayIpnRequest(array $headers, $body)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createAdapterFactory()
             ->createIpnRequestAdapter($headers, $body)
-            ->getIpnRequest($headers, $body);
+            ->getIpnRequest();
     }
 
     /**

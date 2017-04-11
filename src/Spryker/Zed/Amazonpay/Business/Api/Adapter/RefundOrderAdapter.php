@@ -29,7 +29,7 @@ class RefundOrderAdapter extends AbstractOrderAdapter
 
         $result = $this->client->refund([
             AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            static::AMAZON_CAPTURE_ID => $orderTransfer->getAmazonpayPayment()->getCaptureId(),
+            static::AMAZON_CAPTURE_ID => $orderTransfer->getAmazonpayPayment()->getAmazonCaptureId(),
             static::REFUND_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getRefundReferenceId(),
             static::REFUND_AMOUNT => $refundAmount,
         ]);

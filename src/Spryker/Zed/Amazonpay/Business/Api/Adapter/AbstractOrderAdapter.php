@@ -7,22 +7,13 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use PayWithAmazon\Client;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
 abstract class AbstractOrderAdapter extends AbstractAdapter implements OrderAdapterInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
-     */
-    protected $converter;
-
-    /**
-     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface
-     */
-    protected $moneyFacade;
 
     /**
      * @param \PayWithAmazon\Client $client

@@ -21,9 +21,10 @@ abstract class AbstractOrderConditionPlugin implements ConditionInterface
      */
     public function check(SpySalesOrderItem $orderItem)
     {
+        $orderItem->getOrder()->reload(true);
         foreach ($orderItem->getOrder()->getItems() as $nextOrderItem) {
             if ($nextOrderItem->getOrder()->getSpyPaymentAmazonpays()->getFirst()->getOrderReferenceStatus()
-                !== $this->getConditionalStatus()) {
+                    !== $this->getConditionalStatus()) {
                 return false;
             }
         }
