@@ -125,11 +125,14 @@
     </transfer>
 
     <transfer name="AmazonpayRefundDetails">
-        <property name="RefundId" type="string"/>
+        <property name="AmazonRefundId" type="string"/>
         <property name="RefundReferenceId" type="string"/>
         <property name="RefundAmount" type="AmazonpayPrice"/>
         <property name="SellerRefundNote" type="string"/>
         <property name="Status" type="string"/>
+        <property name="isDeclined" type="bool"/>
+        <property name="isPending" type="bool"/>
+        <property name="isCompleted" type="bool"/>
     </transfer>
 
     <transfer name="AmazonpayAuthorizeOrderResponse">
@@ -137,15 +140,29 @@
         <property name="authorizationDetails" type="AmazonpayAuthorizationDetails"/>
     </transfer>
 
-    <transfer name="AmazonpayIpnPaymentAuthorizeRequest">
+    <transfer name="AmazonpayIpnRequestMessage">
         <property name="NotificationReferenceId" type="string"/>
         <property name="NotificationType" type="string"/>
         <property name="SellerId" type="string" />
         <property name="ReleaseEnvironment" type="string" />
-        <property name="AuthorizationDetails" type="AmazonpayAuthorizationDetails" />
         <property name="Type" type="string" />
         <property name="MessageId" type="string" />
         <property name="TopicArn" type="string" />
+    </transfer>
+
+    <transfer name="AmazonpayIpnPaymentAuthorizeRequest">
+        <property name="message" type="AmazonpayIpnRequestMessage" />
+        <property name="authorizationDetails" type="AmazonpayAuthorizationDetails" />
+    </transfer>
+
+    <transfer name="AmazonpayIpnPaymentCaptureRequest">
+        <property name="message" type="AmazonpayIpnRequestMessage" />
+        <property name="captureDetails" type="AmazonpayCaptureDetails" />
+    </transfer>
+
+    <transfer name="AmazonpayIpnPaymentRefundRequest">
+        <property name="message" type="AmazonpayIpnRequestMessage" />
+        <property name="refundDetails" type="AmazonpayRefundDetails" />
     </transfer>
 
 </transfers>

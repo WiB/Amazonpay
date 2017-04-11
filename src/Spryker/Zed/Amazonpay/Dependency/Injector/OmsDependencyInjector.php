@@ -10,8 +10,7 @@ namespace Spryker\Zed\Amazonpay\Dependency\Injector;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CaptureCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CloseOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\RefundOrderCommandPlugin;
-use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateAuthorizationStatusCommandPlugin;
-use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateNewOrderStatusCommandPlugin;
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateOrderStatusCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthDeclinedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthOpenConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthPendingConditionPlugin;
@@ -57,8 +56,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new CloseOrderCommandPlugin(), 'Amazonpay/CloseOrder')
                 ->add(new RefundOrderCommandPlugin(), 'Amazonpay/RefundOrder')
                 ->add(new CaptureCommandPlugin(), 'Amazonpay/Capture')
-                ->add(new UpdateAuthorizationStatusCommandPlugin(), 'Amazonpay/UpdateAuthorizationStatus')
-                ->add(new UpdateNewOrderStatusCommandPlugin(), 'Amazonpay/UpdateNewOrderStatus')
+                ->add(new UpdateOrderStatusCommandPlugin(), 'Amazonpay/UpdateOrderStatus')
             ;
 
             return $commandCollection;

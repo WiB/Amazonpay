@@ -13,7 +13,8 @@
         <column name="amazon_authorization_id" type="VARCHAR"/>
         <column name="capture_reference_id" type="VARCHAR"/>
         <column name="amazon_capture_id" type="VARCHAR"/>
-        <column name="refund_id" type="VARCHAR"/>
+        <column name="refund_reference_id" type="VARCHAR"/>
+        <column name="amazon_refund_id" type="VARCHAR"/>
         <column name="request_id" type="VARCHAR"/>
 
         <foreign-key name="spy_payment_amazonpay-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">

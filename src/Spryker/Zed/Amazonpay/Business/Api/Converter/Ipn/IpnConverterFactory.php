@@ -24,7 +24,12 @@ class IpnConverterFactory implements IpnConverterFactoryInterface
         {
             case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE:
                 return new IpnPaymentAuthorizeRequestConverter();
-                break;
+
+            case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_CAPTURE:
+                return new IpnPaymentCaptureRequestConverter();
+
+            case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_REFUND:
+                return new IpnPaymentRefundRequestConverter();
         }
     }
 }

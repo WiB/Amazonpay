@@ -9,10 +9,10 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
 use Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer;
 use Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter;
 
-class IpnPaymentAuthorizeRequestConverter extends AbstractArrayConverter
+class IpnPaymentAuthorizeRequestConverter extends IpnPaymentAbstractRequestConverter
 {
+
     /**
      * @param array $request
      *
@@ -21,18 +21,12 @@ class IpnPaymentAuthorizeRequestConverter extends AbstractArrayConverter
     public function convert(array $request)
     {
         $ipnPaymentAuthorizeRequestTransfer = new AmazonpayIpnPaymentAuthorizeRequestTransfer();
+        $ipnPaymentAuthorizeRequestTransfer->setMessage($this->extractMessage($request));
 
         $authDetailsTransfer = new AmazonpayAuthorizationDetailsTransfer();
         $authDetailsTransfer->fromArray($request['AuthorizationDetails'], true);
 
         $ipnPaymentAuthorizeRequestTransfer->setAuthorizationDetails($authDetailsTransfer);
-        $ipnPaymentAuthorizeRequestTransfer->setMessageId($request['MessageId']);
-        $ipnPaymentAuthorizeRequestTransfer->setNotificationReferenceId($request['NotificationReferenceId']);
-        $ipnPaymentAuthorizeRequestTransfer->setNotificationType($request['NotificationType']);
-        $ipnPaymentAuthorizeRequestTransfer->setReleaseEnvironment($request['ReleaseEnvironment']);
-        $ipnPaymentAuthorizeRequestTransfer->setSellerId($request['SellerId']);
-        $ipnPaymentAuthorizeRequestTransfer->setTopicArn($request['TopicArn']);
-        $ipnPaymentAuthorizeRequestTransfer->setType($request['Type']);
 
         return $ipnPaymentAuthorizeRequestTransfer;
     }

@@ -46,6 +46,7 @@ interface AmazonpayConstants
     const OMS_STATUS_REFUND_COMPLETED = 'refund_completed';
 
     const IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE = 'PaymentAuthorize';
-
+    const IPN_REQUEST_TYPE_PAYMENT_CAPTURE = 'PaymentCapture';
+    const IPN_REQUEST_TYPE_PAYMENT_REFUND = 'PaymentRefund';
 
 }
