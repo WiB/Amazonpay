@@ -18,7 +18,7 @@ abstract class AbstractConverter
     const STATUS_PENDING = 'Pending';
     const STATUS_OPEN = 'Open';
     const STATUS_CLOSED = 'Closed';
-    const STATUS_COMPLETED = 'Open';
+    const STATUS_COMPLETED = 'Completed';
 
     /**
      * @param array $priceData
@@ -56,6 +56,10 @@ abstract class AbstractConverter
 
         $status->setIsOpen(
             $statusData['State'] === static::STATUS_OPEN
+        );
+
+        $status->setIsClosed(
+            $statusData['State'] === static::STATUS_CLOSED
         );
 
         $status->setIsCompleted(

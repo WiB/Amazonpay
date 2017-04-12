@@ -32,23 +32,9 @@ class RefundDetailsConverter extends AbstractArrayConverter
         ));
 
         if (!empty($refundDetailsData['RefundStatus'])) {
-            $this->convertStatusToTransfer($refundDetailsData['RefundStatus']);
-//            $refundStatus = new AmazonpayStatusTransfer();
-//            $refundStatus->setLastUpdateTimestamp($refundDetailsData['RefundStatus']['LastUpdateTimestamp']);
-//            $refundStatus->setState($refundDetailsData['RefundStatus']['State']);
-//            $refundDetails->setRefundStatus($refundStatus);
-//
-//            $refundDetails->setIsDeclined(
-//                $refundDetailsData['CaptureStatus']['State'] === self::CAPTURE_STATUS_DECLINED
-//            );
-//
-//            $refundDetails->setIsPending(
-//                $refundDetailsData['CaptureStatus']['State'] === self::CAPTURE_STATUS_PENDING
-//            );
-//
-//            $refundDetails->setIsCompleted(
-//                $refundDetailsData['CaptureStatus']['State'] === self::CAPTURE_STATUS_COMPLETED
-//            );
+            $refundDetails->setRefundStatus(
+                $this->convertStatusToTransfer($refundDetailsData['RefundStatus'])
+            );
         }
 
         if (!empty($refundDetailsData['SellerRefundNote'])) {

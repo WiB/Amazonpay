@@ -9,6 +9,9 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\AuthorizationDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\CaptureDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\RefundDetailsConverter;
 
 class IpnConverterFactory implements IpnConverterFactoryInterface
 {
@@ -23,13 +26,19 @@ class IpnConverterFactory implements IpnConverterFactoryInterface
         switch ($request['NotificationType'])
         {
             case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE:
-                return new IpnPaymentAuthorizeRequestConverter();
+                return new IpnPaymentAuthorizeRequestConverter(
+                    new AuthorizationDetailsConverter()
+                );
 
             case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_CAPTURE:
-                return new IpnPaymentCaptureRequestConverter();
+                return new IpnPaymentCaptureRequestConverter(
+                    new CaptureDetailsConverter()
+                );
 
             case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_REFUND:
-                return new IpnPaymentRefundRequestConverter();
+                return new IpnPaymentRefundRequestConverter(
+                    new RefundDetailsConverter()
+                );
         }
     }
 }

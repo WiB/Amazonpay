@@ -67,18 +67,20 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
      */
     protected function createIpnPaymentAuthorizeHandler(AbstractTransfer $ipnRequest)
     {
-        if ($ipnRequest->getAuthorizationDetails()->getIsDeclined()) {
+        if ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
             return new IpnPaymentAuthorizeDeclineHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
-        } elseif ($ipnRequest->getAuthorizationDetails()->getIsOpen()) {
+        } elseif ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsOpen()) {
             return new IpnPaymentAuthorizeOpenHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
+        } elseif ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsClosed()) {
+            return new IpnPaymentAuthorizeClosedHandler();
         }
     }
 
@@ -89,13 +91,13 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
      */
     protected function createIpnPaymentCaptureHandler(AbstractTransfer $ipnRequest)
     {
-        if ($ipnRequest->getCaptureDetails()->getIsDeclined()) {
+        if ($ipnRequest->getCaptureDetails()->getCaptureStatus()->getIsDeclined()) {
             return new IpnPaymentCaptureDeclineHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
-        } elseif ($ipnRequest->getCaptureDetails()->getIsCompleted()) {
+        } elseif ($ipnRequest->getCaptureDetails()->getCaptureStatus()->getIsCompleted()) {
             return new IpnPaymentCaptureCompletedHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
@@ -111,13 +113,15 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
      */
     protected function createIpnPaymentRefundHandler(AbstractTransfer $ipnRequest)
     {
-        if ($ipnRequest->getRefundDetails()->getIsDeclined()) {
+        // var_dump($ipnRequest->getRefundDetails()->getRefundStatus());exit;
+
+        if ($ipnRequest->getRefundDetails()->getRefundStatus()->getIsDeclined()) {
             return new IpnPaymentRefundDeclineHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
-        } elseif ($ipnRequest->getRefundDetails()->getIsCompleted()) {
+        } elseif ($ipnRequest->getRefundDetails()->getRefundStatus()->getIsCompleted()) {
             return new IpnPaymentRefundCompletedHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,

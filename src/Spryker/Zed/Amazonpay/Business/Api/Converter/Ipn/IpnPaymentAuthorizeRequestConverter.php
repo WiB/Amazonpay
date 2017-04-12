@@ -37,9 +37,6 @@ class IpnPaymentAuthorizeRequestConverter extends IpnPaymentAbstractRequestConve
         $ipnPaymentAuthorizeRequestTransfer = new AmazonpayIpnPaymentAuthorizeRequestTransfer();
         $ipnPaymentAuthorizeRequestTransfer->setMessage($this->extractMessage($request));
 
-//        $authDetailsTransfer = new AmazonpayAuthorizationDetailsTransfer();
-//        $authDetailsTransfer->fromArray($request['AuthorizationDetails'], true);
-
         $ipnPaymentAuthorizeRequestTransfer->setAuthorizationDetails(
             $this->authDetailsConverter->convert($request['AuthorizationDetails'])
         );

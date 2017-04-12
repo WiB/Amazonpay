@@ -36,6 +36,7 @@ interface AmazonpayConstants
     const OMS_STATUS_AUTH_PENDING = 'auth_pending';
     const OMS_STATUS_AUTH_DECLINED = 'auth_declined';
     const OMS_STATUS_AUTH_OPEN = 'auth_open';
+    const OMS_STATUS_AUTH_CLOSED = 'auth_closed';
 
     const OMS_STATUS_CAPTURE_PENDING = 'capture_pending';
     const OMS_STATUS_CAPTURE_DECLINED = 'capture_declined';

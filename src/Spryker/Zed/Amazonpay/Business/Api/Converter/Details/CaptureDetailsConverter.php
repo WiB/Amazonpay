@@ -37,23 +37,7 @@ class CaptureDetailsConverter extends AbstractArrayConverter
         }
 
         if (!empty($captureDetailsData['CaptureStatus'])) {
-            $this->convertStatusToTransfer($captureDetailsData['CaptureStatus']);
-//            $captureStatus = new AmazonpayStatusTransfer();
-//            $captureStatus->setLastUpdateTimestamp($captureDetailsData['CaptureStatus']['LastUpdateTimestamp']);
-//            $captureStatus->setState($captureDetailsData['CaptureStatus']['State']);
-//            $captureDetails->setCaptureStatus($captureStatus);
-//
-//            $captureDetails->setIsDeclined(
-//                $captureDetailsData['CaptureStatus']['State'] === self::CAPTURE_STATUS_DECLINED
-//            );
-//
-//            $captureDetails->setIsPending(
-//                $captureDetailsData['CaptureStatus']['State'] === self::CAPTURE_STATUS_PENDING
-//            );
-//
-//            $captureDetails->setIsCompleted(
-//                $captureDetailsData['CaptureStatus']['State'] === self::CAPTURE_STATUS_COMPLETED
-//            );
+            $captureDetails->setCaptureStatus($this->convertStatusToTransfer($captureDetailsData['CaptureStatus']));
         }
 
         if (!empty($captureDetailsData['IdList'])) {

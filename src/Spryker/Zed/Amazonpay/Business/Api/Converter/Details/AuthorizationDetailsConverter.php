@@ -39,23 +39,6 @@ class AuthorizationDetailsConverter extends AbstractArrayConverter
         }
 
         if (!empty($authDetailsData['AuthorizationStatus'])) {
-//            $authStatus = new AmazonpayStatusTransfer();
-//            $authStatus->setLastUpdateTimestamp($authDetailsData['AuthorizationStatus']['LastUpdateTimestamp']);
-//            $authStatus->setState($authDetailsData['AuthorizationStatus']['State']);
-//            $authorizationDetails->setAuthorizationStatus($authStatus);
-//
-//            $authorizationDetails->setIsDeclined(
-//                $authDetailsData['AuthorizationStatus']['State'] === static::AUTH_STATUS_DECLINED
-//            );
-//
-//            $authorizationDetails->setIsPending(
-//                $authDetailsData['AuthorizationStatus']['State'] === static::AUTH_STATUS_PENDING
-//            );
-//
-//            $authorizationDetails->setIsOpen(
-//                $authDetailsData['AuthorizationStatus']['State'] === static::AUTH_STATUS_OPEN
-//            );
-
             $authorizationDetails->setAuthorizationStatus(
                 $this->convertStatusToTransfer($authDetailsData['AuthorizationStatus'])
             );
