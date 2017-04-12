@@ -73,7 +73,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
-        } else {
+        } elseif ($ipnRequest->getAuthorizationDetails()->getIsOpen()) {
             return new IpnPaymentAuthorizeOpenHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
@@ -95,7 +95,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
-        } else {
+        } elseif ($ipnRequest->getCaptureDetails()->getIsCompleted()) {
             return new IpnPaymentCaptureCompletedHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
@@ -117,7 +117,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
-        } else {
+        } elseif ($ipnRequest->getRefundDetails()->getIsCompleted()) {
             return new IpnPaymentRefundCompletedHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,

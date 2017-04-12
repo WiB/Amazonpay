@@ -7,12 +7,24 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-use Generated\Shared\Transfer\AmazonpayRefundDetailsTransfer;
 use Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer;
 use PayWithAmazon\ResponseParser;
 
 class RefundOrderConverter extends AbstractResponseParserConverter
 {
+
+    /**
+     * @var ArrayConverterInterface $refundDetailsConverter
+     */
+    protected $refundDetailsConverter;
+
+    /**
+     * @param ArrayConverterInterface $refundDetailsConverter
+     */
+    public function __construct(ArrayConverterInterface $refundDetailsConverter)
+    {
+        $this->refundDetailsConverter = $refundDetailsConverter;
+    }
 
     /**
      * @return string
@@ -25,37 +37,15 @@ class RefundOrderConverter extends AbstractResponseParserConverter
     /**
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return \Generated\Shared\Transfer\AmazonpayRefundDetailsTransfer
-     */
-    protected function extractRefundDetails(ResponseParser $responseParser)
-    {
-        $result = $this->extractResult($responseParser)['RefundDetails'];
-
-        $refundDetails = new AmazonpayRefundDetailsTransfer();
-        $refundDetails->setAmazonRefundId($result['AmazonRefundId']);
-        $refundDetails->setRefundReferenceId($result['RefundReferenceId']);
-        $refundDetails->setRefundAmount($this->convertPriceToTransfer(
-            $result['RefundAmount']
-        ));
-        $refundDetails->setStatus($result['RefundStatus']['State']);
-
-        if (!empty($result['SellerRefundNote'])) {
-            $refundDetails->setRefundReferenceId($result['SellerRefundNote']);
-        }
-
-        return $refundDetails;
-    }
-
-    /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
-     *
      * @return \Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer
      */
     public function convert(ResponseParser $responseParser)
     {
         $responseTransfer = new AmazonpayRefundOrderResponseTransfer();
         $responseTransfer->setHeader($this->extractHeader($responseParser));
-        $responseTransfer->setRefundDetails($this->extractRefundDetails($responseParser));
+        $responseTransfer->setRefundDetails(
+            $this->refundDetailsConverter->convert($this->extractResult($responseParser)['RefundDetails'])
+        );
 
         return $responseTransfer;
     }

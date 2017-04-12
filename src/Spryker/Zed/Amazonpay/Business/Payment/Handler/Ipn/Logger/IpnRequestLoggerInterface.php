@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 interface IpnRequestLoggerInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $headerTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
      *
      * @return void
      */

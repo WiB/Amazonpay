@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\AuthorizationDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\CaptureDetailsConverter;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\RefundDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnArrayConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnConverterFactory;
 
@@ -58,7 +61,9 @@ class ConverterFactory
      */
     public function createAuthorizeOrderConverter()
     {
-        return new AuthorizeOrderConverter();
+        return new AuthorizeOrderConverter(
+            $this->createAuthorizationDetailsConverter()
+        );
     }
 
     /**
@@ -66,7 +71,19 @@ class ConverterFactory
      */
     public function createCaptureOrderConverter()
     {
-        return new CaptureOrderConverter();
+        return new CaptureOrderConverter(
+            $this->createCaptureDetailsConverter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
+     */
+    public function createRefundOrderConverter()
+    {
+        return new RefundOrderConverter(
+            $this->createRefundDetailsConverter()
+        );
     }
 
     /**
@@ -75,14 +92,6 @@ class ConverterFactory
     public function createCancelOrderConverter()
     {
         return new CancelOrderConverter();
-    }
-
-    /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
-     */
-    public function createRefundOrderConverter()
-    {
-        return new RefundOrderConverter();
     }
 
     /**
@@ -101,6 +110,30 @@ class ConverterFactory
         return new IpnArrayConverter(
             $this->createIpnConverterFactory()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface
+     */
+    protected function createAuthorizationDetailsConverter()
+    {
+        return new AuthorizationDetailsConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface
+     */
+    protected function createCaptureDetailsConverter()
+    {
+        return new CaptureDetailsConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface
+     */
+    protected function createRefundDetailsConverter()
+    {
+        return new RefundDetailsConverter();
     }
 
 }

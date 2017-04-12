@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PaymentController extends AbstractController
 {
 
-    const URL_PARAM_REFRENCE_ID = 'reference_id';
+    const URL_PARAM_REFERENCE_ID = 'reference_id';
     const URL_PARAM_ACCESS_TOKEN = 'access_token';
     const URL_PARAM_SHIPMENT_METHOD_ID = 'shipment_method_id';
 
@@ -33,7 +33,7 @@ class PaymentController extends AbstractController
     public function checkoutAction(Request $request)
     {
         $amazonPaymentTransfer = new AmazonpayPaymentTransfer();
-        $amazonPaymentTransfer->setOrderReferenceId($request->query->get(static::URL_PARAM_REFRENCE_ID));
+        $amazonPaymentTransfer->setOrderReferenceId($request->query->get(static::URL_PARAM_REFERENCE_ID));
         $amazonPaymentTransfer->setAddressConsentToken($request->query->get(static::URL_PARAM_ACCESS_TOKEN));
 
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
@@ -54,7 +54,7 @@ class PaymentController extends AbstractController
     public function setOrderReferenceAction(Request $request)
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-        $quoteTransfer->getAmazonpayPayment()->setOrderReferenceId($request->request->get(static::URL_PARAM_REFRENCE_ID));
+        $quoteTransfer->getAmazonpayPayment()->setOrderReferenceId($request->request->get(static::URL_PARAM_REFERENCE_ID));
 
         return new JsonResponse(['success' => true]);
     }
@@ -112,7 +112,11 @@ class PaymentController extends AbstractController
         $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
 
         if ($quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
-            if (!$quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined()) {
+            if (!$quoteTransfer->getAmazonpayPayment()
+                    ->getAuthorizationDetails()
+                    ->getAuthorizationStatus()
+                ->getIsDeclined()
+            ) {
                 $checkoutResponseTransfer = $this->getFactory()->getCheckoutClient()->placeOrder($quoteTransfer);
 
                 if ($checkoutResponseTransfer->getIsSuccess()) {

@@ -24,7 +24,7 @@ class WidgetController extends AbstractController
         $quote = $this->getFactory()->getQuoteClient()->getQuote();
         $logout = $quote->getAmazonpayPayment()
                    && $quote->getAmazonpayPayment()->getAuthorizationDetails()
-                   && $quote->getAmazonpayPayment()->getAuthorizationDetails()->getIsDeclined();
+                   && $quote->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined();
 
         return [
             'amazonpayConfig' => $this->getFactory()->getConfig(),

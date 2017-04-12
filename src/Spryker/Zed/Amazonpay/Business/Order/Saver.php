@@ -66,15 +66,15 @@ class Saver implements SaverInterface
             return AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED;
         }
 
-        if ($paymentTransfer->getAuthorizationDetails()->getIsDeclined()) {
+        if ($paymentTransfer->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
             return AmazonpayConstants::OMS_STATUS_AUTH_DECLINED;
         }
 
-        if ($paymentTransfer->getAuthorizationDetails()->getIsPending()) {
+        if ($paymentTransfer->getAuthorizationDetails()->getAuthorizationStatus()->getIsPending()) {
             return AmazonpayConstants::OMS_STATUS_AUTH_PENDING;
         }
 
-        if ($paymentTransfer->getAuthorizationDetails()->getIsOpen()) {
+        if ($paymentTransfer->getAuthorizationDetails()->getAuthorizationStatus()->getIsOpen()) {
             return AmazonpayConstants::OMS_STATUS_AUTH_OPEN;
         }
     }

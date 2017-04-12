@@ -138,7 +138,7 @@ interface AmazonpayFacadeInterface
     /**
      * Specification:
      * - Converts amazon-specific income data into Transfer Object
-     * Concrete transfer objecte depens on income data
+     * Concrete transfer object depends on income data
      *
      * @param array $headers
      * @param $body

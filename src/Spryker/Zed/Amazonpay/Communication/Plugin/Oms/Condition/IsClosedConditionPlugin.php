@@ -29,9 +29,6 @@ class IsClosedConditionPlugin implements ConditionInterface
         }
 
         return true;
-//
-//        return $orderItem->getOrder()->getSpyPaymentAmazonpays()->getFirst()->getOrderReferenceStatus()
-//                    === AmazonpayConstants::OMS_STATUS_CLOSED;
     }
 
 }

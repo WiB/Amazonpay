@@ -205,19 +205,5 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
         return $address;
     }
 
-    /**
-     * @param array $priceData
-     *
-     * @return \Generated\Shared\Transfer\AmazonpayPriceTransfer
-     */
-    protected function convertPriceToTransfer(array $priceData)
-    {
-        $priceTransfer = new AmazonpayPriceTransfer();
-
-        $priceTransfer->setAmount($priceData['Amount']);
-        $priceTransfer->setCurrencyCode($priceData['CurrencyCode']);
-
-        return $priceTransfer;
-    }
 
 }

@@ -8,7 +8,7 @@
     var amazonpayConfig = {
         clientId: "{{ amazonpayConfig.clientId }}",
         sellerId: "{{ amazonpayConfig.sellerId }}",
-        setOrderReferencetUrl: "{{ path('amazonpay_set_order_reference') }}",
+        setOrderReferenceUrl: "{{ path('amazonpay_set_order_reference') }}",
         getShipmentMethodsUrl: "{{ path('amazonpay_get_shipment_methods') }}"
     };
 </script>
@@ -28,7 +28,7 @@
 
                 $(function() {
                     $.post(
-                        amazonpayConfig.setOrderReferencetUrl,
+                        amazonpayConfig.setOrderReferenceUrl,
                         {'reference_id': aoid}
                     );
                 });

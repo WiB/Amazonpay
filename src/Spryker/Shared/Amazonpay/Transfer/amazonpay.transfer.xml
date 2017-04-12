@@ -80,6 +80,11 @@
         <property name="state" type="string"/>
         <property name="reasonCode" type="string"/>
         <property name="lastUpdateTimestamp" type="string"/>
+        <property name="isDeclined" type="bool"/>
+        <property name="isPending" type="bool"/>
+        <property name="isOpen" type="bool"/>
+        <property name="isClosed" type="bool"/>
+        <property name="isCompleted" type="bool"/>
     </transfer>
 
     <transfer name="AmazonpayAuthorizationDetails">
@@ -97,9 +102,6 @@
         <property name="softDecline" type="bool" />
         <property name="captureNow" type="bool" />
         <property name="softDescriptor" type="string" />
-        <property name="isDeclined" type="bool"/>
-        <property name="isPending" type="bool"/>
-        <property name="isOpen" type="bool"/>
         <property name="isPaymentMethodInvalid" type="bool"/>
     </transfer>
 
@@ -114,9 +116,6 @@
         <property name="creationTimestamp" type="string"/>
         <property name="captureStatus" type="AmazonpayStatus" />
         <property name="softDescriptor" type="string" />
-        <property name="isDeclined" type="bool"/>
-        <property name="isPending" type="bool"/>
-        <property name="isCompleted" type="bool"/>
     </transfer>
 
     <transfer name="AmazonpayCaptureOrderResponse">
@@ -129,10 +128,7 @@
         <property name="RefundReferenceId" type="string"/>
         <property name="RefundAmount" type="AmazonpayPrice"/>
         <property name="SellerRefundNote" type="string"/>
-        <property name="Status" type="string"/>
-        <property name="isDeclined" type="bool"/>
-        <property name="isPending" type="bool"/>
-        <property name="isCompleted" type="bool"/>
+        <property name="refundStatus" type="AmazonpayStatus" />
     </transfer>
 
     <transfer name="AmazonpayAuthorizeOrderResponse">

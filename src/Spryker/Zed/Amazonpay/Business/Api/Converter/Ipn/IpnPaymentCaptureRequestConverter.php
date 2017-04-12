@@ -7,14 +7,24 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
-use Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer;
-use Generated\Shared\Transfer\AmazonpayCaptureDetailsTransfer;
-use Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer;
 use Generated\Shared\Transfer\AmazonpayIpnPaymentCaptureRequestTransfer;
-use Generated\Shared\Transfer\AmazonpayIpnPaymentRefundRequestTransfer;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface;
 
 class IpnPaymentCaptureRequestConverter extends IpnPaymentAbstractRequestConverter
 {
+
+    /**
+     * @var ArrayConverterInterface $captureDetailsConverter
+     */
+    protected $captureDetailsConverter;
+
+    /**
+     * @param ArrayConverterInterface $captureDetailsConverter
+     */
+    public function __construct(ArrayConverterInterface $captureDetailsConverter)
+    {
+        $this->captureDetailsConverter = $captureDetailsConverter;
+    }
 
     /**
      * @param array $request
@@ -26,10 +36,9 @@ class IpnPaymentCaptureRequestConverter extends IpnPaymentAbstractRequestConvert
         $ipnPaymentCaptureRequestTransfer = new AmazonpayIpnPaymentCaptureRequestTransfer();
         $ipnPaymentCaptureRequestTransfer->setMessage($this->extractMessage($request));
 
-        $captureDetailsTransfer = new AmazonpayCaptureDetailsTransfer();
-        $captureDetailsTransfer->fromArray($request['CaptureDetails'], true);
-
-        $ipnPaymentCaptureRequestTransfer->setCaptureDetails($captureDetailsTransfer);
+        $ipnPaymentCaptureRequestTransfer->setCaptureDetails(
+            $this->captureDetailsConverter->convert($request['CaptureDetails'])
+        );
 
         return $ipnPaymentCaptureRequestTransfer;
     }
