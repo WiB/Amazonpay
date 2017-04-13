@@ -11,7 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
-class UpdateAuthorizationStatusCommandPlugin extends AbstractAmazonpayCommandPlugin
+class UpdateCaptureStatusCommandPlugin extends AbstractAmazonpayCommandPlugin
 {
     /**
      * @inheritdoc
@@ -19,11 +19,11 @@ class UpdateAuthorizationStatusCommandPlugin extends AbstractAmazonpayCommandPlu
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         if ($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus()
-            === AmazonpayConstants::OMS_STATUS_AUTH_PENDING
+            === AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING
             && count($orderEntity->getItems()) === count($salesOrderItems)
         ) {
             $orderTransfer = $this->getOrderTransfer($orderEntity);
-            $this->getFacade()->updateAuthorizationStatus($orderTransfer);
+            $this->getFacade()->updateCaptureStatus($orderTransfer);
         }
 
         return [];

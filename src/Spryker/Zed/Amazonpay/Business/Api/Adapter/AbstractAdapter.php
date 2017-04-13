@@ -13,9 +13,12 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 abstract class AbstractAdapter
 {
 
+    const AMAZON_AUTHORIZATION_ID = 'amazon_authorization_id';
     const AMAZON_ORDER_REFERENCE_ID = 'amazon_order_reference_id';
     const AMAZON_ADDRESS_CONSENT_TOKEN = 'address_consent_token';
     const AMAZON_AMOUNT = 'amount';
+    const AMAZON_CAPTURE_ID = 'amazon_capture_id';
+    const AMAZON_REFUND_ID = 'amazon_refund_id';
 
     /**
      * @var \PayWithAmazon\Client

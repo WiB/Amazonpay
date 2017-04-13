@@ -7,24 +7,8 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-use Generated\Shared\Transfer\AmazonpayCaptureOrderResponseTransfer;
-use PayWithAmazon\ResponseParser;
-
-class CaptureOrderConverter extends AbstractResponseParserConverter
+class CaptureOrderConverter extends AbstractCaptureOrderConverter
 {
-
-    /**
-     * @var ArrayConverterInterface $captureDetailsConverter
-     */
-    protected $captureDetailsConverter;
-
-    /**
-     * @param ArrayConverterInterface $captureDetailsConverter
-     */
-    public function __construct(ArrayConverterInterface $captureDetailsConverter)
-    {
-        $this->captureDetailsConverter = $captureDetailsConverter;
-    }
 
     /**
      * @return string
@@ -32,24 +16,6 @@ class CaptureOrderConverter extends AbstractResponseParserConverter
     protected function getResponseType()
     {
         return 'CaptureResult';
-    }
-
-    /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
-     *
-     * @return \Generated\Shared\Transfer\AmazonpayCaptureOrderResponseTransfer
-     */
-    public function convert(ResponseParser $responseParser)
-    {
-        $responseTransfer = new AmazonpayCaptureOrderResponseTransfer();
-        $responseTransfer->setHeader($this->extractHeader($responseParser));
-        $responseTransfer->setCaptureDetails(
-            $this->captureDetailsConverter->convert(
-                $this->extractResult($responseParser)['CaptureDetails']
-            )
-        );
-
-        return $responseTransfer;
     }
 
 }

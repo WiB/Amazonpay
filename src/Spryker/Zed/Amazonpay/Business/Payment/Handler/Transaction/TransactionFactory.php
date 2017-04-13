@@ -199,6 +199,45 @@ class TransactionFactory implements TransactionFactoryInterface
     }
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createUpdateOrderRefundStatusTransaction()
+    {
+        return new UpdateOrderRefundStatusTransaction(
+            $this->adapterFactory->createGetOrderRefundDetailsAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createUpdateOrderAuthorizationStatusTransaction()
+    {
+        return new UpdateOrderAuthorizationStatusTransaction(
+            $this->adapterFactory->createGetOrderAuthorizationDetailsAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createUpdateOrderCaptureStatusTransaction()
+    {
+        return new UpdateOrderCaptureStatusTransaction(
+            $this->adapterFactory->createGetOrderCaptureDetailsAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\HandleDeclinedOrderTransaction
      */
     public function createHandleDeclinedOrderTransaction()

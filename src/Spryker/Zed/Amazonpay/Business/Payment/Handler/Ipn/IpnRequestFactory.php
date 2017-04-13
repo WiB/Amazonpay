@@ -103,6 +103,8 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
+        } elseif ($ipnRequest->getCaptureDetails()->getCaptureStatus()->getIsClosed()) {
+            return new IpnPaymentCaptureClosedHandler();
         }
     }
 
@@ -113,8 +115,6 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
      */
     protected function createIpnPaymentRefundHandler(AbstractTransfer $ipnRequest)
     {
-        // var_dump($ipnRequest->getRefundDetails()->getRefundStatus());exit;
-
         if ($ipnRequest->getRefundDetails()->getRefundStatus()->getIsDeclined()) {
             return new IpnPaymentRefundDeclineHandler(
                 $this->omsFacade,

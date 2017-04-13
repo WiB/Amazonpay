@@ -12,7 +12,6 @@ use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactoryInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
-use PayWithAmazon\IpnHandler;
 
 class AdapterFactory implements AdapterFactoryInterface
 {
@@ -108,7 +107,7 @@ class AdapterFactory implements AdapterFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
     public function createCaptureOrderAdapter()
     {
@@ -152,6 +151,42 @@ class AdapterFactory implements AdapterFactoryInterface
         return new RefundOrderAdapter(
             $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createRefundOrderConverter(),
+            $this->moneyFacade
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
+    public function createGetOrderAuthorizationDetailsAdapter()
+    {
+        return new GetOrderAuthorizationDetailsAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createGetAuthorizationDetailsOrderConverter(),
+            $this->moneyFacade
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
+    public function createGetOrderCaptureDetailsAdapter()
+    {
+        return new GetOrderCaptureDetailsAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createGetCaptureOrderDetailsConverter(),
+            $this->moneyFacade
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
+    public function createGetOrderRefundDetailsAdapter()
+    {
+        return new GetOrderRefundDetailsAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createGetRefundOrderConverter(),
             $this->moneyFacade
         );
     }

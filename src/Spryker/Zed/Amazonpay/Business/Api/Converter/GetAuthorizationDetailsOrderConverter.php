@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-class RefundOrderConverter extends AbstractRefundOrderConverter
+class GetAuthorizationDetailsOrderConverter extends AbstractAuthorizeOrderConverter
 {
-
     /**
      * @return string
      */
     protected function getResponseType()
     {
-        return 'RefundResult';
+        return 'GetAuthorizationDetailsResult';
     }
 
 }

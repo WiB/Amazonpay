@@ -13,6 +13,7 @@ class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
 {
 
     const SELLER_ORDER_ID = 'seller_order_id';
+    const PLATFORM_ID = 'platform_id';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -22,9 +23,9 @@ class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
     public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->setOrderReferenceDetails([
-            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
-            AbstractAdapter::AMAZON_ADDRESS_CONSENT_TOKEN => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
-            AbstractAdapter::AMAZON_AMOUNT => $this->getAmount($quoteTransfer),
+            static::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            static::AMAZON_ADDRESS_CONSENT_TOKEN => $quoteTransfer->getAmazonpayPayment()->getAddressConsentToken(),
+            static::AMAZON_AMOUNT => $this->getAmount($quoteTransfer),
             static::SELLER_ORDER_ID => $quoteTransfer->getAmazonpayPayment()->getSellerOrderId(),
         ]);
 

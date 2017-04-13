@@ -41,6 +41,7 @@ interface AmazonpayConstants
     const OMS_STATUS_CAPTURE_PENDING = 'capture_pending';
     const OMS_STATUS_CAPTURE_DECLINED = 'capture_declined';
     const OMS_STATUS_CAPTURE_COMPLETED = 'capture_completed';
+    const OMS_STATUS_CAPTURE_CLOSED = 'capture_closed';
 
     const OMS_STATUS_REFUND_PENDING = 'refund_pending';
     const OMS_STATUS_REFUND_DECLINED = 'refund_declined';

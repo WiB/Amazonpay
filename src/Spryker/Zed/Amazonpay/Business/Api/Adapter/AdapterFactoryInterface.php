@@ -51,6 +51,21 @@ interface AdapterFactoryInterface
     public function createRefundOrderAdapter();
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
+    public function createGetOrderAuthorizationDetailsAdapter();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
+    public function createGetOrderCaptureDetailsAdapter();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
+    public function createGetOrderRefundDetailsAdapter();
+
+    /**
      * @param array $headers
      * @param string $body
      *

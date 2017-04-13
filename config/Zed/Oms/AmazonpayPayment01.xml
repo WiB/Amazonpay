@@ -24,10 +24,10 @@
         </states>
 
         <events>
-            <event name="update_new_order_status" onEnter="true" command="Amazonpay/UpdateOrderStatus" />
-            <event name="update_authorization_status" manual="true" command="Amazonpay/UpdateOrderStatus" />
-            <event name="update_capture_status" manual="true" command="Amazonpay/UpdateOrderStatus" />
-            <event name="update_refund_status" manual="true" command="Amazonpay/UpdateOrderStatus" />
+            <event name="update_new_order_status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
+            <event name="update_authorization_status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
+            <event name="update_capture_status" manual="true" command="Amazonpay/UpdateCaptureStatus" />
+            <event name="update_refund_status" manual="true" command="Amazonpay/UpdateRefundStatus" />
             <event name="capture" manual="true" command="Amazonpay/Capture" />
             <event name="close" manual="true" command="Amazonpay/CloseOrder" />
             <event name="refund" manual="true" command="Amazonpay/RefundOrder" />

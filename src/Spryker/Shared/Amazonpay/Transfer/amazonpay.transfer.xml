@@ -7,15 +7,17 @@
         <property name="fkSalesOrder" type="int" />
         <property name="orderReferenceId" type="string"/>
         <property name="sellerOrderId" type="string"/>
+        <property name="addressConsentToken" type="string"/>
         <property name="amazonAuthorizationId" type="string"/>
         <property name="amazonCaptureId" type="string"/>
-        <property name="addressConsentToken" type="string"/>
+        <property name="amazonRefundId" type="string"/>
         <property name="authorizationReferenceId" type="string"/>
         <property name="captureReferenceId" type="string"/>
         <property name="refundReferenceId" type="string"/>
         <property name="orderReferenceStatus" type="string"/>
         <property name="authorizationDetails" type="AmazonpayAuthorizationDetails"/>
         <property name="captureDetails" type="AmazonpayCaptureDetails"/>
+        <property name="refundDetails" type="AmazonpayRefundDetails"/>
         <property name="responseHeader" type="AmazonpayResponseHeader"/>
     </transfer>
 

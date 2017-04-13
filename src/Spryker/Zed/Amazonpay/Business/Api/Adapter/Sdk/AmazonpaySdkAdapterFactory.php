@@ -15,6 +15,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
 {
 
     const MERCHANT_ID = 'merchant_id';
+    const PLATFORM_ID = 'platform_id';
     const ACCESS_KEY = 'access_key';
     const SECRET_KEY = 'secret_key';
     const CLIENT_ID = 'client_id';
@@ -31,6 +32,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
     {
         $aConfig = [
             static::MERCHANT_ID => $config->getSellerId(),
+            static::PLATFORM_ID => $config->getSellerId(),
             static::ACCESS_KEY => $config->getAccessKeyId(),
             static::SECRET_KEY => $config->getSecretAccessKey(),
             static::CLIENT_ID => $config->getClientId(),

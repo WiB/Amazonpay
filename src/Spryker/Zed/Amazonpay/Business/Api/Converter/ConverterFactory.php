@@ -69,6 +69,16 @@ class ConverterFactory
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
      */
+    public function createGetAuthorizationDetailsOrderConverter()
+    {
+        return new GetAuthorizationDetailsOrderConverter(
+            $this->createAuthorizationDetailsConverter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
+     */
     public function createCaptureOrderConverter()
     {
         return new CaptureOrderConverter(
@@ -79,9 +89,29 @@ class ConverterFactory
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
      */
+    public function createGetCaptureOrderDetailsConverter()
+    {
+        return new GetCaptureOrderDetailsConverter(
+            $this->createCaptureDetailsConverter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
+     */
     public function createRefundOrderConverter()
     {
         return new RefundOrderConverter(
+            $this->createRefundDetailsConverter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface
+     */
+    public function createGetRefundOrderConverter()
+    {
+        return new GetRefundOrderDetailsConverter(
             $this->createRefundDetailsConverter()
         );
     }

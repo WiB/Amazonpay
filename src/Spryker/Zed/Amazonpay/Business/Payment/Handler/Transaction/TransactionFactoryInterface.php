@@ -60,4 +60,19 @@ interface TransactionFactoryInterface
      */
     public function createConfirmPurchaseTransactionCollection();
 
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createUpdateOrderRefundStatusTransaction();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createUpdateOrderAuthorizationStatusTransaction();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createUpdateOrderCaptureStatusTransaction();
+
 }
