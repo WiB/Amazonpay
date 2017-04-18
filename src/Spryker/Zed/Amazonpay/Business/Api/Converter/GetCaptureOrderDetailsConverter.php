@@ -15,7 +15,7 @@ class GetCaptureOrderDetailsConverter extends AbstractCaptureOrderConverter
      */
     protected function getResponseType()
     {
-        return 'CaptureResult';
+        return 'GetCaptureDetailsResult';
     }
 
 }

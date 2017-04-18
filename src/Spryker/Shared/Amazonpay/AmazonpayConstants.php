@@ -50,5 +50,6 @@ interface AmazonpayConstants
     const IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE = 'PaymentAuthorize';
     const IPN_REQUEST_TYPE_PAYMENT_CAPTURE = 'PaymentCapture';
     const IPN_REQUEST_TYPE_PAYMENT_REFUND = 'PaymentRefund';
+    const IPN_REQUEST_TYPE_ORDER_REFERENCE_NOTIFICATION = 'OrderReferenceNotification';
 
 }

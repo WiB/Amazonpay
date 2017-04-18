@@ -115,7 +115,7 @@ class PaymentController extends AbstractController
             if (!$quoteTransfer->getAmazonpayPayment()
                     ->getAuthorizationDetails()
                     ->getAuthorizationStatus()
-                ->getIsDeclined()
+                    ->getIsDeclined()
             ) {
                 $checkoutResponseTransfer = $this->getFactory()->getCheckoutClient()->placeOrder($quoteTransfer);
 

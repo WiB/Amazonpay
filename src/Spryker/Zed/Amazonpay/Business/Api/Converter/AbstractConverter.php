@@ -10,6 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 use Generated\Shared\Transfer\AmazonpayPriceTransfer;
 use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\AuthorizationDetailsConverter;
 
 abstract class AbstractConverter
 {
@@ -19,6 +20,7 @@ abstract class AbstractConverter
     const STATUS_OPEN = 'Open';
     const STATUS_CLOSED = 'Closed';
     const STATUS_COMPLETED = 'Completed';
+    const STATUS_SUSPENDED = 'Suspended';
 
     /**
      * @param array $priceData
@@ -46,9 +48,20 @@ abstract class AbstractConverter
         $status->setLastUpdateTimestamp($statusData['LastUpdateTimestamp']);
         $status->setState($statusData['State']);
 
-        $status->setIsDeclined(
-            $statusData['State'] === static::STATUS_DECLINED
-        );
+        if ($statusData['State'] === static::STATUS_DECLINED) {
+            if (!empty($statusData['ReasonCode'])
+                && $statusData['ReasonCode'] === AuthorizationDetailsConverter::PAYMENT_METHOD_INVALID
+            ) {
+                $status->setIsSuspended(true);
+            }
+
+            $status->setIsDeclined(true);
+        }
+
+        if ($statusData['State'] === static::STATUS_SUSPENDED) {
+            $status->setIsSuspended(true);
+            $status->setIsDeclined(true);
+        }
 
         $status->setIsPending(
             $statusData['State'] === static::STATUS_PENDING

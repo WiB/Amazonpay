@@ -38,7 +38,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
             static::CLIENT_ID => $config->getClientId(),
             static::REGION => $config->getRegion(),
             static::CURRENCY_CODE => $config->getCurrencyIsoCode(),
-            static::SANDBOX => true,
+            static::SANDBOX => $config->isSandbox(),
         ];
 
         return new Client($aConfig);

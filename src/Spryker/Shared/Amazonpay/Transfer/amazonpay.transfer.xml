@@ -83,10 +83,16 @@
         <property name="reasonCode" type="string"/>
         <property name="lastUpdateTimestamp" type="string"/>
         <property name="isDeclined" type="bool"/>
+        <property name="isSuspended" type="bool"/>
         <property name="isPending" type="bool"/>
         <property name="isOpen" type="bool"/>
         <property name="isClosed" type="bool"/>
         <property name="isCompleted" type="bool"/>
+    </transfer>
+
+    <transfer name="AmazonpayOrderReferenceNotification">
+        <property name="amazonOrderReferenceId" type="string"/>
+        <property name="orderReferenceStatus" type="AmazonpayStatus"/>
     </transfer>
 
     <transfer name="AmazonpayAuthorizationDetails">
@@ -161,6 +167,11 @@
     <transfer name="AmazonpayIpnPaymentRefundRequest">
         <property name="message" type="AmazonpayIpnRequestMessage" />
         <property name="refundDetails" type="AmazonpayRefundDetails" />
+    </transfer>
+
+    <transfer name="AmazonpayIpnOrderReferenceNotification">
+        <property name="message" type="AmazonpayIpnRequestMessage" />
+        <property name="orderReferenceNotification" type="AmazonpayOrderReferenceNotification" />
     </transfer>
 
 </transfers>

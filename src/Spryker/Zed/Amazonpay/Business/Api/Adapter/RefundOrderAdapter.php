@@ -31,6 +31,7 @@ class RefundOrderAdapter extends AbstractOrderAdapter
             static::AMAZON_CAPTURE_ID => $orderTransfer->getAmazonpayPayment()->getAmazonCaptureId(),
             static::REFUND_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getRefundReferenceId(),
             static::REFUND_AMOUNT => $refundAmount,
+            //'seller_refund_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}',
         ]);
 
         return $this->converter->convert($result);

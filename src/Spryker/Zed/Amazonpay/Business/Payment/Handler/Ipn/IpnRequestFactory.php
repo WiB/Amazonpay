@@ -67,7 +67,13 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
      */
     protected function createIpnPaymentAuthorizeHandler(AbstractTransfer $ipnRequest)
     {
-        if ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
+        if ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsSuspended()) {
+            return new IpnPaymentAuthorizeSuspendedHandler(
+                $this->omsFacade,
+                $this->amazonpayQueryContainer,
+                $this->ipnRequestLogger
+            );
+        } elseif ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
             return new IpnPaymentAuthorizeDeclineHandler(
                 $this->omsFacade,
                 $this->amazonpayQueryContainer,
