@@ -17,6 +17,7 @@ use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateRefundStatusCom
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthDeclinedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthOpenConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthPendingConditionPlugin;
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthSuspendedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCaptureCompletedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCaptureDeclinedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCapturePendingConditionPlugin;
@@ -59,6 +60,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new CloseOrderCommandPlugin(), 'Amazonpay/CloseOrder')
                 ->add(new RefundOrderCommandPlugin(), 'Amazonpay/RefundOrder')
                 ->add(new CaptureCommandPlugin(), 'Amazonpay/Capture')
+                ->add(new RefundOrderCommandPlugin(), 'Amazonpay/Reauthorize')
                 ->add(new UpdateNewOrderStatusCommandPlugin(), 'Amazonpay/UpdateNewOrderStatus')
                 ->add(new UpdateAuthorizationStatusCommandPlugin(), 'Amazonpay/UpdateAuthorizationStatus')
                 ->add(new UpdateCaptureStatusCommandPlugin(), 'Amazonpay/UpdateCaptureStatus')
@@ -86,6 +88,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new IsAuthOpenConditionPlugin(), 'Amazonpay/IsAuthOpen')
                 ->add(new IsAuthDeclinedConditionPlugin(), 'Amazonpay/IsAuthDeclined')
                 ->add(new IsAuthPendingConditionPlugin(), 'Amazonpay/IsAuthPending')
+                ->add(new IsAuthSuspendedConditionPlugin(), 'Amazonpay/IsAuthSuspended')
 
                 ->add(new IsCaptureCompletedConditionPlugin(), 'Amazonpay/IsCaptureCompleted')
                 ->add(new IsCaptureDeclinedConditionPlugin(), 'Amazonpay/IsCaptureDeclined')

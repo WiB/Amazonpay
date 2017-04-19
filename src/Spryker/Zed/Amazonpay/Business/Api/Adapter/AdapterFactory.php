@@ -94,11 +94,11 @@ class AdapterFactory implements AdapterFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapterInterface
      */
     public function createAuthorizeOrderAdapter()
     {
-        return new AuthorizeOrderQuoteAdapter(
+        return new AuthorizeOrderAdapter(
             $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createAuthorizeOrderConverter(),
             $this->moneyFacade,

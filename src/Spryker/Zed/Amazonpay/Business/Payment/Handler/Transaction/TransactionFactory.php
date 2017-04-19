@@ -155,6 +155,21 @@ class TransactionFactory implements TransactionFactoryInterface
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
      */
+    public function createReauthorizeOrderTransaction()
+    {
+        $handler = new ReauthorizeOrderTransaction(
+            $this->adapterFactory->createAuthorizeOrderAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
+        );
+
+        return $handler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
     public function createCaptureOrderTransaction()
     {
         $handler = new CaptureOrderTransaction(

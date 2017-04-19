@@ -120,6 +120,15 @@ interface AmazonpayFacadeInterface
     public function refundOrder(OrderTransfer $orderTransfer);
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function reauthorizeOrder(OrderTransfer $orderTransfer);
+
+    /**
      * Specification:
      * - Persists an order in the database
      *

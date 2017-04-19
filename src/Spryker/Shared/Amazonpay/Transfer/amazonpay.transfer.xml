@@ -171,7 +171,8 @@
 
     <transfer name="AmazonpayIpnOrderReferenceNotification">
         <property name="message" type="AmazonpayIpnRequestMessage" />
-        <property name="orderReferenceNotification" type="AmazonpayOrderReferenceNotification" />
+        <property name="amazonOrderReferenceId" type="string" />
+        <property name="orderReferenceStatus" type="AmazonpayStatus" />
     </transfer>
 
 </transfers>

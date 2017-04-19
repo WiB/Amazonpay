@@ -10,6 +10,7 @@
 
             <state name="auth_pending" reserved="true"/>
             <state name="auth_open" reserved="true"/>
+            <state name="auth_suspended" reserved="true"/>
             <state name="auth_declined"/>
 
             <state name="capture_pending" reserved="true"/>
@@ -24,11 +25,12 @@
         </states>
 
         <events>
-            <event name="update_new_order_status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
+            <event name="update_order_status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
             <event name="update_authorization_status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
             <event name="update_capture_status" manual="true" command="Amazonpay/UpdateCaptureStatus" />
             <event name="update_refund_status" manual="true" command="Amazonpay/UpdateRefundStatus" />
             <event name="capture" manual="true" command="Amazonpay/Capture" />
+            <event name="reauthorize_order" manual="true" command="Amazonpay/Reauthorize" />
             <event name="close" manual="true" command="Amazonpay/CloseOrder" />
             <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
         </events>
@@ -38,19 +40,19 @@
             <transition condition="Amazonpay/IsAuthPending" happy="true">
                 <source>new</source>
                 <target>auth_pending</target>
-                <event>update_new_order_status</event>
+                <event>update_order_status</event>
             </transition>
 
             <transition condition="Amazonpay/IsAuthOpen" happy="true">
                 <source>new</source>
                 <target>auth_open</target>
-                <event>update_new_order_status</event>
+                <event>update_order_status</event>
             </transition>
 
             <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
                 <source>new</source>
                 <target>capture_completed</target>
-                <event>update_new_order_status</event>
+                <event>update_order_status</event>
             </transition>
 
             <!-- from auth_pending (ipn) -->
@@ -64,6 +66,19 @@
                 <source>auth_pending</source>
                 <target>auth_declined</target>
                 <event>update_authorization_status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsAuthSuspended">
+                <source>auth_pending</source>
+                <target>auth_suspended</target>
+                <event>update_authorization_status</event>
+            </transition>
+
+            <!-- from auth_suspended -->
+            <transition condition="Amazonpay/IsAuthPending" happy="true">
+                <source>auth_suspended</source>
+                <target>auth_pending</target>
+                <event>reauthorize_order</event>
             </transition>
 
             <!-- from capture_pending -->

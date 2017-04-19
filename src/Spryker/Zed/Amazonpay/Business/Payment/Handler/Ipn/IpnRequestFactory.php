@@ -12,6 +12,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
+use Exception;
 
 class IpnRequestFactory implements IpnRequestFactoryInterface
 {
@@ -43,6 +44,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @throws Exception
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -57,11 +59,19 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
 
             case AmazonpayConstants::IPN_REQUEST_TYPE_PAYMENT_REFUND:
                 return $this->createIpnPaymentRefundHandler($ipnRequest);
+
+            case AmazonpayConstants::IPN_REQUEST_TYPE_ORDER_REFERENCE_NOTIFICATION:
+                return $this->createIpnOrderReferenceHandler($ipnRequest);
         }
+
+        throw new Exception('Unknown IPN Notification type: ' .
+            $ipnRequest->getMessage()->getNotificationType()
+        );
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @throws Exception
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -88,10 +98,15 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
         } elseif ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsClosed()) {
             return new IpnPaymentAuthorizeClosedHandler();
         }
+
+        throw new Exception('No IPN handler for status ' .
+            $ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getState()
+        );
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @throws Exception
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -112,10 +127,15 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
         } elseif ($ipnRequest->getCaptureDetails()->getCaptureStatus()->getIsClosed()) {
             return new IpnPaymentCaptureClosedHandler();
         }
+
+        throw new Exception('No IPN handler for status ' .
+            $ipnRequest->getCaptureDetails()->getCaptureStatus()->getState()
+        );
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @throws Exception
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -133,6 +153,17 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->amazonpayQueryContainer,
                 $this->ipnRequestLogger
             );
+        }
+
+        throw new Exception('No IPN handler for status ' .
+            $ipnRequest->getRefundDetails()->getRefundStatus()->getState()
+        );
+    }
+
+    protected function createIpnOrderReferenceHandler(AbstractTransfer $ipnRequest)
+    {
+        if ($ipnRequest->getOrderReferenceStatus()->getIsOpen()) {
+
         }
     }
 

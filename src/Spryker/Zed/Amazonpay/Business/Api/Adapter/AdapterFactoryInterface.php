@@ -11,42 +11,42 @@ interface AdapterFactoryInterface
 {
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\ObtainProfileInformationAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
      */
     public function createObtainProfileInformationAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
      */
     public function createSetOrderReferenceDetailsAmazonpayAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\ConfirmOrderReferenceAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
      */
     public function createConfirmOrderReferenceAmazonpayAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\GetOrderReferenceDetailsAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
      */
     public function createGetOrderReferenceDetailsAmazonpayAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AuthorizeOrderQuoteAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapterInterface
      */
     public function createAuthorizeOrderAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\CloseOrderAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
     public function createCloseOrderAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\CancelOrderAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
     public function createCancelOrderAdapter();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\RefundOrderAdapter
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
     public function createRefundOrderAdapter();
 

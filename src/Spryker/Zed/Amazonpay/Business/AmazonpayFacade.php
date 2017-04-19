@@ -156,6 +156,21 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function reauthorizeOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createTransactionFactory()
+            ->createReauthorizeOrderTransaction()
+            ->execute($orderTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
