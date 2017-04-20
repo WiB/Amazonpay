@@ -27,21 +27,21 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $abstractTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer)
+    public function execute(QuoteTransfer $abstractTransfer)
     {
         foreach ($this->transactionHandlers as $transactionHandler) {
-            $quoteTransfer = $transactionHandler->execute($quoteTransfer);
+            $abstractTransfer = $transactionHandler->execute($abstractTransfer);
 
-            if (!$quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
-                return $quoteTransfer;
+            if (!$abstractTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
+                return $abstractTransfer;
             }
         }
 
-        return $quoteTransfer;
+        return $abstractTransfer;
     }
 
 }

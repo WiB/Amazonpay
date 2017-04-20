@@ -41,15 +41,17 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
             $this->paymentEntity->save();
         }
 
-        if ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsSuspended()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_SUSPENDED);
-        } elseif ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_DECLINED);
-        }  elseif ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsPending()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_PENDING);
-        } elseif ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsOpen()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_OPEN);
-        }
+        $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_PENDING);
+
+//        if ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsSuspended()) {
+//            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_SUSPENDED);
+//        } elseif ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
+//            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_DECLINED);
+//        }  elseif ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsPending()) {
+//            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_PENDING);
+//        } elseif ($orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsOpen()) {
+//            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_OPEN);
+//        }
 
         $this->paymentEntity->save();
 

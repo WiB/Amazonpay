@@ -140,7 +140,7 @@ class TransactionFactory implements TransactionFactoryInterface
     public function createAuthorizeOrderTransaction()
     {
         $handler = new AuthorizeOrderTransaction(
-            $this->adapterFactory->createAuthorizeOrderAdapter(),
+            $this->adapterFactory->createAuthorizeQuoteAdapter(),
             $this->config,
             $this->transactionLogger
         );

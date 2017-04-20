@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -8,20 +7,20 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-class AuthorizeOrderAdapter extends AbstractAuthorizeAdapter implements OrderAdapterInterface
+class AuthorizeQuoteAdapter extends AbstractAuthorizeAdapter implements QuoteAdapterInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer
      */
-    public function call(OrderTransfer $orderTransfer)
+    public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->authorize(
-            $this->buildRequestArray($orderTransfer->getAmazonpayPayment(), $this->getAmount($orderTransfer))
+            $this->buildRequestArray($quoteTransfer->getAmazonpayPayment(), $this->getAmount($quoteTransfer))
         );
 
         return $this->converter->convert($result);

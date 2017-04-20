@@ -99,7 +99,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             return new IpnPaymentAuthorizeClosedHandler();
         }
 
-        throw new Exception('No IPN handler for status ' .
+        throw new Exception('No IPN handler for auth payment and status ' .
             $ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getState()
         );
     }
@@ -128,7 +128,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             return new IpnPaymentCaptureClosedHandler();
         }
 
-        throw new Exception('No IPN handler for status ' .
+        throw new Exception('No IPN handler for capture and status ' .
             $ipnRequest->getCaptureDetails()->getCaptureStatus()->getState()
         );
     }
@@ -155,16 +155,38 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
-        throw new Exception('No IPN handler for status ' .
+        throw new Exception('No IPN handler for payment refund and status ' .
             $ipnRequest->getRefundDetails()->getRefundStatus()->getState()
         );
     }
 
+    /**
+     * @param AbstractTransfer $ipnRequest
+     * @throws Exception
+     *
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
+     */
     protected function createIpnOrderReferenceHandler(AbstractTransfer $ipnRequest)
     {
         if ($ipnRequest->getOrderReferenceStatus()->getIsOpen()) {
-
+            return new IpnOrderReferenceOpenHandler(
+                $this->omsFacade,
+                $this->amazonpayQueryContainer,
+                $this->ipnRequestLogger
+            );
         }
+
+        if ($ipnRequest->getOrderReferenceStatus()->getIsSuspended()) {
+            return new IpnOrderReferenceSuspendedHandler(
+                $this->omsFacade,
+                $this->amazonpayQueryContainer,
+                $this->ipnRequestLogger
+            );
+        }
+
+        throw new Exception('No IPN handler for order reference and status ' .
+            $ipnRequest->getOrderReferenceStatus()->getState()
+        );
     }
 
 }

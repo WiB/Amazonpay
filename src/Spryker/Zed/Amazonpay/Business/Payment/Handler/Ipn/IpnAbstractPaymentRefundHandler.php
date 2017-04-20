@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class IpnAbstractPaymentRefundHandler extends IpnAbstractTransferRequestHandler
@@ -30,7 +31,7 @@ abstract class IpnAbstractPaymentRefundHandler extends IpnAbstractTransferReques
      */
     protected function getOmsEventId()
     {
-        return 'update_refund_status';
+        return AmazonpayConstants::OMS_EVENT_UPDATE_REFUND_STATUS;
     }
 
 }

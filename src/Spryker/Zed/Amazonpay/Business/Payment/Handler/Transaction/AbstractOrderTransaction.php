@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;

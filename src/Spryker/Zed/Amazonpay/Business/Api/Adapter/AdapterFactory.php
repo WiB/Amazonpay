@@ -74,7 +74,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     public function createConfirmOrderReferenceAmazonpayAdapter()
     {
-        return new ConfirmOrderReferenceAdapter(
+        return new ConfirmQuoteReferenceAdapter(
             $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
             $this->converterFactory->createConfirmOrderReferenceConverter(),
             $this->moneyFacade
@@ -94,7 +94,20 @@ class AdapterFactory implements AdapterFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapterInterface
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
+     */
+    public function createAuthorizeQuoteAdapter()
+    {
+        return new AuthorizeQuoteAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createAuthorizeOrderConverter(),
+            $this->moneyFacade,
+            $this->config
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
     public function createAuthorizeOrderAdapter()
     {

@@ -13,25 +13,25 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $abstractTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer)
+    public function execute(QuoteTransfer $abstractTransfer)
     {
         // handling suspended case
-        if ($quoteTransfer->getAmazonpayPayment()
-            && $quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()
-            && $quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()
+        if ($abstractTransfer->getAmazonpayPayment()
+            && $abstractTransfer->getAmazonpayPayment()->getAuthorizationDetails()
+            && $abstractTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()
         ) {
-            return $quoteTransfer;
+            return $abstractTransfer;
         }
 
-        $quoteTransfer->getAmazonpayPayment()->setSellerOrderId(
-            $this->generateOperationReferenceId($quoteTransfer)
+        $abstractTransfer->getAmazonpayPayment()->setSellerOrderId(
+            $this->generateOperationReferenceId($abstractTransfer)
         );
 
-        return parent::execute($quoteTransfer);
+        return parent::execute($abstractTransfer);
     }
 
 }

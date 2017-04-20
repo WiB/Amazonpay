@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
-class ReauthorizeOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
+class UpdateSuspendedOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
 {
 
     /**
@@ -19,7 +20,9 @@ class ReauthorizeOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         // no partial reauthorize should be possible
-        if (count($orderEntity->getItems()) === count($salesOrderItems)) {
+        if ($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus()
+            === AmazonpayConstants::OMS_STATUS_PAYMENT_METHOD_CHANGED
+            && count($orderEntity->getItems()) === count($salesOrderItems)) {
             $this->getFacade()->reauthorizeOrder($this->getOrderTransfer($orderEntity));
         }
 

@@ -33,7 +33,7 @@ class UpdateOrderAuthorizationStatusTransaction extends AbstractOrderTransaction
 
             if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
                 if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsSuspended()) {
-                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_PENDING);
+                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_SUSPENDED);
                 } else {
                     $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_DECLINED);
                 }

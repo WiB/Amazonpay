@@ -20,9 +20,6 @@ class IpnOrderReferenceNotificationConverter extends IpnPaymentAbstractRequestCo
      */
     public function convert(array $request)
     {
-//        var_dump($request);
-//        exit;
-
         $ipnOrderReferenceNotificationTransfer = new AmazonpayIpnOrderReferenceNotificationTransfer();
         $ipnOrderReferenceNotificationTransfer->setMessage($this->extractMessage($request));
 

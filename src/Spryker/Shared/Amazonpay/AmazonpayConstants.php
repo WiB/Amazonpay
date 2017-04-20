@@ -33,21 +33,30 @@ interface AmazonpayConstants
     const OMS_STATUS_CANCELLED = 'cancelled';
     const OMS_STATUS_CLOSED = 'closed';
 
-    const OMS_STATUS_AUTH_PENDING = 'auth_pending';
-    const OMS_STATUS_AUTH_DECLINED = 'auth_declined';
-    const OMS_STATUS_AUTH_SUSPENDED = 'auth_suspended';
-    const OMS_STATUS_AUTH_OPEN = 'auth_open';
-    const OMS_STATUS_AUTH_CLOSED = 'auth_closed';
-    const OMS_STATUS_REAUTH_REQUIRED = 'reauth_required';
+    const OMS_STATUS_AUTH_PENDING = 'auth pending';
+    const OMS_STATUS_AUTH_DECLINED = 'auth declined';
+    const OMS_STATUS_AUTH_SUSPENDED = 'auth suspended';
+    const OMS_STATUS_AUTH_OPEN = 'auth open';
+    const OMS_STATUS_AUTH_CLOSED = 'auth closed';
+    const OMS_STATUS_PAYMENT_METHOD_CHANGED = 'payment method changed';
 
-    const OMS_STATUS_CAPTURE_PENDING = 'capture_pending';
-    const OMS_STATUS_CAPTURE_DECLINED = 'capture_declined';
-    const OMS_STATUS_CAPTURE_COMPLETED = 'capture_completed';
-    const OMS_STATUS_CAPTURE_CLOSED = 'capture_closed';
+    const OMS_STATUS_CAPTURE_PENDING = 'capture pending';
+    const OMS_STATUS_CAPTURE_DECLINED = 'capture declined';
+    const OMS_STATUS_CAPTURE_COMPLETED = 'capture completed';
+    const OMS_STATUS_CAPTURE_CLOSED = 'capture closed';
 
-    const OMS_STATUS_REFUND_PENDING = 'refund_pending';
-    const OMS_STATUS_REFUND_DECLINED = 'refund_declined';
-    const OMS_STATUS_REFUND_COMPLETED = 'refund_completed';
+    const OMS_STATUS_REFUND_PENDING = 'refund pending';
+    const OMS_STATUS_REFUND_DECLINED = 'refund declined';
+    const OMS_STATUS_REFUND_COMPLETED = 'refund completed';
+
+    const OMS_EVENT_UPDATE_ORDER_STATUS = 'update order status';
+    const OMS_EVENT_UPDATE_AUTH_STATUS = 'update authorization status';
+    const OMS_EVENT_UPDATE_CAPTURE_STATUS = 'update capture status';
+    const OMS_EVENT_UPDATE_REFUND_STATUS = 'update refund status';
+    const OMS_EVENT_CAPTURE = 'capture';
+    const OMS_EVENT_UPDATE_SUSPENDED_ORDER = 'update suspended order';
+    const OMS_EVENT_CLOSE = 'close';
+    const OMS_EVENT_REFUND = 'refund';
 
     const IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE = 'PaymentAuthorize';
     const IPN_REQUEST_TYPE_PAYMENT_CAPTURE = 'PaymentCapture';
