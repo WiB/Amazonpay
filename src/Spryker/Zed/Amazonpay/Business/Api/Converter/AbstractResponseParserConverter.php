@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\AmazonpayPriceTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
 use PayWithAmazon\ResponseParser;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractResponseParserConverter extends AbstractConverter implements ResponseParserConverterInterface
 {
@@ -27,6 +27,45 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
      * @return string
      */
     abstract protected function getResponseType();
+
+    abstract protected function createTransferObject();
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function setBody(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
+    {
+        return $responseTransfer;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function setResponseDataToTransfer(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
+    {
+        $responseTransfer->setHeader($this->extractHeader($responseParser));
+        if ($responseTransfer->getHeader()->getIsSuccess()) {
+            return $this->setBody($responseTransfer, $responseParser);
+        }
+
+        return $responseTransfer;
+    }
+
+    /**
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function convert(ResponseParser $responseParser)
+    {
+        return $this->setResponseDataToTransfer($this->createTransferObject(), $responseParser);
+    }
 
     /**
      * @param \PayWithAmazon\ResponseParser $responseParser

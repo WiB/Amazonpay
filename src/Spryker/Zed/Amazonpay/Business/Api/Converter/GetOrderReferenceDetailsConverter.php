@@ -10,6 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AmazonpayGetOrderReferenceDetailsResponseTransfer;
 use PayWithAmazon\ResponseParser;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
@@ -52,19 +53,28 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
-     *
      * @return \Generated\Shared\Transfer\AmazonpayGetOrderReferenceDetailsResponseTransfer
      */
-    public function convert(ResponseParser $responseParser)
+    protected function createTransferObject()
     {
-        $responseTransfer = new AmazonpayGetOrderReferenceDetailsResponseTransfer();
-        $responseTransfer->setHeader($this->extractHeader($responseParser));
+        return new AmazonpayGetOrderReferenceDetailsResponseTransfer();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function setBody(
+        AbstractTransfer $responseTransfer,
+        ResponseParser $responseParser
+    ) {
         $responseTransfer->setOrderReferenceStatus($this->extractOrderReferenceStatus($responseParser));
         $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));
         $responseTransfer->setBillingAddress($this->extractBillingAddress($responseParser));
 
-        return $responseTransfer;
+        return parent::setBody($responseTransfer, $responseParser);
     }
 
 }

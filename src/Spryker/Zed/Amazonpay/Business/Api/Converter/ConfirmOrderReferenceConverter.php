@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpayConfirmOrderReferenceResponseTransfer;
-use PayWithAmazon\ResponseParser;
 
 class ConfirmOrderReferenceConverter extends AbstractResponseParserConverter
 {
@@ -22,16 +21,11 @@ class ConfirmOrderReferenceConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
-     *
      * @return \Generated\Shared\Transfer\AmazonpayConfirmOrderReferenceResponseTransfer
      */
-    public function convert(ResponseParser $responseParser)
+    protected function createTransferObject()
     {
-        $responseTransfer = new AmazonpayConfirmOrderReferenceResponseTransfer();
-        $responseTransfer->setHeader($this->extractHeader($responseParser));
-
-        return $responseTransfer;
+        return new AmazonpayConfirmOrderReferenceResponseTransfer();
     }
 
 }

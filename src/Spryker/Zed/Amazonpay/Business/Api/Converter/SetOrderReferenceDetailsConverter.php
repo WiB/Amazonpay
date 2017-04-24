@@ -9,6 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpaySetOrderReferenceDetailsResponseTransfer;
 use PayWithAmazon\ResponseParser;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class SetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
@@ -22,17 +23,18 @@ class SetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
-     *
-     * @return \Generated\Shared\Transfer\AmazonpaySetOrderReferenceDetailsResponseTransfer
+     * @return AmazonpaySetOrderReferenceDetailsResponseTransfer
      */
-    public function convert(ResponseParser $responseParser)
+    protected function createTransferObject()
     {
-        $responseTransfer = new AmazonpaySetOrderReferenceDetailsResponseTransfer();
-        $responseTransfer->setHeader($this->extractHeader($responseParser));
+        return new AmazonpaySetOrderReferenceDetailsResponseTransfer();
+    }
+
+    protected function setBody(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
+    {
         $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));
 
-        return $responseTransfer;
+        return parent::setBody($responseTransfer, $responseParser);
     }
 
 }

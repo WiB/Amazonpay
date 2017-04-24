@@ -55,14 +55,13 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
 
     protected function buildRequestArray(AmazonpayPaymentTransfer $amazonpayPaymentTransfer, $amount)
     {
-        // ExpiredUnused
         return [
             static::AMAZON_ORDER_REFERENCE_ID => $amazonpayPaymentTransfer->getOrderReferenceId(),
             static::AUTHORIZATION_AMOUNT => $amount,
             static::AUTHORIZATION_REFERENCE_ID => $amazonpayPaymentTransfer->getAuthorizationReferenceId(),
             static::TRANSACTION_TIMEOUT => $this->transactionTimeout,
             static::CAPTURE_NOW => $this->captureNow,
-            'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"InvalidPaymentMethod", "ExpirationTimeInMins":1}}',
+            'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"ExpiredUnused", "ExpirationTimeInMins":1}}',
             // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod", "PaymentMethodUpdateTimeInMins":1, "SoftDecline":"false"}}'
         ];
     }

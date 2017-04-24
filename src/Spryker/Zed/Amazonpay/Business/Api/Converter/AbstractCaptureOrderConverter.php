@@ -9,6 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpayCaptureOrderResponseTransfer;
 use PayWithAmazon\ResponseParser;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractCaptureOrderConverter extends AbstractResponseParserConverter
 {
@@ -27,21 +28,28 @@ abstract class AbstractCaptureOrderConverter extends AbstractResponseParserConve
     }
 
     /**
+     * @return /Generated\Shared\Transfer\AmazonpayCaptureOrderResponseTransfer
+     */
+    protected function createTransferObject()
+    {
+        return new AmazonpayCaptureOrderResponseTransfer();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
-     * @return \Generated\Shared\Transfer\AmazonpayCaptureOrderResponseTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function convert(ResponseParser $responseParser)
+    protected function setBody(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
     {
-        $responseTransfer = new AmazonpayCaptureOrderResponseTransfer();
-        $responseTransfer->setHeader($this->extractHeader($responseParser));
         $responseTransfer->setCaptureDetails(
             $this->captureDetailsConverter->convert(
                 $this->extractResult($responseParser)['CaptureDetails']
             )
         );
 
-        return $responseTransfer;
+        return parent::setBody($responseTransfer, $responseParser);
     }
 
 }
