@@ -127,7 +127,11 @@ class PaymentController extends AbstractController
                 return new Response('Persisting Order Error');
             }
 
-            if ($quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
+            if ($quoteTransfer->getAmazonpayPayment()
+                    ->getAuthorizationDetails()
+                    ->getAuthorizationStatus()
+                    ->getIsPaymentMethodInvalid()
+            ) {
                 return $this->redirectResponseInternal(AmazonpayControllerProvider::CHANGE_PAYMENT_METHOD);
             } else {
                 return $this->getFailedRedirectResponse();

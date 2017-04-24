@@ -25,6 +25,9 @@ class CaptureOrderTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
+        if (!$orderTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsOpen()) {
+            return $orderTransfer;
+        }
 
         $orderTransfer->getAmazonpayPayment()->setCaptureReferenceId(
             $this->generateOperationReferenceId($orderTransfer)

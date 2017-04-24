@@ -43,6 +43,11 @@ interface AdapterFactoryInterface
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
+    public function createAuthorizeCaptureNowOrderAdapter();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
     public function createCloseOrderAdapter();
 
     /**

@@ -155,6 +155,21 @@ class TransactionFactory implements TransactionFactoryInterface
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
      */
+    protected function createAuthorizeCaptureNowOrderTransaction()
+    {
+        $handler = new ReauthorizeOrderTransaction(
+            $this->adapterFactory->createAuthorizeCaptureNowOrderAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
+        );
+
+        return $handler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
     public function createReauthorizeOrderTransaction()
     {
         $handler = new ReauthorizeOrderTransaction(
@@ -170,7 +185,7 @@ class TransactionFactory implements TransactionFactoryInterface
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
      */
-    public function createCaptureOrderTransaction()
+    protected function createCaptureOrderTransaction()
     {
         $handler = new CaptureOrderTransaction(
             $this->adapterFactory->createCaptureOrderAdapter(),
@@ -184,6 +199,21 @@ class TransactionFactory implements TransactionFactoryInterface
         );
 
         return $handler;
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createCaptureAuthorizedTransactionCollection()
+    {
+        return new OrderTransactionCollection(
+            [
+                $this->createUpdateOrderAuthorizationStatusTransaction(),
+                $this->createCaptureOrderTransaction(),
+                $this->createAuthorizeCaptureNowOrderTransaction(),
+                $this->createUpdateOrderAuthorizationStatusTransaction(),
+            ]
+        );
     }
 
     /**
@@ -264,11 +294,11 @@ class TransactionFactory implements TransactionFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ConfirmPurchaseTransactionCollection
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionCollection
      */
     public function createConfirmPurchaseTransactionCollection()
     {
-        return new ConfirmPurchaseTransactionCollection(
+        return new QuoteTransactionCollection(
             [
                 $this->createSetOrderReferenceTransaction(),
                 $this->createConfirmOrderReferenceTransaction(),

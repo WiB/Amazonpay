@@ -10,6 +10,7 @@
 
             <state name="auth pending" reserved="true"/>
             <state name="auth open" reserved="true"/>
+            <state name="auth closed"/>
             <state name="auth suspended" reserved="true"/>
             <state name="auth declined"/>
 
@@ -55,7 +56,7 @@
                 <event>update order status</event>
             </transition>
 
-            <!-- from auth_pending (ipn) -->
+            <!-- from auth_pending -->
             <transition condition="Amazonpay/IsAuthOpen" happy="true">
                 <source>auth pending</source>
                 <target>auth open</target>
@@ -72,6 +73,24 @@
                 <source>auth pending</source>
                 <target>auth suspended</target>
                 <event>update authorization status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsAuthClosed">
+                <source>auth pending</source>
+                <target>auth closed</target>
+                <event>update authorization status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsAuthClosed">
+                <source>auth open</source>
+                <target>auth closed</target>
+                <event>capture</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
+                <source>auth open</source>
+                <target>capture completed</target>
+                <event>capture</event>
             </transition>
 
             <!-- from auth_suspended -->

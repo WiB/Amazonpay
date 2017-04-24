@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
-class IpnPaymentCaptureClosedHandler implements IpnRequestHandlerInterface
+class IpnEmptyHandler implements IpnRequestHandlerInterface
 {
 
     /**
@@ -17,7 +17,7 @@ class IpnPaymentCaptureClosedHandler implements IpnRequestHandlerInterface
      */
     public function handle(AbstractTransfer $amazonpayIpnRequestTransfer)
     {
-        // do nothing
+        // do nothing. but probably logging has to be added. and for others transactions as well
     }
 
 }

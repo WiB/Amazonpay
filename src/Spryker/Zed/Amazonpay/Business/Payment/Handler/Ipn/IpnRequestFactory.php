@@ -96,7 +96,11 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->ipnRequestLogger
             );
         } elseif ($ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getIsClosed()) {
-            return new IpnPaymentAuthorizeClosedHandler();
+            return new IpnPaymentAuthorizeClosedHandler(
+                $this->omsFacade,
+                $this->amazonpayQueryContainer,
+                $this->ipnRequestLogger
+            );
         }
 
         throw new Exception('No IPN handler for auth payment and status ' .
@@ -125,7 +129,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 $this->ipnRequestLogger
             );
         } elseif ($ipnRequest->getCaptureDetails()->getCaptureStatus()->getIsClosed()) {
-            return new IpnPaymentCaptureClosedHandler();
+            return new IpnEmptyHandler();
         }
 
         throw new Exception('No IPN handler for capture and status ' .

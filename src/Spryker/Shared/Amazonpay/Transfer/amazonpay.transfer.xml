@@ -88,6 +88,8 @@
         <property name="isOpen" type="bool"/>
         <property name="isClosed" type="bool"/>
         <property name="isCompleted" type="bool"/>
+        <property name="isPaymentMethodInvalid" type="bool"/>
+        <property name="isReauthorizable" type="bool"/>
     </transfer>
 
     <transfer name="AmazonpayOrderReferenceNotification">
@@ -110,7 +112,6 @@
         <property name="softDecline" type="bool" />
         <property name="captureNow" type="bool" />
         <property name="softDescriptor" type="string" />
-        <property name="isPaymentMethodInvalid" type="bool"/>
     </transfer>
 
     <transfer name="AmazonpayCaptureDetails">

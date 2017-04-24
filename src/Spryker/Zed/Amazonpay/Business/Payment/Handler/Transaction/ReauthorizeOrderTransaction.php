@@ -25,6 +25,28 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
+        if ($orderTransfer->getAmazonpayPayment()
+                ->getAuthorizationDetails()
+                ->getAuthorizationStatus()
+                ->getIsOpen()
+        ) {
+            return $orderTransfer;
+        }
+
+        if ($orderTransfer->getAmazonpayPayment()
+                ->getAuthorizationDetails()
+                ->getAuthorizationStatus()
+                ->getIsClosed()
+        ) {
+            if (!$orderTransfer->getAmazonpayPayment()
+                ->getAuthorizationDetails()
+                ->getAuthorizationStatus()
+                ->getIsReauthorizable()
+            ) {
+                return $orderTransfer;
+            }
+        }
+
         $orderTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
             $this->generateOperationReferenceId($orderTransfer)
         );

@@ -5,27 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
+namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
-class IpnPaymentAuthorizeClosedHandler extends IpnAbstractPaymentAuthorizeHandler
+class IsAuthClosedConditionPlugin extends AbstractOrderConditionPlugin
 {
 
     /**
      * @return string
      */
-    protected function getOmsStatusName()
+    protected function getConditionalStatus()
     {
         return AmazonpayConstants::OMS_STATUS_AUTH_CLOSED;
     }
-
-    /**
-     * @return string
-     */
-    protected function getOmsEventId()
-    {
-        return AmazonpayConstants::OMS_EVENT_CAPTURE;
-    }
-
 }

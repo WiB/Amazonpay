@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Details;
 
 use Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter;
 
 class AuthorizationDetailsConverter extends AbstractArrayConverter
@@ -42,14 +43,6 @@ class AuthorizationDetailsConverter extends AbstractArrayConverter
             $authorizationDetails->setAuthorizationStatus(
                 $this->convertStatusToTransfer($authDetailsData['AuthorizationStatus'])
             );
-
-            if (!empty($authDetailsData['AuthorizationStatus']['ReasonCode'])) {
-                $authorizationDetails->setIsPaymentMethodInvalid(
-                    $authDetailsData['AuthorizationStatus']['ReasonCode'] === static::PAYMENT_METHOD_INVALID
-                );
-            } else {
-                $authorizationDetails->setIsPaymentMethodInvalid(false);
-            }
         }
 
         if (!empty($authDetailsData['ExpirationTimestamp'])) {

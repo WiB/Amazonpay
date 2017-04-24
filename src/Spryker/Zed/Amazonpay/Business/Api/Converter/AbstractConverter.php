@@ -9,6 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpayPriceTransfer;
 use Generated\Shared\Transfer\AmazonpayStatusTransfer;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\AuthorizationDetailsConverter;
 
@@ -48,13 +49,20 @@ abstract class AbstractConverter
         $status->setLastUpdateTimestamp($statusData['LastUpdateTimestamp']);
         $status->setState($statusData['State']);
 
-        if ($statusData['State'] === static::STATUS_DECLINED) {
-            if (!empty($statusData['ReasonCode'])
-                && $statusData['ReasonCode'] === AuthorizationDetailsConverter::PAYMENT_METHOD_INVALID
-            ) {
-                $status->setIsSuspended(true);
-            }
+        if (!empty($statusData['ReasonCode'])) {
+            $status->setReasonCode($statusData['ReasonCode']);
+            $status->setIsReauthorizable(
+                $statusData['ReasonCode'] === AmazonpayConstants::REASON_CODE_SELLER_CLOSED
+                || $statusData['ReasonCode'] === AmazonpayConstants::REASON_CODE_EXPIRED_UNUSED
+            );
 
+            $status->setIsPaymentMethodInvalid(
+                $statusData['ReasonCode'] === AmazonpayConstants::REASON_CODE_PAYMENT_METHOD_INVALID
+            );
+        }
+
+        if ($statusData['State'] === static::STATUS_DECLINED) {
+            $status->setIsSuspended($status->getIsPaymentMethodInvalid());
             $status->setIsDeclined(true);
         }
 

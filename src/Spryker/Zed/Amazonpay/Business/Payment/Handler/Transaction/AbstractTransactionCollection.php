@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 
-class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+
+abstract class AbstractTransactionCollection
 {
 
     /**
@@ -27,11 +28,11 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $abstractTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(QuoteTransfer $abstractTransfer)
+    protected function executeHandlers(AbstractTransfer $abstractTransfer)
     {
         foreach ($this->transactionHandlers as $transactionHandler) {
             $abstractTransfer = $transactionHandler->execute($abstractTransfer);
@@ -43,5 +44,4 @@ class ConfirmPurchaseTransactionCollection extends AbstractQuoteTransaction
 
         return $abstractTransfer;
     }
-
 }

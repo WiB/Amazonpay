@@ -122,6 +122,20 @@ class AdapterFactory implements AdapterFactoryInterface
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
      */
+    public function createAuthorizeCaptureNowOrderAdapter()
+    {
+        return new AuthorizeOrderAdapter(
+            $this->createSdkAdapterFactory()->createAmazonpayClient($this->config),
+            $this->converterFactory->createAuthorizeOrderConverter(),
+            $this->moneyFacade,
+            $this->config,
+            true
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface
+     */
     public function createCaptureOrderAdapter()
     {
         return new CaptureOrderAdapter(

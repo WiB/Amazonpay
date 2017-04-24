@@ -35,4 +35,13 @@ interface AmazonpayBusinessFactoryInterface
      */
     public function createTransactionLogger();
 
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactory
+     */
+    public function createIpnFactory();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface
+     */
+    public function createAdapterFactory();
 }

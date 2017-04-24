@@ -63,13 +63,26 @@ abstract class AbstractOrderTransaction extends AbstractTransaction implements O
         $this->apiResponse = $this->executionAdapter->call($orderTransfer);
         $orderTransfer->getAmazonpayPayment()->setResponseHeader($this->apiResponse->getHeader());
         $this->transactionsLogger->log($this->apiResponse->getHeader());
-        $this->paymentEntity =
-            $this->queryContainer->queryPaymentByOrderReferenceId(
-                $orderTransfer->getAmazonpayPayment()->getOrderReferenceId()
-            )
-                ->findOne();
+        $this->paymentEntity = $this->retrievePaymentEntity($orderTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
+     */
+    protected function retrievePaymentEntity(OrderTransfer $orderTransfer)
+    {
+        if ($this->paymentEntity) {
+            return $this->paymentEntity;
+        }
+
+        return $this->queryContainer->queryPaymentByOrderReferenceId(
+            $orderTransfer->getAmazonpayPayment()->getOrderReferenceId()
+        )
+            ->findOne();
     }
 
 }

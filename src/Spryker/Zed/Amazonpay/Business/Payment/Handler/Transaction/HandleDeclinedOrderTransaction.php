@@ -47,12 +47,17 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
             return $abstractTransfer;
         }
 
-        if ($abstractTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getIsPaymentMethodInvalid()) {
+        if ($abstractTransfer->getAmazonpayPayment()
+                ->getAuthorizationDetails()
+                ->getAuthorizationStatus()
+                ->getIsPaymentMethodInvalid()
+        ) {
             return $abstractTransfer;
         }
 
         $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($abstractTransfer);
 
+        //@todo should be  $checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus()->isOpen instead
         if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus() === self::ORDER_REFERENCE_STATUS_OPEN) {
             $this->cancelOrderTransaction->execute($abstractTransfer);
         }

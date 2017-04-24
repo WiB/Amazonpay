@@ -36,24 +36,33 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
         Client $client,
         ResponseParserConverterInterface $converter,
         AmazonpayToMoneyInterface $moneyFacade,
-        AmazonpayConfigInterface $config
+        AmazonpayConfigInterface $config,
+        $captureNow = null
     ) {
         parent::__construct($client);
 
         $this->converter = $converter;
         $this->moneyFacade = $moneyFacade;
-        $this->captureNow = $config->getCaptureNow();
+
+        if (is_null($captureNow)) {
+            $this->captureNow = $config->getCaptureNow();
+        } else {
+            $this->captureNow = (bool)$captureNow;
+        }
+
         $this->transactionTimeout = $config->getAuthTransactionTimeout();
     }
 
     protected function buildRequestArray(AmazonpayPaymentTransfer $amazonpayPaymentTransfer, $amount)
     {
+        // ExpiredUnused
         return [
             static::AMAZON_ORDER_REFERENCE_ID => $amazonpayPaymentTransfer->getOrderReferenceId(),
             static::AUTHORIZATION_AMOUNT => $amount,
             static::AUTHORIZATION_REFERENCE_ID => $amazonpayPaymentTransfer->getAuthorizationReferenceId(),
             static::TRANSACTION_TIMEOUT => $this->transactionTimeout,
             static::CAPTURE_NOW => $this->captureNow,
+            'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"InvalidPaymentMethod", "ExpirationTimeInMins":1}}',
             // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod", "PaymentMethodUpdateTimeInMins":1, "SoftDecline":"false"}}'
         ];
     }

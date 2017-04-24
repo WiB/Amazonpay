@@ -58,6 +58,10 @@ interface AmazonpayConstants
     const OMS_EVENT_CLOSE = 'close';
     const OMS_EVENT_REFUND = 'refund';
 
+    const REASON_CODE_EXPIRED_UNUSED = 'ExpiredUnused';
+    const REASON_CODE_SELLER_CLOSED = 'SellerClosed';
+    const REASON_CODE_PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
+
     const IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE = 'PaymentAuthorize';
     const IPN_REQUEST_TYPE_PAYMENT_CAPTURE = 'PaymentCapture';
     const IPN_REQUEST_TYPE_PAYMENT_REFUND = 'PaymentRefund';
