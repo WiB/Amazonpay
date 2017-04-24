@@ -61,7 +61,7 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
             static::AUTHORIZATION_REFERENCE_ID => $amazonpayPaymentTransfer->getAuthorizationReferenceId(),
             static::TRANSACTION_TIMEOUT => $this->transactionTimeout,
             static::CAPTURE_NOW => $this->captureNow,
-            'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"ExpiredUnused", "ExpirationTimeInMins":1}}',
+            // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"ExpiredUnused", "ExpirationTimeInMins":1}}',
             // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod", "PaymentMethodUpdateTimeInMins":1, "SoftDecline":"false"}}'
         ];
     }

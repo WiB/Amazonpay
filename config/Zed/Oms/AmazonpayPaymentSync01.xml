@@ -4,37 +4,28 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
 
-    <process name="AmazonpayPayment01" main="true">
+    <process name="AmazonpayPaymentSync01" main="true">
+        <subprocesses>
+            <process>AmazonpayCaptured</process>
+        </subprocesses>
+
         <states>
             <state name="new" reserved="true"/>
-            <state name="closed" reserved="true"/>
-            <state name="refunded"/>
         </states>
 
         <events>
-            <event name="close" manual="true" command="Amazonpay/CloseOrder" />
-            <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
+            <event name="update order status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
         </events>
 
         <transitions>
-            <transition condition="Amazonpay/IsClosed" happy="true">
+            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
                 <source>new</source>
-                <target>closed</target>
-                <event>close</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsRefunded">
-                <source>new</source>
-                <target>refunded</target>
-                <event>refund</event>
-            </transition>
-
-            <transition  condition="Amazonpay/IsRefunded">
-                <source>closed</source>
-                <target>refunded</target>
-                <event>refund</event>
+                <target>capture completed</target>
+                <event>update order status</event>
             </transition>
         </transitions>
     </process>
+
+    <process name="AmazonpayCaptured" file="AmazonpayCapturedSubprocess01.xml"/>
 
 </statemachine>

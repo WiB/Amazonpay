@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<statemachine
+        xmlns="spryker:oms-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
+
+    <process name="AmazonpayCaptured">
+        <states>
+            <state name="capture completed" reserved="true"/>
+
+            <state name="refund pending"/>
+            <state name="refund completed"/>
+            <state name="refund declined"/>
+
+            <state name="closed" reserved="true"/>
+        </states>
+
+        <events>
+            <event name="update refund status" manual="true" command="Amazonpay/UpdateRefundStatus" />
+            <event name="capture" manual="true" command="Amazonpay/Capture" />
+            <event name="close" manual="true" command="Amazonpay/CloseOrder" />
+            <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
+        </events>
+
+        <transitions>
+            <!-- from capture_completed to refund -->
+            <transition condition="Amazonpay/IsRefundPending">
+                <source>capture completed</source>
+                <target>refund pending</target>
+                <event>refund</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefundCompleted">
+                <source>capture completed</source>
+                <target>refund completed</target>
+                <event>refund</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefundDeclined">
+                <source>capture completed</source>
+                <target>refund declined</target>
+                <event>refund</event>
+            </transition>
+
+            <!-- from refund_pending -->
+            <transition condition="Amazonpay/IsRefundCompleted">
+                <source>refund pending</source>
+                <target>refund completed</target>
+                <event>update refund status</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsRefundDeclined">
+                <source>refund pending</source>
+                <target>refund declined</target>
+                <event>update refund status</event>
+            </transition>
+
+            <!-- close -->
+            <transition condition="Amazonpay/IsClosed" happy="true">
+                <source>capture completed</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsClosed">
+                <source>refund completed</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+        </transitions>
+    </process>
+
+</statemachine>

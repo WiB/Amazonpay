@@ -4,7 +4,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
 
-    <process name="AmazonpayPayment01" main="true">
+    <process name="AmazonpayPaymentAsync01" main="true">
+        <subprocesses>
+            <process>AmazonpayCaptured</process>
+        </subprocesses>
+
         <states>
             <state name="new" reserved="true"/>
 
@@ -15,25 +19,25 @@
             <state name="auth declined"/>
 
             <state name="capture pending" reserved="true"/>
-            <state name="capture completed" reserved="true"/>
+            <!--<state name="capture completed" reserved="true"/>-->
             <state name="capture declined"/>
 
-            <state name="refund pending"/>
-            <state name="refund completed"/>
-            <state name="refund declined"/>
+            <!--<state name="refund pending"/>-->
+            <!--<state name="refund completed"/>-->
+            <!--<state name="refund declined"/>-->
 
-            <state name="closed" reserved="true"/>
+            <!--<state name="closed" reserved="true"/>-->
         </states>
 
         <events>
             <event name="update order status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
             <event name="update authorization status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
             <event name="update capture status" manual="true" command="Amazonpay/UpdateCaptureStatus" />
-            <event name="update refund status" manual="true" command="Amazonpay/UpdateRefundStatus" />
-            <event name="capture" manual="true" command="Amazonpay/Capture" />
+            <!--<event name="update refund status" manual="true" command="Amazonpay/UpdateRefundStatus" />-->
+            <!--<event name="capture" manual="true" command="Amazonpay/Capture" />-->
             <event name="update suspended order" command="Amazonpay/UpdateSuspendedOrder" />
-            <event name="close" manual="true" command="Amazonpay/CloseOrder" />
-            <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
+            <!--<event name="close" manual="true" command="Amazonpay/CloseOrder" />-->
+            <!--<event name="refund" manual="true" command="Amazonpay/RefundOrder" />-->
         </events>
 
         <transitions>
@@ -47,12 +51,6 @@
             <transition condition="Amazonpay/IsAuthOpen" happy="true">
                 <source>new</source>
                 <target>auth open</target>
-                <event>update order status</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
-                <source>new</source>
-                <target>capture completed</target>
                 <event>update order status</event>
             </transition>
 
@@ -120,64 +118,15 @@
                 <event>capture</event>
             </transition>
 
-            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
-                <source>auth open</source>
-                <target>capture completed</target>
-                <event>capture</event>
-            </transition>
-
             <transition condition="Amazonpay/IsCaptureDeclined">
                 <source>auth open</source>
                 <target>capture declined</target>
                 <event>capture</event>
             </transition>
 
-            <!-- from capture_completed to refund -->
-            <transition condition="Amazonpay/IsRefundPending" happy="true">
-                <source>capture completed</source>
-                <target>refund pending</target>
-                <event>refund</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsRefundCompleted" happy="true">
-                <source>capture completed</source>
-                <target>refund completed</target>
-                <event>refund</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsRefundDeclined">
-                <source>capture completed</source>
-                <target>refund declined</target>
-                <event>refund</event>
-            </transition>
-
-            <!-- from refund_pending -->
-            <transition condition="Amazonpay/IsRefundCompleted" happy="true">
-                <source>refund pending</source>
-                <target>refund completed</target>
-                <event>update refund status</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsRefundDeclined">
-                <source>refund pending</source>
-                <target>refund declined</target>
-                <event>update refund status</event>
-            </transition>
-
-            <!-- close -->
-            <transition condition="Amazonpay/IsClosed" happy="true">
-                <source>capture completed</source>
-                <target>closed</target>
-                <event>close</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsClosed" happy="true">
-                <source>refund completed</source>
-                <target>closed</target>
-                <event>close</event>
-            </transition>
-
         </transitions>
     </process>
+
+    <process name="AmazonpayCaptured" file="AmazonpayCapturedSubprocess01.xml"/>
 
 </statemachine>

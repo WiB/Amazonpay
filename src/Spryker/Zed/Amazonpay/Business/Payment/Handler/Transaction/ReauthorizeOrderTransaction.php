@@ -27,6 +27,9 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
     {
         if ($orderTransfer->getAmazonpayPayment()
                 ->getAuthorizationDetails()
+                ->getAuthorizationStatus() &&
+            $orderTransfer->getAmazonpayPayment()
+                ->getAuthorizationDetails()
                 ->getAuthorizationStatus()
                 ->getIsOpen()
         ) {
@@ -34,6 +37,9 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
         }
 
         if ($orderTransfer->getAmazonpayPayment()
+            ->getAuthorizationDetails()
+            ->getAuthorizationStatus() &&
+            $orderTransfer->getAmazonpayPayment()
                 ->getAuthorizationDetails()
                 ->getAuthorizationStatus()
                 ->getIsClosed()
