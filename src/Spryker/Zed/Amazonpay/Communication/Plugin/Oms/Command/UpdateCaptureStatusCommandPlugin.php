@@ -18,10 +18,7 @@ class UpdateCaptureStatusCommandPlugin extends AbstractAmazonpayCommandPlugin
      */
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        if ($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus()
-            === AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING
-            && count($orderEntity->getItems()) === count($salesOrderItems)
-        ) {
+        if (count($orderEntity->getItems()) === count($salesOrderItems)) {
             $orderTransfer = $this->getOrderTransfer($orderEntity);
             $this->getFacade()->updateCaptureStatus($orderTransfer);
         }

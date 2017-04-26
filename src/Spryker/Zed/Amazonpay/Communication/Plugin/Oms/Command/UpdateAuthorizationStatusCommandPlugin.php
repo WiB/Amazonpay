@@ -13,17 +13,19 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 class UpdateAuthorizationStatusCommandPlugin extends AbstractAmazonpayCommandPlugin
 {
+
     /**
      * @inheritdoc
      */
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        if ($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus()
-            === AmazonpayConstants::OMS_STATUS_AUTH_PENDING
-            && count($orderEntity->getItems()) === count($salesOrderItems)
-        ) {
+        echo 'trggered' . PHP_EOL;
+
+        if (count($orderEntity->getItems()) === count($salesOrderItems)) {
             $orderTransfer = $this->getOrderTransfer($orderEntity);
             $this->getFacade()->updateAuthorizationStatus($orderTransfer);
+        } else {
+            echo count($salesOrderItems) . PHP_EOL;
         }
 
         return [];

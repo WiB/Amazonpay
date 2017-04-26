@@ -180,6 +180,14 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
+        if ($ipnRequest->getOrderReferenceStatus()->getIsClosed()) {
+            return new IpnOrderReferenceClosedHandler(
+                $this->omsFacade,
+                $this->amazonpayQueryContainer,
+                $this->ipnRequestLogger
+            );
+        }
+
         if ($ipnRequest->getOrderReferenceStatus()->getIsSuspended()) {
             return new IpnOrderReferenceSuspendedHandler(
                 $this->omsFacade,

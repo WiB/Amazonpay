@@ -10,6 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;
+use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Notification\OrderAuthFailedTransaction;
 use Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
 

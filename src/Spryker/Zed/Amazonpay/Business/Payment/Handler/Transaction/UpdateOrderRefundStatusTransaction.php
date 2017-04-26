@@ -25,6 +25,12 @@ class UpdateOrderRefundStatusTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
+        if ($orderTransfer->getAmazonpayPayment()->getOrderReferenceStatus()
+                !==  AmazonpayConstants::OMS_STATUS_REFUND_PENDING
+        ) {
+            return $orderTransfer;
+        }
+
         $orderTransfer = parent::execute($orderTransfer);
 
         if ($this->apiResponse->getHeader()->getIsSuccess()) {

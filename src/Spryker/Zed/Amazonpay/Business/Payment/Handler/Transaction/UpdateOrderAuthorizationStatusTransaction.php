@@ -24,6 +24,12 @@ class UpdateOrderAuthorizationStatusTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
+        if ($orderTransfer->getAmazonpayPayment()->getOrderReferenceStatus()
+                !==  AmazonpayConstants::OMS_STATUS_AUTH_PENDING
+        ) {
+            return $orderTransfer;
+        }
+
         $orderTransfer = parent::execute($orderTransfer);
 
         $orderTransfer->getAmazonpayPayment()->setAuthorizationDetails(
