@@ -8,10 +8,9 @@
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
-class UpdateAuthorizationStatusCommandPlugin extends AbstractAmazonpayCommandPlugin
+class CancelOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
 {
 
     /**
@@ -19,9 +18,9 @@ class UpdateAuthorizationStatusCommandPlugin extends AbstractAmazonpayCommandPlu
      */
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
+        // no partial closing should be possible
         if (count($orderEntity->getItems()) === count($salesOrderItems)) {
-            $orderTransfer = $this->getOrderTransfer($orderEntity);
-            $this->getFacade()->updateAuthorizationStatus($orderTransfer);
+            $this->getFacade()->cancelOrder($this->getOrderTransfer($orderEntity));
         }
 
         return [];

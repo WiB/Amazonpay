@@ -18,26 +18,34 @@
         <events>
             <event name="update refund status" manual="true" command="Amazonpay/UpdateRefundStatus" />
             <event name="capture" manual="true" command="Amazonpay/Capture" />
-            <event name="close" manual="true" command="Amazonpay/CloseOrder" />
+            <event name="close" onEnter="true" command="Amazonpay/CloseOrder" />
             <event name="refund" manual="true" command="Amazonpay/RefundOrder" />
+            <event name="cancel" manual="true" command="Amazonpay/CancelOrder" />
         </events>
 
         <transitions>
-            <!-- from capture_completed to refund -->
-            <transition condition="Amazonpay/IsRefundPending">
+            <!-- close -->
+            <transition condition="Amazonpay/IsClosed" happy="true">
                 <source>capture completed</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+
+            <!-- from closed to refund -->
+            <transition condition="Amazonpay/IsRefundPending">
+                <source>closed</source>
                 <target>refund pending</target>
                 <event>refund</event>
             </transition>
 
             <transition condition="Amazonpay/IsRefundCompleted">
-                <source>capture completed</source>
+                <source>closed</source>
                 <target>refund completed</target>
                 <event>refund</event>
             </transition>
 
             <transition condition="Amazonpay/IsRefundDeclined">
-                <source>capture completed</source>
+                <source>closed</source>
                 <target>refund declined</target>
                 <event>refund</event>
             </transition>
@@ -53,19 +61,6 @@
                 <source>refund pending</source>
                 <target>refund declined</target>
                 <event>update refund status</event>
-            </transition>
-
-            <!-- close -->
-            <transition condition="Amazonpay/IsClosed" happy="true">
-                <source>capture completed</source>
-                <target>closed</target>
-                <event>close</event>
-            </transition>
-
-            <transition condition="Amazonpay/IsClosed">
-                <source>refund completed</source>
-                <target>closed</target>
-                <event>close</event>
             </transition>
         </transitions>
     </process>

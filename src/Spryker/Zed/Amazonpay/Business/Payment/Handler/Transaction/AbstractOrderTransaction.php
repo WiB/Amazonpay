@@ -62,7 +62,10 @@ abstract class AbstractOrderTransaction extends AbstractTransaction implements O
     {
         $this->apiResponse = $this->executionAdapter->call($orderTransfer);
         $orderTransfer->getAmazonpayPayment()->setResponseHeader($this->apiResponse->getHeader());
-        $this->transactionsLogger->log($this->apiResponse->getHeader());
+        $this->transactionsLogger->log(
+            $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            $this->apiResponse->getHeader()
+        );
         $this->paymentEntity = $this->retrievePaymentEntity($orderTransfer);
 
         return $orderTransfer;

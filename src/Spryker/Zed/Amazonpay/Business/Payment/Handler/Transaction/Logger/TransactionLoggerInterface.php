@@ -13,10 +13,11 @@ interface TransactionLoggerInterface
 {
 
     /**
+     * @param string $orderReferenceId
      * @param \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer $headerTransfer
      *
      * @return void
      */
-    public function log(AmazonpayResponseHeaderTransfer $headerTransfer);
+    public function log($orderReferenceId, AmazonpayResponseHeaderTransfer $headerTransfer);
 
 }

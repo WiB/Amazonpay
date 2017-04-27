@@ -19,25 +19,16 @@
             <state name="auth declined"/>
 
             <state name="capture pending" reserved="true"/>
-            <!--<state name="capture completed" reserved="true"/>-->
             <state name="capture declined"/>
 
-            <!--<state name="refund pending"/>-->
-            <!--<state name="refund completed"/>-->
-            <!--<state name="refund declined"/>-->
-
-            <!--<state name="closed" reserved="true"/>-->
+            <state name="cancelled"/>
         </states>
 
         <events>
             <event name="update order status" onEnter="true" command="Amazonpay/UpdateNewOrderStatus" />
             <event name="update authorization status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
             <event name="update capture status" manual="true" command="Amazonpay/UpdateCaptureStatus" />
-            <!--<event name="update refund status" manual="true" command="Amazonpay/UpdateRefundStatus" />-->
-            <!--<event name="capture" manual="true" command="Amazonpay/Capture" />-->
             <event name="update suspended order" command="Amazonpay/UpdateSuspendedOrder" />
-            <!--<event name="close" manual="true" command="Amazonpay/CloseOrder" />-->
-            <!--<event name="refund" manual="true" command="Amazonpay/RefundOrder" />-->
         </events>
 
         <transitions>
@@ -98,6 +89,13 @@
                 <event>update suspended order</event>
             </transition>
 
+            <!-- from closed to cancelled -->
+            <transition condition="Amazonpay/IsCancelled">
+                <source>auth open</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
             <!-- from capture_pending -->
             <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
                 <source>capture pending</source>
@@ -123,7 +121,6 @@
                 <target>capture declined</target>
                 <event>capture</event>
             </transition>
-
         </transitions>
     </process>
 

@@ -36,6 +36,16 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     /**
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
+     * @return boolean
+     */
+    protected function extractIsSandbox(ResponseParser $responseParser)
+    {
+        return ($this->extractResult($responseParser)['OrderReferenceDetails']['ReleaseEnvironment'] === 'Sandbox');
+    }
+
+    /**
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function extractBillingAddress(ResponseParser $responseParser)
@@ -71,6 +81,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
         ResponseParser $responseParser
     ) {
         $responseTransfer->setOrderReferenceStatus($this->extractOrderReferenceStatus($responseParser));
+        $responseTransfer->setIsSandbox($this->extractIsSandbox($responseParser));
         $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));
         $responseTransfer->setBillingAddress($this->extractBillingAddress($responseParser));
 

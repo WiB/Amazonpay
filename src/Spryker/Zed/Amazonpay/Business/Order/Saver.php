@@ -50,6 +50,7 @@ class Saver implements SaverInterface
         $paymentEntity->setAmazonCaptureId($paymentTransfer->getAuthorizationDetails()->getIdList());
         $paymentEntity->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $paymentEntity->setRequestId($paymentTransfer->getResponseHeader()->getRequestId());
+        $paymentEntity->setIsSandbox($paymentTransfer->getIsSandbox());
         $paymentEntity->save();
 
         return $paymentEntity;

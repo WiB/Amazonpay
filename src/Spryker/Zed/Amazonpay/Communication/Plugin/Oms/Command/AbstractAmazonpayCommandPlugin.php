@@ -33,28 +33,15 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
      */
     protected function getOrderTransfer(SpySalesOrder $orderEntity, array $salesOrderItems = [])
     {
-        $paymentTransfer = new AmazonpayPaymentTransfer();
-
         $responseHeader = new AmazonpayResponseHeaderTransfer();
         $responseHeader->setIsSuccess(true);
+
+        $paymentTransfer = new AmazonpayPaymentTransfer();
         $paymentTransfer->setResponseHeader($responseHeader);
-
-        $authDetailsTransfer = new AmazonpayAuthorizationDetailsTransfer();
-        $authDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
-        $authDetailsTransfer->setAuthorizationStatus(
-            $this->getStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
-        );
-
-        $captureDetailsTransfer = new AmazonpayCaptureDetailsTransfer();
-        $captureDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
-
-        $refundDetailsTransfer = new AmazonpayRefundDetailsTransfer();
-        $refundDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
-
         $paymentTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
-        $paymentTransfer->setAuthorizationDetails($authDetailsTransfer);
-        $paymentTransfer->setCaptureDetails($captureDetailsTransfer);
-        $paymentTransfer->setRefundDetails($refundDetailsTransfer);
+        $paymentTransfer->setAuthorizationDetails($this->getAuthorizationDetailsTransfer($orderEntity));
+        $paymentTransfer->setCaptureDetails($this->getCaptureDetailsTransfer($orderEntity));
+        $paymentTransfer->setRefundDetails($this->getAmazonpayRefundDetailsTransfer($orderEntity));
 
         $orderTransfer = $this
             ->getFactory()
@@ -79,11 +66,59 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer
+     */
+    protected function getAuthorizationDetailsTransfer(SpySalesOrder $orderEntity)
+    {
+        $authDetailsTransfer = new AmazonpayAuthorizationDetailsTransfer();
+        $authDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
+        $authDetailsTransfer->setAuthorizationStatus(
+            $this->getAuthStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
+        );
+
+        return $authDetailsTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\AmazonpayRefundDetailsTransfer
+     */
+    protected function getAmazonpayRefundDetailsTransfer(SpySalesOrder $orderEntity)
+    {
+        $refundDetailsTransfer = new AmazonpayRefundDetailsTransfer();
+        $refundDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
+        $refundDetailsTransfer->setRefundStatus(
+            $this->getRefundStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
+        );
+
+        return $refundDetailsTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\AmazonpayCaptureDetailsTransfer
+     */
+    protected function getCaptureDetailsTransfer($orderEntity)
+    {
+        $captureDetailsTransfer = new AmazonpayCaptureDetailsTransfer();
+        $captureDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
+        $captureDetailsTransfer->setCaptureStatus(
+            $this->getCaptureStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
+        );
+
+        return $captureDetailsTransfer;
+    }
+
+    /**
      * @param string $statusName
      *
      * @return AmazonpayStatusTransfer
      */
-    protected function getStatusTransfer($statusName)
+    protected function getAuthStatusTransfer($statusName)
     {
         $amazonpayStatusTransfer = new AmazonpayStatusTransfer();
 
@@ -102,6 +137,58 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
 
         $amazonpayStatusTransfer->setIsOpen(
             $statusName === AmazonpayConstants::OMS_STATUS_AUTH_OPEN
+        );
+
+        return $amazonpayStatusTransfer;
+    }
+
+    /**
+     * @param string $statusName
+     *
+     * @return AmazonpayStatusTransfer
+     */
+    protected function getCaptureStatusTransfer($statusName)
+    {
+        $amazonpayStatusTransfer = new AmazonpayStatusTransfer();
+
+        $amazonpayStatusTransfer->setIsPending(
+            $statusName === AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING
+        );
+
+        $amazonpayStatusTransfer->setIsDeclined(
+            $statusName === AmazonpayConstants::OMS_STATUS_CAPTURE_DECLINED
+        );
+
+        $amazonpayStatusTransfer->setIsCompleted(
+            $statusName === AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED
+        );
+
+        $amazonpayStatusTransfer->setIsClosed(
+            $statusName === AmazonpayConstants::OMS_STATUS_CAPTURE_CLOSED
+        );
+
+        return $amazonpayStatusTransfer;
+    }
+
+    /**
+     * @param string $statusName
+     *
+     * @return AmazonpayStatusTransfer
+     */
+    protected function getRefundStatusTransfer($statusName)
+    {
+        $amazonpayStatusTransfer = new AmazonpayStatusTransfer();
+
+        $amazonpayStatusTransfer->setIsPending(
+            $statusName === AmazonpayConstants::OMS_STATUS_REFUND_PENDING
+        );
+
+        $amazonpayStatusTransfer->setIsDeclined(
+            $statusName === AmazonpayConstants::OMS_STATUS_REFUND_DECLINED
+        );
+
+        $amazonpayStatusTransfer->setIsCompleted(
+            $statusName === AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED
         );
 
         return $amazonpayStatusTransfer;

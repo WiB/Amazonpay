@@ -23,17 +23,20 @@ abstract class AbstractQuoteTransaction extends AbstractTransaction implements Q
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $abstractTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $abstractTransfer)
+    public function execute(QuoteTransfer $quoteTransfer)
     {
-        $this->apiResponse = $this->executionAdapter->call($abstractTransfer);
-        $abstractTransfer->getAmazonpayPayment()->setResponseHeader($this->apiResponse->getHeader());
-        $this->transactionsLogger->log($this->apiResponse->getHeader());
+        $this->apiResponse = $this->executionAdapter->call($quoteTransfer);
+        $quoteTransfer->getAmazonpayPayment()->setResponseHeader($this->apiResponse->getHeader());
+        $this->transactionsLogger->log(
+            $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            $this->apiResponse->getHeader()
+        );
 
-        return $abstractTransfer;
+        return $quoteTransfer;
     }
 
 }

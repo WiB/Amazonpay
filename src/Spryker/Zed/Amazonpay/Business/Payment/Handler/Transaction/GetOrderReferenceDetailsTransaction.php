@@ -36,8 +36,15 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
                 $quoteTransfer->setBillingSameAsShipping(true);
             }
 
-            $quoteTransfer->setOrderReference($quoteTransfer->getAmazonpayPayment()->getOrderReferenceId());
-            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus($this->apiResponse->getOrderReferenceStatus());
+            $quoteTransfer->getAmazonpayPayment()->setIsSandbox(
+                $this->apiResponse->getIsSandbox()
+            );
+            $quoteTransfer->setOrderReference(
+                $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId()
+            );
+            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus(
+                $this->apiResponse->getOrderReferenceStatus()
+            );
         }
 
         return $quoteTransfer;

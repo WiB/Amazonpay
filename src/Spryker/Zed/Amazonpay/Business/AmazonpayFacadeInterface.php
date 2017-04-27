@@ -84,6 +84,18 @@ interface AmazonpayFacadeInterface
 
     /**
      * Specification
+     * - send an API call to Amazon that order is cancelled
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function cancelOrder(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification
      * - calculates the refund amount
      *
      * @api

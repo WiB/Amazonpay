@@ -16,6 +16,7 @@
         <column name="refund_reference_id" type="VARCHAR"/>
         <column name="amazon_refund_id" type="VARCHAR"/>
         <column name="request_id" type="VARCHAR"/>
+        <column name="is_sandbox" required="true" type="INTEGER"/>
 
         <foreign-key name="spy_payment_amazonpay-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
@@ -35,6 +36,7 @@
 
     <table name="spy_payment_amazonpay_api_log">
         <column name="id_payment_amazonpay_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="order_reference_id" type="VARCHAR"/>
         <column name="status_code" type="INTEGER"/>
         <column name="request_id" type="VARCHAR"/>
         <column name="error_message" type="VARCHAR"/>

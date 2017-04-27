@@ -15,6 +15,7 @@
         <property name="captureReferenceId" type="string"/>
         <property name="refundReferenceId" type="string"/>
         <property name="orderReferenceStatus" type="string"/>
+        <property name="isSandbox" type="string"/>
         <property name="authorizationDetails" type="AmazonpayAuthorizationDetails"/>
         <property name="captureDetails" type="AmazonpayCaptureDetails"/>
         <property name="refundDetails" type="AmazonpayRefundDetails"/>
@@ -56,6 +57,7 @@
     <transfer name="AmazonpayGetOrderReferenceDetailsResponse">
         <property name="header" type="AmazonpayResponseHeader"/>
         <property name="orderReferenceStatus" type="string"/>
+        <property name="isSandbox" type="bool"/>
         <property name="shippingAddress" type="Address"/>
         <property name="billingAddress" type="Address"/>
     </transfer>
@@ -112,6 +114,7 @@
         <property name="softDecline" type="bool" />
         <property name="captureNow" type="bool" />
         <property name="softDescriptor" type="string" />
+        <property name="releaseEnvironment" type="string" />
     </transfer>
 
     <transfer name="AmazonpayCaptureDetails">

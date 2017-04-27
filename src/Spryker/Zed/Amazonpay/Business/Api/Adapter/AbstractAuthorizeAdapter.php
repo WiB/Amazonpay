@@ -13,7 +13,6 @@ use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
-
 abstract class AbstractAuthorizeAdapter extends AbstractAdapter
 {
 
@@ -32,6 +31,13 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
      */
     protected $transactionTimeout;
 
+    /**
+     * @param \PayWithAmazon\Client $client
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
+     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param bool|null $captureNow
+     */
     public function __construct(
         Client $client,
         ResponseParserConverterInterface $converter,
@@ -53,6 +59,12 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
         $this->transactionTimeout = $config->getAuthTransactionTimeout();
     }
 
+    /**
+     * @param AmazonpayPaymentTransfer $amazonpayPaymentTransfer
+     * @param double $amount
+     *
+     * @return array
+     */
     protected function buildRequestArray(AmazonpayPaymentTransfer $amazonpayPaymentTransfer, $amount)
     {
         return [
@@ -61,7 +73,7 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
             static::AUTHORIZATION_REFERENCE_ID => $amazonpayPaymentTransfer->getAuthorizationReferenceId(),
             static::TRANSACTION_TIMEOUT => $this->transactionTimeout,
             static::CAPTURE_NOW => $this->captureNow,
-            // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"ExpiredUnused", "ExpirationTimeInMins":1}}',
+            //'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"ExpiredUnused", "ExpirationTimeInMins":1}}',
             // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod", "PaymentMethodUpdateTimeInMins":1, "SoftDecline":"false"}}'
         ];
     }

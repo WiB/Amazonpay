@@ -79,7 +79,7 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     {
         return $this->getFactory()
             ->createTransactionFactory()
-            ->createConfirmPurchaseTransactionCollection()
+            ->createConfirmPurchaseTransaction()
             ->execute($quoteTransfer);
     }
 
@@ -92,7 +92,22 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     {
         return $this->getFactory()
             ->createTransactionFactory()
-            ->createCaptureAuthorizedTransactionCollection()
+            ->createCaptureAuthorizedTransaction()
+            ->execute($orderTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function cancelOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createTransactionFactory()
+            ->createCancelOrderTransaction()
             ->execute($orderTransfer);
     }
 

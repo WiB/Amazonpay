@@ -26,7 +26,12 @@ interface TransactionFactoryInterface
     public function createGetOrderReferenceDetailsTransaction();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createCancelPreOrderTransaction();
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
      */
     public function createCancelOrderTransaction();
 
@@ -41,9 +46,9 @@ interface TransactionFactoryInterface
     public function createReauthorizeOrderTransaction();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionCollection
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
      */
-    public function createCaptureAuthorizedTransactionCollection();
+    public function createCaptureAuthorizedTransaction();
 
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
@@ -63,7 +68,7 @@ interface TransactionFactoryInterface
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionCollection
      */
-    public function createConfirmPurchaseTransactionCollection();
+    public function createConfirmPurchaseTransaction();
 
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface

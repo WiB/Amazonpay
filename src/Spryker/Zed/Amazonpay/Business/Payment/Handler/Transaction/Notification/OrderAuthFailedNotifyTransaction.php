@@ -42,8 +42,6 @@ class OrderAuthFailedNotifyTransaction implements OrderTransactionInterface
      */
     public function execute(OrderTransfer $orderTransfer)
     {
-        echo 'executed' . PHP_EOL;
-
         $message = $this->orderMessageFactory->createFailedAuthMessage($orderTransfer);
 
         if ($orderTransfer->getAmazonpayPayment()
@@ -52,8 +50,6 @@ class OrderAuthFailedNotifyTransaction implements OrderTransactionInterface
                 ->getIsDeclined()
         ) {
             $this->orderFailedAuthNotificationSender->notify($message);
-        } else {
-            echo 'no action' . PHP_EOL;
         }
 
         return $orderTransfer;

@@ -18,25 +18,25 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
     protected $apiResponse;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $abstractTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $abstractTransfer)
+    public function execute(QuoteTransfer $quoteTransfer)
     {
-        $abstractTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
-            $this->generateOperationReferenceId($abstractTransfer)
+        $quoteTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
+            $this->generateOperationReferenceId($quoteTransfer)
         );
 
-        $abstractTransfer = parent::execute($abstractTransfer);
+        $quoteTransfer = parent::execute($quoteTransfer);
 
-        if ($abstractTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
-            $abstractTransfer->getAmazonpayPayment()->setAuthorizationDetails(
+        if ($quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
+            $quoteTransfer->getAmazonpayPayment()->setAuthorizationDetails(
                 $this->apiResponse->getAuthorizationDetails()
             );
         }
 
-        return $abstractTransfer;
+        return $quoteTransfer;
     }
 
 }

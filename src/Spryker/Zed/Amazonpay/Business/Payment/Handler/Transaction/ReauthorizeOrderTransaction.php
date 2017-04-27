@@ -27,9 +27,6 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
     {
         if ($orderTransfer->getAmazonpayPayment()
                 ->getAuthorizationDetails()
-                ->getAuthorizationStatus() &&
-            $orderTransfer->getAmazonpayPayment()
-                ->getAuthorizationDetails()
                 ->getAuthorizationStatus()
                 ->getIsOpen()
         ) {
@@ -37,20 +34,15 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
         }
 
         if ($orderTransfer->getAmazonpayPayment()
-            ->getAuthorizationDetails()
-            ->getAuthorizationStatus() &&
-            $orderTransfer->getAmazonpayPayment()
                 ->getAuthorizationDetails()
                 ->getAuthorizationStatus()
-                ->getIsClosed()
-        ) {
-            if (!$orderTransfer->getAmazonpayPayment()
+                ->getIsClosed() &&
+            !$orderTransfer->getAmazonpayPayment()
                 ->getAuthorizationDetails()
                 ->getAuthorizationStatus()
                 ->getIsReauthorizable()
-            ) {
-                return $orderTransfer;
-            }
+        ) {
+            return $orderTransfer;
         }
 
         $orderTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(

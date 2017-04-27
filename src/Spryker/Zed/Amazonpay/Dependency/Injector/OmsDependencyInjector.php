@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Dependency\Injector;
 
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CancelOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CaptureCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CloseOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateSuspendedOrderCommandPlugin;
@@ -20,6 +21,7 @@ use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthDeclinedCondi
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthOpenConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthPendingConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthSuspendedConditionPlugin;
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCancelledConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCaptureCompletedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCaptureDeclinedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCapturePendingConditionPlugin;
@@ -57,19 +59,21 @@ class OmsDependencyInjector extends AbstractDependencyInjector
      */
     protected function injectCommands(Container $container)
     {
-        $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
-            $commandCollection
-                ->add(new CloseOrderCommandPlugin(), 'Amazonpay/CloseOrder')
-                ->add(new RefundOrderCommandPlugin(), 'Amazonpay/RefundOrder')
-                ->add(new CaptureCommandPlugin(), 'Amazonpay/Capture')
-                ->add(new UpdateSuspendedOrderCommandPlugin(), 'Amazonpay/UpdateSuspendedOrder')
-                ->add(new UpdateNewOrderStatusCommandPlugin(), 'Amazonpay/UpdateNewOrderStatus')
-                ->add(new UpdateAuthorizationStatusCommandPlugin(), 'Amazonpay/UpdateAuthorizationStatus')
-                ->add(new UpdateCaptureStatusCommandPlugin(), 'Amazonpay/UpdateCaptureStatus')
-                ->add(new UpdateRefundStatusCommandPlugin(), 'Amazonpay/UpdateRefundStatus')
-            ;
+        $container->extend(OmsDependencyProvider::COMMAND_PLUGINS,
+            function (CommandCollectionInterface $commandCollection) {
+                $commandCollection
+                    ->add(new CancelOrderCommandPlugin(), 'Amazonpay/CancelOrder')
+                    ->add(new CloseOrderCommandPlugin(), 'Amazonpay/CloseOrder')
+                    ->add(new RefundOrderCommandPlugin(), 'Amazonpay/RefundOrder')
+                    ->add(new CaptureCommandPlugin(), 'Amazonpay/Capture')
+                    ->add(new UpdateSuspendedOrderCommandPlugin(), 'Amazonpay/UpdateSuspendedOrder')
+                    ->add(new UpdateNewOrderStatusCommandPlugin(), 'Amazonpay/UpdateNewOrderStatus')
+                    ->add(new UpdateAuthorizationStatusCommandPlugin(), 'Amazonpay/UpdateAuthorizationStatus')
+                    ->add(new UpdateCaptureStatusCommandPlugin(), 'Amazonpay/UpdateCaptureStatus')
+                    ->add(new UpdateRefundStatusCommandPlugin(), 'Amazonpay/UpdateRefundStatus')
+                ;
 
-            return $commandCollection;
+                return $commandCollection;
         });
 
         return $container;
@@ -84,8 +88,9 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
-                ->add(new IsClosedConditionPlugin(), 'Amazonpay/IsClosed')
                 ->add(new IsRefundedConditionPlugin(), 'Amazonpay/IsRefunded')
+                ->add(new IsClosedConditionPlugin(), 'Amazonpay/IsClosed')
+                ->add(new IsCancelledConditionPlugin(), 'Amazonpay/IsCancelled')
 
                 ->add(new IsAuthOpenConditionPlugin(), 'Amazonpay/IsAuthOpen')
                 ->add(new IsAuthDeclinedConditionPlugin(), 'Amazonpay/IsAuthDeclined')

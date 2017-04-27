@@ -53,17 +53,19 @@ class TransactionLogger implements TransactionLoggerInterface
     }
 
     /**
+     * @param string $orderReferenceId
      * @param \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer $headerTransfer
      *
      * @return void
      */
-    public function log(AmazonpayResponseHeaderTransfer $headerTransfer)
+    public function log($orderReferenceId, AmazonpayResponseHeaderTransfer $headerTransfer)
     {
         if (!$this->isLoggingEnabled($headerTransfer)) {
             return;
         }
 
         $logEntity = new SpyPaymentAmazonpayApiLog();
+        $logEntity->setOrderReferenceId($orderReferenceId);
         $logEntity->setStatusCode($headerTransfer->getStatusCode());
         $logEntity->setRequestId($headerTransfer->getRequestId());
         $logEntity->setErrorMessage($headerTransfer->getErrorMessage());

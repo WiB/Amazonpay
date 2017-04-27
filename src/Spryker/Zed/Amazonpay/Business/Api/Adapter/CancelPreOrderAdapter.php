@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-class CancelOrderAdapter extends AbstractOrderAdapter
+class CancelPreOrderAdapter extends AbstractQuoteAdapter
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\AmazonpayCancelOrderResponseTransfer
      */
-    public function call(OrderTransfer $orderTransfer)
+    public function call(QuoteTransfer $quoteTransfer)
     {
         $result = $this->client->cancelOrderReference([
-            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $orderTransfer->getAmazonpayPayment()->getOrderReferenceId(),
+            AbstractAdapter::AMAZON_ORDER_REFERENCE_ID => $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId(),
         ]);
 
         return $this->converter->convert($result);

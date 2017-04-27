@@ -20,49 +20,49 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
     protected $getOrderReferenceDetailsTransaction;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelPreOrderTransaction
      */
     protected $cancelOrderTransaction;
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction
-     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelOrderTransaction $cancelOrderTransaction
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelPreOrderTransaction $cancelOrderTransaction
      */
     public function __construct(
         GetOrderReferenceDetailsTransaction $getOrderReferenceDetailsTransaction,
-        CancelOrderTransaction $cancelOrderTransaction
+        CancelPreOrderTransaction $cancelOrderTransaction
     ) {
         $this->getOrderReferenceDetailsTransaction = $getOrderReferenceDetailsTransaction;
         $this->cancelOrderTransaction = $cancelOrderTransaction;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $abstractTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $abstractTransfer)
+    public function execute(QuoteTransfer $quoteTransfer)
     {
-        if (!$abstractTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
-            return $abstractTransfer;
+        if (!$quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
+            return $quoteTransfer;
         }
 
-        if ($abstractTransfer->getAmazonpayPayment()
+        if ($quoteTransfer->getAmazonpayPayment()
                 ->getAuthorizationDetails()
                 ->getAuthorizationStatus()
                 ->getIsPaymentMethodInvalid()
         ) {
-            return $abstractTransfer;
+            return $quoteTransfer;
         }
 
-        $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($abstractTransfer);
+        $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
         //@todo should be  $checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus()->isOpen instead
         if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus() === self::ORDER_REFERENCE_STATUS_OPEN) {
-            $this->cancelOrderTransaction->execute($abstractTransfer);
+            $this->cancelOrderTransaction->execute($quoteTransfer);
         }
 
-        return $abstractTransfer;
+        return $quoteTransfer;
     }
 
 }
