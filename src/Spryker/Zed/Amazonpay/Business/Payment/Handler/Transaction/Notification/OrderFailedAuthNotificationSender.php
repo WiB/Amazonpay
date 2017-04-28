@@ -11,9 +11,12 @@ class OrderFailedAuthNotificationSender implements OrderNotificationSenderInterf
 {
 
     /**
-     * @param AbstractNotificationMessage $notificationMessage
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Notification\AbstractNotificationMessage $notificationMessage
+     *
+     * @return void
      */
     public function notify(AbstractNotificationMessage $notificationMessage)
     {
     }
+
 }

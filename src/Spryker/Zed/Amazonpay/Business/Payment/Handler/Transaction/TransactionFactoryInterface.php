@@ -41,9 +41,14 @@ interface TransactionFactoryInterface
     public function createAuthorizeOrderTransaction();
 
     /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    public function createReauthorizeExpiredOrderTransaction();
+
+    /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\ReauthorizeOrderTransaction
      */
-    public function createReauthorizeOrderTransaction();
+    public function createReauthorizeSuspendedOrderTransaction();
 
     /**
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface

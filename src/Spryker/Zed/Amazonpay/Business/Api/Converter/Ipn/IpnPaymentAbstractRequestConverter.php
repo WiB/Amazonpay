@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
-use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter;
 use Generated\Shared\Transfer\AmazonpayIpnRequestMessageTransfer;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter;
 
 abstract class IpnPaymentAbstractRequestConverter extends AbstractArrayConverter
 {
+
     /**
      * @param array $request
      *
-     * @return AmazonpayIpnRequestMessageTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayIpnRequestMessageTransfer
      */
     protected function extractMessage(array $request)
     {
@@ -29,7 +30,6 @@ abstract class IpnPaymentAbstractRequestConverter extends AbstractArrayConverter
         $ipnRequestMessageTransfer->setType($request['Type']);
 
         return $ipnRequestMessageTransfer;
-
     }
 
 }

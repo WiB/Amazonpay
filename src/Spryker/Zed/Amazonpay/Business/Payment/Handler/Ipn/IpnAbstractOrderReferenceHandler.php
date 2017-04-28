@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
-use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class IpnAbstractOrderReferenceHandler extends IpnAbstractTransferRequestHandler
 {
+
     /**
-     * @param AbstractTransfer $amazonpayIpnOrderReferenceOpenTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnOrderReferenceOpenTransfer
      *
-     * @return SpyPaymentAmazonpay
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */
     protected function retrievePaymentEntity(AbstractTransfer $amazonpayIpnOrderReferenceOpenTransfer)
     {

@@ -33,7 +33,7 @@ class CaptureOrderTransaction extends AbstractOrderTransaction
             return $orderTransfer;
         }
 
-        $orderTransfer->getAmazonpayPayment()->setCaptureReferenceId(
+        $orderTransfer->getAmazonpayPayment()->getCaptureDetails()->setCaptureReferenceId(
             $this->generateOperationReferenceId($orderTransfer)
         );
 
@@ -44,18 +44,18 @@ class CaptureOrderTransaction extends AbstractOrderTransaction
                 $this->apiResponse->getCaptureDetails()
             );
 
-            $this->paymentEntity->setAmazonCaptureId($this->apiResponse->getCaptureDetails()->getAmazonCaptureId());
-            $this->paymentEntity->setCaptureReferenceId($this->apiResponse->getCaptureDetails()->getCaptureReferenceId());
-        } else {
-            // do some stuff
-            ;
-        }
+            $this->paymentEntity->setAmazonCaptureId(
+                $this->apiResponse->getCaptureDetails()->getAmazonCaptureId()
+            );
 
-        return $orderTransfer;
+            $this->paymentEntity->setCaptureReferenceId(
+                $this->apiResponse->getCaptureDetails()->getCaptureReferenceId()
+            );
+        }
 
         if ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsDeclined()) {
             $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_DECLINED);
-        }  elseif ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsPending()) {
+        } elseif ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsPending()) {
             $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING);
         } elseif ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsCompleted()) {
             $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED);

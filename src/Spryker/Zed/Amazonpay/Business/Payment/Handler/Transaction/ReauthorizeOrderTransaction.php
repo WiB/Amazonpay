@@ -25,29 +25,11 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
-        if ($orderTransfer->getAmazonpayPayment()
-                ->getAuthorizationDetails()
-                ->getAuthorizationStatus()
-                ->getIsOpen()
-        ) {
-            return $orderTransfer;
-        }
-
-        if ($orderTransfer->getAmazonpayPayment()
-                ->getAuthorizationDetails()
-                ->getAuthorizationStatus()
-                ->getIsClosed() &&
-            !$orderTransfer->getAmazonpayPayment()
-                ->getAuthorizationDetails()
-                ->getAuthorizationStatus()
-                ->getIsReauthorizable()
-        ) {
-            return $orderTransfer;
-        }
-
-        $orderTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
-            $this->generateOperationReferenceId($orderTransfer)
-        );
+        $orderTransfer->getAmazonpayPayment()
+            ->getAuthorizationDetails()
+            ->setAuthorizationReferenceId(
+                $this->generateOperationReferenceId($orderTransfer)
+            );
 
         $orderTransfer = parent::execute($orderTransfer);
 
@@ -56,8 +38,14 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
                 $this->apiResponse->getAuthorizationDetails()
             );
 
-            $this->paymentEntity->setAmazonAuthorizationId($this->apiResponse->getAuthorizationDetails()->getAmazonAuthorizationId());
-            $this->paymentEntity->setAuthorizationReferenceId($this->apiResponse->getAuthorizationDetails()->getAuthorizationReferenceId());
+            $this->paymentEntity->setAmazonAuthorizationId(
+                $this->apiResponse->getAuthorizationDetails()->getAmazonAuthorizationId()
+            );
+
+            $this->paymentEntity->setAuthorizationReferenceId(
+                $this->apiResponse->getAuthorizationDetails()->getAuthorizationReferenceId()
+            );
+
             $this->paymentEntity->save();
         }
 

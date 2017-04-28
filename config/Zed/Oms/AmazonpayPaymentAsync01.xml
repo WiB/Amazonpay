@@ -16,6 +16,7 @@
             <state name="auth open" reserved="true"/>
             <state name="auth closed"/>
             <state name="auth suspended" reserved="true"/>
+            <state name="auth expired" reserved="true"/>
             <state name="auth declined"/>
 
             <state name="capture pending" reserved="true"/>
@@ -29,6 +30,7 @@
             <event name="update authorization status" manual="true" command="Amazonpay/UpdateAuthorizationStatus" />
             <event name="update capture status" manual="true" command="Amazonpay/UpdateCaptureStatus" />
             <event name="update suspended order" command="Amazonpay/UpdateSuspendedOrder" />
+            <event name="reauthorize expired order" onEnter="true" command="Amazonpay/ReauthorizeExpiredOrder" />
         </events>
 
         <transitions>
@@ -74,6 +76,18 @@
                 <source>auth open</source>
                 <target>auth closed</target>
                 <event>capture</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsAuthExpired">
+                <source>auth open</source>
+                <target>auth expired</target>
+                <event>capture</event>
+            </transition>
+
+            <transition condition="Amazonpay/IsCaptureCompleted" happy="true">
+                <source>auth expired</source>
+                <target>capture completed</target>
+                <event>reauthorize expired order</event>
             </transition>
 
             <transition condition="Amazonpay/IsCaptureCompleted" happy="true">

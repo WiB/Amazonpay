@@ -44,4 +44,5 @@ interface AmazonpayBusinessFactoryInterface
      * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface
      */
     public function createAdapterFactory();
+
 }

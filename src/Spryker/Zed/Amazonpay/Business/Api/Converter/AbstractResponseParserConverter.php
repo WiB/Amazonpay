@@ -28,6 +28,9 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
      */
     abstract protected function getResponseType();
 
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
     abstract protected function createTransferObject();
 
     /**
@@ -243,6 +246,5 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
 
         return $address;
     }
-
 
 }

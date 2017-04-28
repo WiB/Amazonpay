@@ -29,6 +29,7 @@ class CaptureOrderAdapter extends AbstractOrderAdapter
                     ->getAmazonAuthorizationId(),
             static::CAPTURE_REFERENCE_ID =>
                 $orderTransfer->getAmazonpayPayment()
+                    ->getCaptureDetails()
                     ->getCaptureReferenceId(),
             static::CAPTURE_AMOUNT => $this->getAmount($orderTransfer),
             //'seller_capture_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}',

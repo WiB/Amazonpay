@@ -20,7 +20,7 @@ class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAd
     protected $converter;
 
     /**
-     * @param Client $client
+     * @param \PayWithAmazon\Client $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $converter
      */
     public function __construct(

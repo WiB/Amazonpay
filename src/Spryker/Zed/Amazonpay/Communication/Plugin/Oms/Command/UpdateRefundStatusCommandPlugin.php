@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 class UpdateRefundStatusCommandPlugin extends AbstractAmazonpayCommandPlugin
 {
+
     /**
      * @inheritdoc
      */

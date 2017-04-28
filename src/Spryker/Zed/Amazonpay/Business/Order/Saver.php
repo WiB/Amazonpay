@@ -41,15 +41,27 @@ class Saver implements SaverInterface
     {
         $paymentEntity = new SpyPaymentAmazonpay();
         $paymentEntity->setOrderReferenceId($paymentTransfer->getOrderReferenceId());
-        $paymentEntity->setOrderReferenceStatus(
-            $this->getOrderStatus($paymentTransfer)
-        );
+        $paymentEntity->setOrderReferenceStatus($this->getOrderStatus($paymentTransfer));
         $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
-        $paymentEntity->setAuthorizationReferenceId($paymentTransfer->getAuthorizationReferenceId());
-        $paymentEntity->setAmazonAuthorizationId($paymentTransfer->getAuthorizationDetails()->getAmazonAuthorizationId());
-        $paymentEntity->setAmazonCaptureId($paymentTransfer->getAuthorizationDetails()->getIdList());
+
+        $paymentEntity->setAuthorizationReferenceId(
+            $paymentTransfer->getAuthorizationDetails()->getAuthorizationReferenceId()
+        );
+
+        $paymentEntity->setAmazonAuthorizationId(
+            $paymentTransfer->getAuthorizationDetails()->getAmazonAuthorizationId()
+        );
+
+        $paymentEntity->setAmazonCaptureId(
+            $paymentTransfer->getAuthorizationDetails()->getIdList()
+        );
+
         $paymentEntity->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $paymentEntity->setRequestId($paymentTransfer->getResponseHeader()->getRequestId());
+
+        $paymentEntity->setRequestId(
+            $paymentTransfer->getResponseHeader()->getRequestId()
+        );
+
         $paymentEntity->setIsSandbox($paymentTransfer->getIsSandbox());
         $paymentEntity->save();
 
@@ -57,7 +69,7 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param AmazonpayPaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\AmazonpayPaymentTransfer $paymentTransfer
      *
      * @return string
      */

@@ -11,11 +11,15 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class IpnRequestLogger implements IpnRequestLoggerInterface
 {
+
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     *
+     * @return void
      */
     public function log(AbstractTransfer $ipnRequest)
     {
         // TODO: Implement log() method.
     }
+
 }

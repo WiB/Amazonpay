@@ -23,7 +23,7 @@ class GetOrderRefundDetailsAdapter extends AbstractOrderAdapter
             static::AMAZON_REFUND_ID => $orderTransfer
                 ->getAmazonpayPayment()
                 ->getRefundDetails()
-                ->getAmazonRefundId()
+                ->getAmazonRefundId(),
         ]);
 
         return $this->converter->convert($result);

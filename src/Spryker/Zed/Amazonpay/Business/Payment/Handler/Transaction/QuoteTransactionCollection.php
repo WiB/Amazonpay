@@ -13,12 +13,13 @@ class QuoteTransactionCollection extends AbstractTransactionCollection implement
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * 
-     * @return QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
         return parent::executeHandlers($quoteTransfer);
     }
+
 }

@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-use Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer;
-use PayWithAmazon\ResponseParser;
-
 class AuthorizeOrderConverter extends AbstractAuthorizeOrderConverter
 {
+
     /**
      * @return string
      */

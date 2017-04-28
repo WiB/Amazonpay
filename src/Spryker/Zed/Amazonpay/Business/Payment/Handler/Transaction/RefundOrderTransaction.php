@@ -27,12 +27,12 @@ class RefundOrderTransaction extends AbstractOrderTransaction
     {
         if (!$orderTransfer->getAmazonpayPayment()
                 ->getCaptureDetails()
-                ->getCaptureReferenceId()
+                ->getAmazonCaptureId()
         ) {
             return $orderTransfer;
         }
 
-        $orderTransfer->getAmazonpayPayment()->setRefundReferenceId(
+        $orderTransfer->getAmazonpayPayment()->getRefundDetails()->setRefundReferenceId(
             $this->generateOperationReferenceId($orderTransfer)
         );
 

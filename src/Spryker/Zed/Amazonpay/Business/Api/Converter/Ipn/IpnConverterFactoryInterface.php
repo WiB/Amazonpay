@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
-
 interface IpnConverterFactoryInterface
 {
+
     /**
      * @param array $request
      *
      * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface
      */
     public function createIpnRequestConverter(array $request);
+
 }

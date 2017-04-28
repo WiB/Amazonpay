@@ -12,6 +12,7 @@ use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class UpdateOrderAuthorizationStatusTransaction extends AbstractOrderTransaction
 {
+
     /**
      * @var \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer
      */
@@ -32,31 +33,43 @@ class UpdateOrderAuthorizationStatusTransaction extends AbstractOrderTransaction
 
         if ($this->apiResponse->getHeader()->getIsSuccess()) {
             if ($this->apiResponse->getAuthorizationDetails()->getIdList()) {
-                $this->paymentEntity->setAmazonCaptureId($this->apiResponse->getAuthorizationDetails()->getIdList());
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED);
+                $this->paymentEntity->setAmazonCaptureId(
+                    $this->apiResponse->getAuthorizationDetails()->getIdList()
+                );
+
+                $this->paymentEntity->setOrderReferenceStatus(
+                    AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED
+                );
+
                 $this->paymentEntity->save();
 
                 return $orderTransfer;
             }
 
-            if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsPending()) {
+            $status = $this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus();
+
+            if ($status->getIsPending()) {
                 return $orderTransfer;
             }
 
-            if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
-                if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsSuspended()) {
+            if ($status->getIsDeclined()) {
+                if ($status->getIsSuspended()) {
                     $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_SUSPENDED);
                 } else {
                     $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_DECLINED);
                 }
             }
 
-            if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsOpen()) {
+            if ($status->getIsOpen()) {
                 $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_OPEN);
             }
 
-            if ($this->apiResponse->getAuthorizationDetails()->getAuthorizationStatus()->getIsClosed()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_CLOSED);
+            if ($status->getIsClosed()) {
+                if ($status->getIsReauthorizable()) {
+                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_EXPIRED);
+                } else {
+                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_CLOSED);
+                }
             }
 
             $this->paymentEntity->save();

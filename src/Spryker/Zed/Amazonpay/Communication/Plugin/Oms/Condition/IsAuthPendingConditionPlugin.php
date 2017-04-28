@@ -19,4 +19,5 @@ class IsAuthPendingConditionPlugin extends AbstractOrderConditionPlugin
     {
         return AmazonpayConstants::OMS_STATUS_AUTH_PENDING;
     }
+
 }

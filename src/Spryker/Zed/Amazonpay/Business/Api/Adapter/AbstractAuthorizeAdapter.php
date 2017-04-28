@@ -50,7 +50,7 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
         $this->converter = $converter;
         $this->moneyFacade = $moneyFacade;
 
-        if (is_null($captureNow)) {
+        if ($captureNow === null) {
             $this->captureNow = $config->getCaptureNow();
         } else {
             $this->captureNow = (bool)$captureNow;
@@ -60,8 +60,8 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
     }
 
     /**
-     * @param AmazonpayPaymentTransfer $amazonpayPaymentTransfer
-     * @param double $amount
+     * @param \Generated\Shared\Transfer\AmazonpayPaymentTransfer $amazonpayPaymentTransfer
+     * @param float $amount
      *
      * @return array
      */
@@ -70,11 +70,13 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
         return [
             static::AMAZON_ORDER_REFERENCE_ID => $amazonpayPaymentTransfer->getOrderReferenceId(),
             static::AUTHORIZATION_AMOUNT => $amount,
-            static::AUTHORIZATION_REFERENCE_ID => $amazonpayPaymentTransfer->getAuthorizationReferenceId(),
+            static::AUTHORIZATION_REFERENCE_ID =>
+                $amazonpayPaymentTransfer
+                    ->getAuthorizationDetails()
+                    ->getAuthorizationReferenceId(),
             static::TRANSACTION_TIMEOUT => $this->transactionTimeout,
             static::CAPTURE_NOW => $this->captureNow,
-            //'seller_authorization_note' => '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"ExpiredUnused", "ExpirationTimeInMins":1}}',
-            // 'seller_authorization_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod", "PaymentMethodUpdateTimeInMins":1, "SoftDecline":"false"}}'
         ];
     }
+
 }

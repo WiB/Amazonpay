@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
-use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
 
@@ -18,20 +16,25 @@ abstract class IpnAbstractTransferRequestHandler implements IpnRequestHandlerInt
 {
 
     /**
-     * @var AmazonpayToOmsBridge $omsFacade
+     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsBridge $omsFacade
      */
     protected $omsFacade;
 
     /**
-     * @var AmazonpayQueryContainerInterface $amazonpayQueryContainer
+     * @var \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
      */
     protected $amazonpayQueryContainer;
 
     /**
-     * @var IpnRequestLoggerInterface $ipnRequestLogger
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface $ipnRequestLogger
      */
     protected $ipnRequestLogger;
 
+    /**
+     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
+     * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface $ipnRequestLogger
+     */
     public function __construct(
         AmazonpayToOmsInterface $omsFacade,
         AmazonpayQueryContainerInterface $amazonpayQueryContainer,
@@ -43,7 +46,9 @@ abstract class IpnAbstractTransferRequestHandler implements IpnRequestHandlerInt
     }
 
     /**
-     * @param AbstractTransfer $amazonpayIpnRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnRequestTransfer
+     *
+     * @return void
      */
     public function handle(AbstractTransfer $amazonpayIpnRequestTransfer)
     {
@@ -61,9 +66,9 @@ abstract class IpnAbstractTransferRequestHandler implements IpnRequestHandlerInt
     }
 
     /**
-     * @param AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
      *
-     * @return SpyPaymentAmazonpay
+     * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */
     abstract protected function retrievePaymentEntity(
         AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
-class IsAuthDeclinedConditionPlugin extends AbstractOrderConditionPlugin
+class IsAuthExpiredConditionPlugin extends AbstractOrderConditionPlugin
 {
 
     /**
@@ -17,7 +17,7 @@ class IsAuthDeclinedConditionPlugin extends AbstractOrderConditionPlugin
      */
     protected function getConditionalStatus()
     {
-        return AmazonpayConstants::OMS_STATUS_AUTH_DECLINED;
+        return AmazonpayConstants::OMS_STATUS_AUTH_EXPIRED;
     }
 
 }

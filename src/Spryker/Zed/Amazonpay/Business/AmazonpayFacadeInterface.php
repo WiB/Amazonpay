@@ -71,6 +71,17 @@ interface AmazonpayFacadeInterface
     public function confirmPurchase(QuoteTransfer $quoteTransfer);
 
     /**
+     *  Specification
+     * - send capture() API call to Amazon
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function captureOrder(OrderTransfer $orderTransfer);
+    /**
      * Specification
      * - send an API call to Amazon that order is closed
      *
@@ -138,7 +149,16 @@ interface AmazonpayFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function reauthorizeOrder(OrderTransfer $orderTransfer);
+    public function reauthorizeExpiredOrder(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function reauthorizeSuspendedOrder(OrderTransfer $orderTransfer);
 
     /**
      * Specification:
@@ -161,8 +181,10 @@ interface AmazonpayFacadeInterface
      * - Converts amazon-specific income data into Transfer Object
      * Concrete transfer object depends on income data
      *
+     * @api
+     *
      * @param array $headers
-     * @param $body
+     * @param string $body
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -172,8 +194,48 @@ interface AmazonpayFacadeInterface
      * Specification:
      * - Handles $ipnRequestTransfer object
      *
+     * @api
+     *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequestTransfer
+     *
+     * @return void
      */
     public function handleAmazonpayIpnRequest(AbstractTransfer $ipnRequestTransfer);
+
+    /**
+     * Specification:
+     * - Updates auth status of an order
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function updateAuthorizationStatus(OrderTransfer $orderTransfer);
+
+    /**
+     *  Specification:
+     * - Updates capture status of an order
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function updateCaptureStatus(OrderTransfer $orderTransfer);
+
+    /**
+     *  Specification:
+     * - Updates refund status of an order
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function updateRefundStatus(OrderTransfer $orderTransfer);
 
 }

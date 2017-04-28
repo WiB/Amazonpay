@@ -7,16 +7,17 @@
 
 namespace Spryker\Zed\Amazonpay\Communication\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Amazonpay\Business\AmazonpayFacade getFacade()
  */
 class IpnController extends AbstractController
 {
+
     /**
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function endpointAction()
     {

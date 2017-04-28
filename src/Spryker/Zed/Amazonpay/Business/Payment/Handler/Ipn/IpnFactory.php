@@ -15,18 +15,18 @@ class IpnFactory implements IpnFactoryInterface
 {
 
     /**
-     * @var AmazonpayQueryContainerInterface
+     * @var \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface
      */
     protected $amazonpayQueryContainer;
 
     /**
-     * @var AmazonpayToOmsInterface
+     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @param AmazonpayToOmsInterface $omsFacade
-     * @param AmazonpayQueryContainerInterface $amazonpayQueryContainer
+     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
      */
     public function __construct(
         AmazonpayToOmsInterface $omsFacade,
@@ -45,7 +45,7 @@ class IpnFactory implements IpnFactoryInterface
     }
 
     /**
-     * @return IpnRequestFactoryInterface
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestFactoryInterface
      */
     public function createIpnRequestFactory()
     {

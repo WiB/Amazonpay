@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Details;
 
 use Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer;
-use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\AbstractArrayConverter;
 
 class AuthorizationDetailsConverter extends AbstractArrayConverter
 {
-    
+
     const PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
 
     /**

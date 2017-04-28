@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
 use Generated\Shared\Transfer\AmazonpayIpnOrderReferenceNotificationTransfer;
-use Generated\Shared\Transfer\AmazonpayOrderReferenceNotificationTransfer;
 
 class IpnOrderReferenceNotificationConverter extends IpnPaymentAbstractRequestConverter
 {

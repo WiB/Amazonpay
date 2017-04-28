@@ -13,6 +13,7 @@ use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class UpdateOrderCaptureStatusTransaction extends AbstractOrderTransaction
 {
+
     /**
      * @var \Generated\Shared\Transfer\AmazonpayCaptureOrderResponseTransfer
      */
@@ -25,11 +26,11 @@ class UpdateOrderCaptureStatusTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
-        if ($orderTransfer->getAmazonpayPayment()->getOrderReferenceStatus()
-                !==  AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING
-        ) {
-            return $orderTransfer;
-        }
+//        if ($orderTransfer->getAmazonpayPayment()->getOrderReferenceStatus()
+//                !==  AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING
+//        ) {
+//            return $orderTransfer;
+//        }
 
         $orderTransfer = parent::execute($orderTransfer);
 

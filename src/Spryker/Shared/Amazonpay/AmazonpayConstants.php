@@ -37,6 +37,7 @@ interface AmazonpayConstants
     const OMS_STATUS_AUTH_DECLINED = 'auth declined';
     const OMS_STATUS_AUTH_SUSPENDED = 'auth suspended';
     const OMS_STATUS_AUTH_OPEN = 'auth open';
+    const OMS_STATUS_AUTH_EXPIRED = 'auth expired';
     const OMS_STATUS_AUTH_CLOSED = 'auth closed';
     const OMS_STATUS_PAYMENT_METHOD_CHANGED = 'payment method changed';
 

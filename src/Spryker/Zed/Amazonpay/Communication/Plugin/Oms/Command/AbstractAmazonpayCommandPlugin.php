@@ -116,7 +116,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
     /**
      * @param string $statusName
      *
-     * @return AmazonpayStatusTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayStatusTransfer
      */
     protected function getAuthStatusTransfer($statusName)
     {
@@ -145,7 +145,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
     /**
      * @param string $statusName
      *
-     * @return AmazonpayStatusTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayStatusTransfer
      */
     protected function getCaptureStatusTransfer($statusName)
     {
@@ -173,7 +173,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
     /**
      * @param string $statusName
      *
-     * @return AmazonpayStatusTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayStatusTransfer
      */
     protected function getRefundStatusTransfer($statusName)
     {

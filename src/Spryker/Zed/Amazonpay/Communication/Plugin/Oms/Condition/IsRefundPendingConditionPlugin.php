@@ -19,4 +19,5 @@ class IsRefundPendingConditionPlugin extends AbstractOrderItemConditionPlugin
     {
         return AmazonpayConstants::OMS_STATUS_REFUND_PENDING;
     }
+
 }

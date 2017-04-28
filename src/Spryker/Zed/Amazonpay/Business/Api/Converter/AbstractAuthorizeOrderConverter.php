@@ -8,19 +8,19 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use PayWithAmazon\ResponseParser;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractAuthorizeOrderConverter extends AbstractResponseParserConverter
 {
 
     /**
-     * @var ArrayConverterInterface $authDetailsConverter
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $authDetailsConverter
      */
     protected $authDetailsConverter;
 
     /**
-     * @param ArrayConverterInterface $authDetailsConverter
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $authDetailsConverter
      */
     public function __construct(ArrayConverterInterface $authDetailsConverter)
     {

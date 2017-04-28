@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AmazonpayPriceTransfer;
 use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\AuthorizationDetailsConverter;
 
 abstract class AbstractConverter
 {
@@ -41,7 +40,7 @@ abstract class AbstractConverter
     /**
      * @param array $statusData
      *
-     * @return AmazonpayStatusTransfer
+     * @return \Generated\Shared\Transfer\AmazonpayStatusTransfer
      */
     protected function convertStatusToTransfer(array $statusData)
     {

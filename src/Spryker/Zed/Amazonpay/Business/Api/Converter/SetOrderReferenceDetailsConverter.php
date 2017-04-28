@@ -23,13 +23,19 @@ class SetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @return AmazonpaySetOrderReferenceDetailsResponseTransfer
+     * @return \Generated\Shared\Transfer\AmazonpaySetOrderReferenceDetailsResponseTransfer
      */
     protected function createTransferObject()
     {
         return new AmazonpaySetOrderReferenceDetailsResponseTransfer();
     }
 
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
+     * @param \PayWithAmazon\ResponseParser $responseParser
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
     protected function setBody(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
     {
         $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));

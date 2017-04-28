@@ -9,7 +9,6 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactory;
-use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactoryInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
@@ -231,7 +230,7 @@ class AdapterFactory implements AdapterFactoryInterface
     }
 
     /**
-     * @return AmazonpaySdkAdapterFactoryInterface
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactoryInterface
      */
     protected function createSdkAdapterFactory()
     {

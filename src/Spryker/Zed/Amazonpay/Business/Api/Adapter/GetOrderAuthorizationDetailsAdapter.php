@@ -22,8 +22,8 @@ class GetOrderAuthorizationDetailsAdapter extends AbstractOrderAdapter
         $result = $this->client->getAuthorizationDetails([
             static::AMAZON_AUTHORIZATION_ID =>
                 $orderTransfer->getAmazonpayPayment()
-                        ->getAuthorizationDetails()
-                        ->getAmazonAuthorizationId(),
+                    ->getAuthorizationDetails()
+                    ->getAmazonAuthorizationId(),
         ]);
 
         return $this->converter->convert($result);

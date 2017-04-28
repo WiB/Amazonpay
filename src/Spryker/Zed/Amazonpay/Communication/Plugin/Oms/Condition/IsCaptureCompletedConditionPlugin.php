@@ -19,4 +19,5 @@ class IsCaptureCompletedConditionPlugin extends AbstractOrderConditionPlugin
     {
         return AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED;
     }
+
 }

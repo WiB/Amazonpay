@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn;
 
-use Generated\Shared\Transfer\AmazonpayAuthorizationDetailsTransfer;
 use Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface;
 
@@ -15,12 +14,12 @@ class IpnPaymentAuthorizeRequestConverter extends IpnPaymentAbstractRequestConve
 {
 
     /**
-     * @var ArrayConverterInterface $authDetailsConverter
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $authDetailsConverter
      */
     protected $authDetailsConverter;
 
     /**
-     * @param ArrayConverterInterface $authDetailsConverter
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $authDetailsConverter
      */
     public function __construct(ArrayConverterInterface $authDetailsConverter)
     {

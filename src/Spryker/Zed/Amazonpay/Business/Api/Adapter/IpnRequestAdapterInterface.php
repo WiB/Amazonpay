@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-
 interface IpnRequestAdapterInterface
 {
 

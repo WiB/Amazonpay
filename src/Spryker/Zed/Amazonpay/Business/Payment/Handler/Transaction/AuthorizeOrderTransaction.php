@@ -24,7 +24,7 @@ class AuthorizeOrderTransaction extends AbstractQuoteTransaction
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->getAmazonpayPayment()->setAuthorizationReferenceId(
+        $quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->setAuthorizationReferenceId(
             $this->generateOperationReferenceId($quoteTransfer)
         );
 

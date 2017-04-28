@@ -13,7 +13,9 @@ class IpnEmptyHandler implements IpnRequestHandlerInterface
 {
 
     /**
-     * @param AbstractTransfer $amazonpayIpnRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnRequestTransfer
+     *
+     * @return void
      */
     public function handle(AbstractTransfer $amazonpayIpnRequestTransfer)
     {

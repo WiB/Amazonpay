@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk;
 
-use PayWithAmazon\Client;
-use PayWithAmazon\IpnHandler;
 use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
 
 interface AmazonpaySdkAdapterFactoryInterface
 {
 
     /**
-     * @param AmazonpayConfigInterface $config
+     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
      *
-     * @return Client
+     * @return \PayWithAmazon\Client
      */
     public function createAmazonpayClient(AmazonpayConfigInterface $config);
 
@@ -25,7 +23,7 @@ interface AmazonpaySdkAdapterFactoryInterface
      * @param array $headers
      * @param string $body
      *
-     * @return IpnHandler
+     * @return \PayWithAmazon\IpnHandler
      */
     public function createAmazonpayIpnHandler(array $headers, $body);
 

@@ -13,9 +13,9 @@ class OrderMessageFactory implements OrderMessageFactoryInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return AbstractNotificationMessage
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Notification\AbstractNotificationMessage
      */
     public function createFailedAuthMessage(OrderTransfer $orderTransfer)
     {
@@ -25,8 +25,7 @@ class OrderMessageFactory implements OrderMessageFactoryInterface
             ->getIsSuspended()
         ) {
             return new OrderAuthFailedSoftDeclineMessage($orderTransfer);
-        } elseif (
-        $orderTransfer->getAmazonpayPayment()
+        } elseif ($orderTransfer->getAmazonpayPayment()
             ->getAuthorizationDetails()
             ->getAuthorizationStatus()
             ->getIsDeclined()

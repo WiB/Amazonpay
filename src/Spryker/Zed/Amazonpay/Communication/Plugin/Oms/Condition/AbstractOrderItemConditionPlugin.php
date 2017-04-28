@@ -12,6 +12,10 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 abstract class AbstractOrderItemConditionPlugin implements ConditionInterface
 {
+
+    /**
+     * @return string
+     */
     abstract protected function getConditionalStatus();
 
     /**

@@ -13,6 +13,7 @@ use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class UpdateOrderRefundStatusTransaction extends AbstractOrderTransaction
 {
+
     /**
      * @var \Generated\Shared\Transfer\AmazonpayRefundOrderResponseTransfer
      */
@@ -26,7 +27,7 @@ class UpdateOrderRefundStatusTransaction extends AbstractOrderTransaction
     public function execute(OrderTransfer $orderTransfer)
     {
         if ($orderTransfer->getAmazonpayPayment()->getOrderReferenceStatus()
-                !==  AmazonpayConstants::OMS_STATUS_REFUND_PENDING
+                !== AmazonpayConstants::OMS_STATUS_REFUND_PENDING
         ) {
             return $orderTransfer;
         }

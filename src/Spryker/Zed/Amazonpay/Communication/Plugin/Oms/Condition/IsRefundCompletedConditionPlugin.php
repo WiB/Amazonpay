@@ -19,4 +19,5 @@ class IsRefundCompletedConditionPlugin extends AbstractOrderItemConditionPlugin
     {
         return AmazonpayConstants::OMS_STATUS_REFUND_COMPLETED;
     }
+
 }

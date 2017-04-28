@@ -84,9 +84,11 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @api
      *
-     * @return OrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function captureOrder(OrderTransfer $orderTransfer)
     {
@@ -177,15 +179,32 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function reauthorizeOrder(OrderTransfer $orderTransfer)
+    public function reauthorizeExpiredOrder(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
             ->createTransactionFactory()
-            ->createReauthorizeOrderTransaction()
+            ->createReauthorizeExpiredOrderTransaction()
             ->execute($orderTransfer);
     }
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function reauthorizeSuspendedOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createTransactionFactory()
+            ->createReauthorizeSuspendedOrderTransaction()
+            ->execute($orderTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -199,6 +218,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -212,6 +233,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -245,10 +268,12 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param array $headers
-     * @param $body
+     * @api
      *
-     * @return AbstractTransfer
+     * @param array $headers
+     * @param string $body
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function convertAmazonpayIpnRequest(array $headers, $body)
     {
@@ -259,7 +284,11 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
-     * @param AbstractTransfer $ipnRequestTransfer
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequestTransfer
+     *
+     * @return void
      */
     public function handleAmazonpayIpnRequest(AbstractTransfer $ipnRequestTransfer)
     {

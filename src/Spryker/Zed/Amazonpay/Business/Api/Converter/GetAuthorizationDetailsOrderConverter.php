@@ -9,6 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 class GetAuthorizationDetailsOrderConverter extends AbstractAuthorizeOrderConverter
 {
+
     /**
      * @return string
      */

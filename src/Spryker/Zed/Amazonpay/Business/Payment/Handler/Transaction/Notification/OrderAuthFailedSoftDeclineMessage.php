@@ -13,9 +13,10 @@ class OrderAuthFailedSoftDeclineMessage extends AbstractNotificationMessage
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function __construct(OrderTransfer $orderTransfer)
     {
     }
+
 }

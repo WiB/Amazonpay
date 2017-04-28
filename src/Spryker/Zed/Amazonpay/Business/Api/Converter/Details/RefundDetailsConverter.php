@@ -42,7 +42,6 @@ class RefundDetailsConverter extends AbstractArrayConverter
         }
 
         return $refundDetails;
-
     }
 
 }

@@ -10,14 +10,16 @@ namespace Spryker\Zed\Amazonpay\Dependency\Injector;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CancelOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CaptureCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\CloseOrderCommandPlugin;
-use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateSuspendedOrderCommandPlugin;
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\ReauthorizeExpiredOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\RefundOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateAuthorizationStatusCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateCaptureStatusCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateNewOrderStatusCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateRefundStatusCommandPlugin;
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Command\UpdateSuspendedOrderCommandPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthClosedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthDeclinedConditionPlugin;
+use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthExpiredConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthOpenConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthPendingConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsAuthSuspendedConditionPlugin;
@@ -59,22 +61,24 @@ class OmsDependencyInjector extends AbstractDependencyInjector
      */
     protected function injectCommands(Container $container)
     {
-        $container->extend(OmsDependencyProvider::COMMAND_PLUGINS,
+        $container->extend(
+            OmsDependencyProvider::COMMAND_PLUGINS,
             function (CommandCollectionInterface $commandCollection) {
                 $commandCollection
                     ->add(new CancelOrderCommandPlugin(), 'Amazonpay/CancelOrder')
                     ->add(new CloseOrderCommandPlugin(), 'Amazonpay/CloseOrder')
                     ->add(new RefundOrderCommandPlugin(), 'Amazonpay/RefundOrder')
+                    ->add(new ReauthorizeExpiredOrderCommandPlugin(), 'Amazonpay/ReauthorizeExpiredOrder')
                     ->add(new CaptureCommandPlugin(), 'Amazonpay/Capture')
                     ->add(new UpdateSuspendedOrderCommandPlugin(), 'Amazonpay/UpdateSuspendedOrder')
                     ->add(new UpdateNewOrderStatusCommandPlugin(), 'Amazonpay/UpdateNewOrderStatus')
                     ->add(new UpdateAuthorizationStatusCommandPlugin(), 'Amazonpay/UpdateAuthorizationStatus')
                     ->add(new UpdateCaptureStatusCommandPlugin(), 'Amazonpay/UpdateCaptureStatus')
-                    ->add(new UpdateRefundStatusCommandPlugin(), 'Amazonpay/UpdateRefundStatus')
-                ;
+                    ->add(new UpdateRefundStatusCommandPlugin(), 'Amazonpay/UpdateRefundStatus');
 
                 return $commandCollection;
-        });
+            }
+        );
 
         return $container;
     }
@@ -96,6 +100,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
                 ->add(new IsAuthDeclinedConditionPlugin(), 'Amazonpay/IsAuthDeclined')
                 ->add(new IsAuthPendingConditionPlugin(), 'Amazonpay/IsAuthPending')
                 ->add(new IsAuthSuspendedConditionPlugin(), 'Amazonpay/IsAuthSuspended')
+                ->add(new IsAuthExpiredConditionPlugin(), 'Amazonpay/IsAuthExpired')
                 ->add(new IsAuthClosedConditionPlugin(), 'Amazonpay/IsAuthClosed')
 
                 ->add(new IsAuthSuspendedConditionPlugin(), 'Amazonpay/IsPaymentMethodChanged')
@@ -106,8 +111,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
 
                 ->add(new IsRefundCompletedConditionPlugin(), 'Amazonpay/IsRefundCompleted')
                 ->add(new IsRefundDeclinedConditionPlugin(), 'Amazonpay/IsRefundDeclined')
-                ->add(new IsRefundPendingConditionPlugin(), 'Amazonpay/IsRefundPending')
-            ;
+                ->add(new IsRefundPendingConditionPlugin(), 'Amazonpay/IsRefundPending');
 
             return $conditionCollection;
         });

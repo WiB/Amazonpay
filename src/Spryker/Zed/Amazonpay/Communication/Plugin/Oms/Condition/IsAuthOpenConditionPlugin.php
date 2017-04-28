@@ -19,4 +19,5 @@ class IsAuthOpenConditionPlugin extends AbstractOrderConditionPlugin
     {
         return AmazonpayConstants::OMS_STATUS_AUTH_OPEN;
     }
+
 }

@@ -54,7 +54,6 @@ class AmazonpayControllerProvider extends YvesControllerProvider
 
         // endpoint
         $this->createController('/amazonpay/endpoint', self::ENDPOINT, 'Amazonpay', 'Payment', 'endpoint');
-
     }
 
 }
