@@ -91,6 +91,7 @@
         <property name="isClosed" type="bool"/>
         <property name="isCompleted" type="bool"/>
         <property name="isPaymentMethodInvalid" type="bool"/>
+        <property name="isClosedByAmazon" type="bool"/>
         <property name="isReauthorizable" type="bool"/>
     </transfer>
 

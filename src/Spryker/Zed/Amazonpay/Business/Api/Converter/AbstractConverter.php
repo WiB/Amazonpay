@@ -59,6 +59,10 @@ abstract class AbstractConverter
             $status->setIsPaymentMethodInvalid(
                 $statusData['ReasonCode'] === AmazonpayConstants::REASON_CODE_PAYMENT_METHOD_INVALID
             );
+
+            $status->setIsClosedByAmazon(
+                $statusData['ReasonCode'] === AmazonpayConstants::REASON_CODE_AMAZON_CLOSED
+            );
         }
 
         if ($statusData['State'] === static::STATUS_DECLINED) {

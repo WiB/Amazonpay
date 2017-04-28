@@ -181,11 +181,19 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
         }
 
         if ($ipnRequest->getOrderReferenceStatus()->getIsClosed()) {
-            return new IpnEmptyHandler(
-                $this->omsFacade,
-                $this->amazonpayQueryContainer,
-                $this->ipnRequestLogger
-            );
+            if ($ipnRequest->getOrderReferenceStatus()->getIsClosedByAmazon()) {
+                return new IpnOrderReferenceClosedHandler(
+                    $this->omsFacade,
+                    $this->amazonpayQueryContainer,
+                    $this->ipnRequestLogger
+                );
+            } else {
+                return new IpnEmptyHandler(
+                    $this->omsFacade,
+                    $this->amazonpayQueryContainer,
+                    $this->ipnRequestLogger
+                );
+            }
         }
 
         if ($ipnRequest->getOrderReferenceStatus()->getIsSuspended()) {
