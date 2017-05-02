@@ -136,13 +136,21 @@ class TransactionFactory implements TransactionFactoryInterface
         return new OrderTransactionCollection(
             [
                 $this->createRefundOrderTransaction(),
-                new CancelOrderTransaction(
-                    $this->adapterFactory->createCancelOrderAdapter(),
-                    $this->config,
-                    $this->transactionLogger,
-                    $this->amazonpayQueryContainer
-                ),
+                $this->createAuthorizeOrderTransaction(),
             ]
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    protected function createCancelOrderTransactionObject()
+    {
+        return new CancelOrderTransaction(
+            $this->adapterFactory->createCancelOrderAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
         );
     }
 
@@ -171,14 +179,22 @@ class TransactionFactory implements TransactionFactoryInterface
     {
         return new OrderTransactionCollection(
             [
-                new ReauthorizeOrderTransaction(
-                    $this->adapterFactory->createAuthorizeCaptureNowOrderAdapter(),
-                    $this->config,
-                    $this->transactionLogger,
-                    $this->amazonpayQueryContainer
-                ),
+                $this->createReauthorizeExpiredOrderTransaction(),
                 $this->createUpdateOrderAuthorizationStatusTransaction(),
             ]
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     */
+    protected function createReauthorizeOrderTransaction()
+    {
+        return new ReauthorizeOrderTransaction(
+            $this->adapterFactory->createAuthorizeCaptureNowOrderAdapter(),
+            $this->config,
+            $this->transactionLogger,
+            $this->amazonpayQueryContainer
         );
     }
 
