@@ -30,7 +30,6 @@ use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsCapturePendingCon
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsClosedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsRefundCompletedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsRefundDeclinedConditionPlugin;
-use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsRefundedConditionPlugin;
 use Spryker\Zed\Amazonpay\Communication\Plugin\Oms\Condition\IsRefundPendingConditionPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
@@ -92,7 +91,6 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
-                ->add(new IsRefundedConditionPlugin(), 'Amazonpay/IsRefunded')
                 ->add(new IsClosedConditionPlugin(), 'Amazonpay/IsClosed')
                 ->add(new IsCancelledConditionPlugin(), 'Amazonpay/IsCancelled')
 
