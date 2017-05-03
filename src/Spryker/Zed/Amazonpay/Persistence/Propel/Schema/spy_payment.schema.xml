@@ -46,4 +46,18 @@
         <id-method-parameter value="spy_payment_amazonpay_api_log_pk_seq"/>
     </table>
 
+    <table name="spy_payment_amazonpay_ipn_log">
+        <column name="id_payment_amazonpay_ipn_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="message_id" type="VARCHAR"/>
+        <column name="fk_payment_amazonpay" type="INTEGER"/>
+        <column name="message" type="LONGVARCHAR"/>
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_payment_amazonpay_ipn_log_pk_seq"/>
+
+        <foreign-key name="spy_payment_amazonpay-fk_payment_amazonpay" foreignTable="spy_payment_amazonpay" phpName="SpyPaymentAmazonpay">
+            <reference foreign="id_payment_amazonpay" local="fk_payment_amazonpay"/>
+        </foreign-key>
+    </table>
+
 </database>

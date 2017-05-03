@@ -62,7 +62,7 @@ abstract class IpnAbstractTransferRequestHandler implements IpnRequestHandlerInt
             []
         );
 
-        $this->ipnRequestLogger->log($amazonpayIpnRequestTransfer);
+        $this->ipnRequestLogger->log($amazonpayIpnRequestTransfer, $paymentEntity);
     }
 
     /**
