@@ -26,7 +26,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
     /**
      * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
      *
-     * @return \PayWithAmazon\Client
+     * @return \PayWithAmazon\ClientInterface
      */
     public function createAmazonpayClient(AmazonpayConfigInterface $config)
     {
@@ -48,7 +48,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
      * @param array $headers
      * @param string $body
      *
-     * @return \PayWithAmazon\IpnHandler
+     * @return \PayWithAmazon\IpnHandlerInterface
      */
     public function createAmazonpayIpnHandler(array $headers, $body)
     {

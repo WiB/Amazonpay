@@ -32,7 +32,7 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
     protected $transactionTimeout;
 
     /**
-     * @param \PayWithAmazon\Client $client
+     * @param \PayWithAmazon\ClientInterface $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
@@ -49,14 +49,23 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
 
         $this->converter = $converter;
         $this->moneyFacade = $moneyFacade;
+        $this->setCaptureNow($config, $captureNow);
+        $this->transactionTimeout = $config->getAuthTransactionTimeout();
+    }
 
+    /**
+     * @param AmazonpayConfigInterface $config
+     * @param string|null $captureNow
+     *
+     * @return void
+     */
+    protected function setCaptureNow(AmazonpayConfigInterface $config, $captureNow = null)
+    {
         if ($captureNow === null) {
             $this->captureNow = $config->getCaptureNow();
         } else {
             $this->captureNow = (bool)$captureNow;
         }
-
-        $this->transactionTimeout = $config->getAuthTransactionTimeout();
     }
 
     /**

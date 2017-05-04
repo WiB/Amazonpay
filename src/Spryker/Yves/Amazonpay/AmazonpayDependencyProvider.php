@@ -9,6 +9,10 @@ namespace Spryker\Yves\Amazonpay;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Zed\Amazonpay\Dependency\Client\AmazonpayToCalculationBridge;
+use Spryker\Zed\Amazonpay\Dependency\Client\AmazonpayToCheckoutBridge;
+use Spryker\Zed\Amazonpay\Dependency\Client\AmazonpayToQuoteBridge;
+use Spryker\Zed\Amazonpay\Dependency\Client\AmazonpayToShipmentBridge;
 
 class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -27,19 +31,27 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container[self::CLIENT_QUOTE] = function () use ($container) {
-            return $container->getLocator()->quote()->client();
+            return new AmazonpayToQuoteBridge(
+                $container->getLocator()->quote()->client()
+            );
         };
 
         $container[self::CLIENT_SHIPMENT] = function () use ($container) {
-            return $container->getLocator()->shipment()->client();
+            return new AmazonpayToShipmentBridge(
+                $container->getLocator()->shipment()->client()
+            );
         };
 
         $container[self::CLIENT_CHECKOUT] = function () use ($container) {
-            return $container->getLocator()->checkout()->client();
+            return new AmazonpayToCheckoutBridge(
+                $container->getLocator()->checkout()->client()
+            );
         };
 
         $container[self::CLIENT_CALCULATION] = function () use ($container) {
-            return $container->getLocator()->calculation()->client();
+            return new AmazonpayToCalculationBridge(
+                $container->getLocator()->calculation()->client()
+            );
         };
 
         return $container;

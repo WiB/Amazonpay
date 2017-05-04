@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-class CancelOrderAdapter extends AbstractOrderAdapter
+class CancelOrderAdapter extends AbstractAdapter implements OrderAdapterInterface
 {
 
     /**

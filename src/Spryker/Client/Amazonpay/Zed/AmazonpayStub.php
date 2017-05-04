@@ -8,20 +8,20 @@
 namespace Spryker\Client\Amazonpay\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class AmazonpayStub implements AmazonpayStubInterface
 {
 
     /**
-     * @var \Spryker\Client\ZedRequest\Client\ZedClient
+     * @var \Spryker\Client\ZedRequest\Client\ZedClientInterface
      */
     protected $zedStub;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedStub
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(ZedRequestClientInterface $zedStub)
     {
         $this->zedStub = $zedStub;
     }

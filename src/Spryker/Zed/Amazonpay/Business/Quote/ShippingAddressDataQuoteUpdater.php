@@ -15,7 +15,7 @@ class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
 {
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\SetOrderReferenceDetailsAdapter
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface
      */
     protected $executionAdapter;
 

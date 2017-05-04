@@ -123,7 +123,7 @@ class PaymentController extends AbstractController
                     return $this->redirectResponseInternal(AmazonpayControllerProvider::SUCCESS);
                 }
 
-                //@todo implement proper error handling (if necessary)
+                //@todo implement proper error handling (if necessary) @TODO CR move to documentation or method header doc block
                 return new Response('Persisting Order Error');
             }
 

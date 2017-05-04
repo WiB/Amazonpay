@@ -20,7 +20,7 @@ class PrepareQuoteCollection implements QuoteUpdaterInterface
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdaterInterface[] $quoteUpdaters
      */
-    public function __construct($quoteUpdaters)
+    public function __construct(array $quoteUpdaters)
     {
         $this->quoteUpdaters = $quoteUpdaters;
     }

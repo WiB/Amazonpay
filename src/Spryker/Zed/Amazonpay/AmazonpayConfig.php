@@ -15,6 +15,8 @@ class AmazonpayConfig extends AbstractBundleConfig implements AmazonpayConfigInt
 {
 
     /**
+     *
+     * @TODO CR use same configuration from shared folder
      * @return string
      */
     public function getClientId()

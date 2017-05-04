@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
  * @method \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer getQueryContainer()
  */
-class AmazonpayBusinessFactory extends AbstractBusinessFactory implements AmazonpayBusinessFactoryInterface
+class AmazonpayBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
@@ -52,6 +52,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
     }
 
     /**
+     * @TODO CR interface
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactory
      */
     public function createIpnFactory()
@@ -87,7 +88,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface
      */
     protected function getShipmentFacade()
     {
@@ -107,7 +108,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory implements Amazon
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactoryInterface
      */
     protected function createConverterFactory()
     {

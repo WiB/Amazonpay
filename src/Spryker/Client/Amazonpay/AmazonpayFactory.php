@@ -18,7 +18,7 @@ class AmazonpayFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        return new AmazonpayStub($this->getProvidedDependency(AmazonpayDependencyProvider::SERVICE_ZED));
+        return new AmazonpayStub($this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_ZED_REQUEST));
     }
 
 }

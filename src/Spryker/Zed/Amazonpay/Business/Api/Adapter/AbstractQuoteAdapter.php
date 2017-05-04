@@ -15,6 +15,7 @@ abstract class AbstractQuoteAdapter extends AbstractAdapter implements QuoteAdap
 {
 
     /**
+     * @todo CR remove quoteAdapter and orderAdapters, use interface directly in concretes
      * @param \PayWithAmazon\Client $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade

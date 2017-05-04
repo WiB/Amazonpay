@@ -14,10 +14,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
  * @method \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer getQueryContainer()
  */
-class AmazonpayPersistenceFactory extends AbstractPersistenceFactory implements AmazonpayPersistenceFactoryInterface
+class AmazonpayPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
+     * @todo CR interface missing
+     *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayQuery
      */
     public function createPaymentAmazonpayQuery()

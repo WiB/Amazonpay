@@ -32,6 +32,7 @@ class CaptureOrderAdapter extends AbstractOrderAdapter
                     ->getCaptureDetails()
                     ->getCaptureReferenceId(),
             static::CAPTURE_AMOUNT => $this->getAmount($orderTransfer),
+            //@todo CR dont forget to remove before release!
             //'seller_capture_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}',
         ]);
 

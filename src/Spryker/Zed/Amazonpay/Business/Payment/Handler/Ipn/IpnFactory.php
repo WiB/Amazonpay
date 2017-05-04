@@ -37,6 +37,8 @@ class IpnFactory implements IpnFactoryInterface
     }
 
     /**
+     * @todo return interface
+     *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLogger
      */
     public function createIpnRequestLogger()

@@ -14,6 +14,7 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
 {
 
     /**
+     * @TODO CR interface missing
      * @return \Spryker\Client\Quote\QuoteClient
      */
     public function getQuoteClient()
@@ -22,6 +23,7 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
     }
 
     /**
+     * @TODO CR interface
      * @return \Spryker\Client\Checkout\CheckoutClient
      */
     public function getCheckoutClient()

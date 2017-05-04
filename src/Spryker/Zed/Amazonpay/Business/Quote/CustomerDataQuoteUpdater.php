@@ -47,7 +47,6 @@ class CustomerDataQuoteUpdater implements QuoteUpdaterInterface
             $this->executionAdapter->call($quoteTransfer)
         );
 
-        //@todo as long as we don't have proper social login via amazon, let's do this:
         $quoteTransfer->getCustomer()->setIsGuest(true);
 
         return $quoteTransfer;

@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Container;
 class AmazonpayDependencyProvider extends AbstractDependencyProvider
 {
 
-    const SERVICE_ZED = 'zed service';
+    const CLIENT_ZED_REQUEST = 'zed request';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -22,8 +22,8 @@ class AmazonpayDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return $container->getLocator()->zedRequest()->client(); //@TODO CR bridge missing
         };
 
         return $container;

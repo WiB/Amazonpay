@@ -13,7 +13,8 @@ interface AmazonpayClientInterface
 {
 
     /**
-     * Set initial order data to quote
+     * Specification:
+     *  - Set initial order data to quote
      *
      * @api
      *
@@ -24,7 +25,8 @@ interface AmazonpayClientInterface
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer);
 
     /**
-     * Handles address selection
+     * Specification:
+     * - Handles address selection
      *
      * @api
      *
@@ -35,7 +37,8 @@ interface AmazonpayClientInterface
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer);
 
     /**
-     * Handles shipment method selection
+     * Specification:
+     * - Handles shipment method selection
      *
      * @api
      *
@@ -46,7 +49,8 @@ interface AmazonpayClientInterface
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer);
 
     /**
-     * Places an order
+     * Specification:
+     * - Places an order
      *
      * @api
      *

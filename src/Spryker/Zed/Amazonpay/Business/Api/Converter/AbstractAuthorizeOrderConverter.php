@@ -36,7 +36,7 @@ abstract class AbstractAuthorizeOrderConverter extends AbstractResponseParserCon
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer|AbstractTransfer $responseTransfer
      * @param \PayWithAmazon\ResponseParser $responseParser
      *
      * @return \Generated\Shared\Transfer\AmazonpayAuthorizeOrderResponseTransfer

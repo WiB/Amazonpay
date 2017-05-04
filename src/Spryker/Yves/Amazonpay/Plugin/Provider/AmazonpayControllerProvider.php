@@ -28,6 +28,8 @@ class AmazonpayControllerProvider extends YvesControllerProvider
     const CHECKOUT_WIDGET = 'amazonpay_checkout_widget';
     const WALLET_WIDGET = 'amazonpay_wallet_widget';
 
+    const BUNDLE_NAME = 'Amazonpay';
+
     /**
      * @param \Silex\Application $app
      *
@@ -35,25 +37,24 @@ class AmazonpayControllerProvider extends YvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        // www
-        $this->createController('/amazonpay/checkout', self::CHECKOUT, 'Amazonpay', 'Payment', 'checkout');
-        $this->createController('/amazonpay/confirm/purchase', self::CONFIRM_PURCHASE, 'Amazonpay', 'Payment', 'confirmPurchase');
-        $this->createController('/amazonpay/success', self::SUCCESS, 'Amazonpay', 'Payment', 'success');
-        $this->createController('/amazonpay/change-payment-method', self::CHANGE_PAYMENT_METHOD, 'Amazonpay', 'Payment', 'changePaymentMethod');
-        $this->createController('/amazonpay/payment-failed', self::PAYMENT_FAILED, 'Amazonpay', 'Payment', 'paymentFailed');
+        $this->createController('/amazonpay/checkout', static::CHECKOUT, self::BUNDLE_NAME, 'Payment', 'checkout');
+        $this->createController('/amazonpay/confirm/purchase', static::CONFIRM_PURCHASE, self::BUNDLE_NAME, 'Payment', 'confirmPurchase');
+        $this->createController('/amazonpay/success', static::SUCCESS, self::BUNDLE_NAME, 'Payment', 'success');
+        $this->createController('/amazonpay/change-payment-method', static::CHANGE_PAYMENT_METHOD, self::BUNDLE_NAME, 'Payment', 'changePaymentMethod');
+        $this->createController('/amazonpay/payment-failed', static::PAYMENT_FAILED, self::BUNDLE_NAME, 'Payment', 'paymentFailed');
 
         // ajax
-        $this->createController('/amazonpay/set-order-reference', self::SET_ORDER_REFERENCE, 'Amazonpay', 'Payment', 'setOrderReference');
-        $this->createController('/amazonpay/update-shipment-method', self::UPDATE_SHIPMENT_METHOD, 'Amazonpay', 'Payment', 'updateShipmentMethod');
-        $this->createController('/amazonpay/get-shipment-methods', self::GET_SHIPMENT_METHODS, 'Amazonpay', 'Payment', 'getShipmentMethods');
+        $this->createController('/amazonpay/set-order-reference', static::SET_ORDER_REFERENCE, self::BUNDLE_NAME, 'Payment', 'setOrderReference');
+        $this->createController('/amazonpay/update-shipment-method', static::UPDATE_SHIPMENT_METHOD, self::BUNDLE_NAME, 'Payment', 'updateShipmentMethod');
+        $this->createController('/amazonpay/get-shipment-methods', static::GET_SHIPMENT_METHODS, self::BUNDLE_NAME, 'Payment', 'getShipmentMethods');
 
         // widgets
-        $this->createController('/amazonpay/paybutton', self::PAYBUTTON, 'Amazonpay', 'Widget', 'payButton');
-        $this->createController('/amazonpay/checkout-widget', self::CHECKOUT_WIDGET, 'Amazonpay', 'Widget', 'checkoutWidget');
-        $this->createController('/amazonpay/wallet-widget', self::WALLET_WIDGET, 'Amazonpay', 'Widget', 'walletWidget');
+        $this->createController('/amazonpay/paybutton', static::PAYBUTTON, self::BUNDLE_NAME, 'Widget', 'payButton');
+        $this->createController('/amazonpay/checkout-widget', static::CHECKOUT_WIDGET, self::BUNDLE_NAME, 'Widget', 'checkoutWidget');
+        $this->createController('/amazonpay/wallet-widget', static::WALLET_WIDGET, self::BUNDLE_NAME, 'Widget', 'walletWidget');
 
         // endpoint
-        $this->createController('/amazonpay/endpoint', self::ENDPOINT, 'Amazonpay', 'Payment', 'endpoint');
+        $this->createController('/amazonpay/endpoint', static::ENDPOINT, self::BUNDLE_NAME, 'Payment', 'endpoint');
     }
 
 }

@@ -17,11 +17,9 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
 {
 
     /**
-     * Set initial order data to quote
+     * {@inheritdoc}
      *
      * @api
-     *
-     * @method \Spryker\Client\Amazonpay\AmazonpayFactory getFactory()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -33,7 +31,7 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
-     * Handles address selection
+     * {@inheritdoc}
      *
      * @api
      *
@@ -47,7 +45,7 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
-     * Handles shipment method selection
+     * {@inheritdoc}
      *
      * @api
      *
@@ -61,7 +59,7 @@ class AmazonpayClient extends AbstractClient implements AmazonpayClientInterface
     }
 
     /**
-     * Places an order
+     * {@inheritdoc}
      *
      * @api
      *

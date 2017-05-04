@@ -39,6 +39,7 @@ class RefundOrderAdapter extends AbstractOrderAdapter
                     ->getRefundDetails()
                     ->getRefundReferenceId(),
             static::REFUND_AMOUNT => $refundAmount,
+            //@todo remove before release
             //'seller_refund_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}',
         ]);
 

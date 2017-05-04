@@ -109,6 +109,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
+        // @todo return your own exception
         throw new Exception('No IPN handler for auth payment and status ' .
             $ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getState());
     }
@@ -138,6 +139,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             return new IpnEmptyHandler();
         }
 
+        // @todo return your own exception
         throw new Exception('No IPN handler for capture and status ' .
             $ipnRequest->getCaptureDetails()->getCaptureStatus()->getState());
     }
@@ -165,6 +167,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
+        // @todo return your own exception
         throw new Exception('No IPN handler for payment refund and status ' .
             $ipnRequest->getRefundDetails()->getRefundStatus()->getState());
     }
@@ -210,6 +213,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
+        // @todo return your own exception
         throw new Exception('No IPN handler for order reference and status ' .
             $ipnRequest->getOrderReferenceStatus()->getState());
     }

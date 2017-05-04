@@ -14,6 +14,8 @@ abstract class IpnAbstractPaymentAuthorizeHandler extends IpnAbstractTransferReq
 {
 
     /**
+     * @todo CR modify PHP doc
+     *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
      *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
@@ -22,8 +24,7 @@ abstract class IpnAbstractPaymentAuthorizeHandler extends IpnAbstractTransferReq
     {
         return $this->amazonpayQueryContainer->queryPaymentByAuthorizationReferenceId(
             $amazonpayIpnPaymentAuthorizeRequestTransfer->getAuthorizationDetails()->getAuthorizationReferenceId()
-        )
-            ->findOne();
+        )->findOne();
     }
 
     /**

@@ -22,10 +22,10 @@ class ShipmentDataQuoteInitializer implements QuoteUpdaterInterface
     public function update(QuoteTransfer $quoteTransfer)
     {
         $shipmentMethod = new ShipmentMethodTransfer();
-        $shipment = new ShipmentTransfer();
-        $shipment->setMethod($shipmentMethod);
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod($shipmentMethod);
 
-        $quoteTransfer->setShipment($shipment);
+        $quoteTransfer->setShipment($shipmentTransfer);
 
         return $quoteTransfer;
     }

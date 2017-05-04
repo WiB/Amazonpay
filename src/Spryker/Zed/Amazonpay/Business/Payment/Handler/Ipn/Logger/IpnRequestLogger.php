@@ -24,6 +24,7 @@ class IpnRequestLogger implements IpnRequestLoggerInterface
     {
         $ipnLog = new SpyPaymentAmazonpayIpnLog();
 
+        //@todo use UtilEncoding service for json encode
         $ipnLog->setMessage(json_encode($ipnRequest->toArray()));
         $ipnLog->setMessageId($ipnRequest->getMessage()->getMessageId());
         $ipnLog->setFkPaymentAmazonpay($paymentAmazonpay->getIdPaymentAmazonpay());

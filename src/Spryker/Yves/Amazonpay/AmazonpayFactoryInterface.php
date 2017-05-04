@@ -11,6 +11,7 @@ interface AmazonpayFactoryInterface
 {
 
     /**
+     * @TODO CR interface
      * @return \Spryker\Client\Quote\QuoteClient
      */
     public function getQuoteClient();

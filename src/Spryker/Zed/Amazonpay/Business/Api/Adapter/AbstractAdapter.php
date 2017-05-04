@@ -36,7 +36,8 @@ abstract class AbstractAdapter
     protected $converter;
 
     /**
-     * @param \PayWithAmazon\Client $client
+     * @todo CR pass all required dependencies, moneyFacade, remove to used.
+     * @param \PayWithAmazon\ClientInterface $client
      */
     public function __construct(
         Client $client

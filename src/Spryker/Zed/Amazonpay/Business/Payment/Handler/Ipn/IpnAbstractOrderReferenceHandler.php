@@ -13,7 +13,7 @@ abstract class IpnAbstractOrderReferenceHandler extends IpnAbstractTransferReque
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnOrderReferenceOpenTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\AmazonpayIpnOrderReferenceNotificationTransfer $amazonpayIpnOrderReferenceOpenTransfer
      *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */
@@ -21,8 +21,7 @@ abstract class IpnAbstractOrderReferenceHandler extends IpnAbstractTransferReque
     {
         return $this->amazonpayQueryContainer->queryPaymentByOrderReferenceId(
             $amazonpayIpnOrderReferenceOpenTransfer->getAmazonOrderReferenceId()
-        )
-            ->findOne();
+        )->findOne();
     }
 
 }

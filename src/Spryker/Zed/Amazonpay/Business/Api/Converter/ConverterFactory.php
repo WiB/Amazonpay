@@ -13,7 +13,7 @@ use Spryker\Zed\Amazonpay\Business\Api\Converter\Details\RefundDetailsConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnArrayConverter;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\Ipn\IpnConverterFactory;
 
-class ConverterFactory
+class ConverterFactory implements ConverterFactoryInterface
 {
 
     /**

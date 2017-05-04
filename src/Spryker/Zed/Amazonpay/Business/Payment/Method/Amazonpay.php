@@ -13,6 +13,9 @@ class Amazonpay implements AmazonpayInterface
 {
 
     /**
+     *
+     * @todo CR remove
+     *
      * @return string
      */
     public function getMethodName()
