@@ -28,7 +28,7 @@ class CancelOrderTransaction extends AbstractOrderTransaction
         $orderTransfer = parent::execute($orderTransfer);
 
         if ($this->apiResponse->getHeader()->getIsSuccess()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CANCELLED);
+            $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CANCELLED);
             $this->paymentEntity->save();
         }
 

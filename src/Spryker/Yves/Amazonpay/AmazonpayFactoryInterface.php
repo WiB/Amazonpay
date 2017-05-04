@@ -11,13 +11,12 @@ interface AmazonpayFactoryInterface
 {
 
     /**
-     * @TODO CR interface
-     * @return \Spryker\Client\Quote\QuoteClient
+     * @return \Spryker\Client\Quote\QuoteClientInterface
      */
     public function getQuoteClient();
 
     /**
-     * @return \Spryker\Client\Checkout\CheckoutClient
+     * @return \Spryker\Client\Checkout\CheckoutClientInterface
      */
     public function getCheckoutClient();
 
@@ -27,12 +26,12 @@ interface AmazonpayFactoryInterface
     public function getConfig();
 
     /**
-     * @return \Spryker\Client\Shipment\ShipmentClient
+     * @return \Spryker\Client\Shipment\ShipmentClientInterface
      */
     public function getShipmentClient();
 
     /**
-     * @return \Spryker\Client\Calculation\CalculationClient
+     * @return \Spryker\Client\Calculation\CalculationClientInterface
      */
     public function getCalculationClient();
 

@@ -24,8 +24,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
 {
 
     /**
+     * {@inheritdoc}
      *
-     * @TODO CR specification is missing add inheridoc and move to interface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -41,6 +41,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -56,6 +58,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -71,6 +75,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -86,6 +92,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -101,6 +109,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -116,6 +126,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -131,6 +143,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $salesOrderItems
@@ -146,6 +160,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
@@ -160,6 +176,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -175,6 +193,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -190,6 +210,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -205,6 +227,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -220,6 +244,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -235,6 +261,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -270,6 +298,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $headers
@@ -286,6 +316,8 @@ class AmazonpayFacade extends AbstractFacade implements AmazonpayFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequestTransfer

@@ -49,7 +49,7 @@ class ReauthorizeOrderTransaction extends AbstractOrderTransaction
             $this->paymentEntity->save();
         }
 
-        $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_PENDING);
+        $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_AUTH_PENDING);
         $this->paymentEntity->save();
 
         return $orderTransfer;

@@ -37,7 +37,7 @@ class UpdateOrderAuthorizationStatusTransaction extends AbstractOrderTransaction
                     $this->apiResponse->getAuthorizationDetails()->getIdList()
                 );
 
-                $this->paymentEntity->setOrderReferenceStatus(
+                $this->paymentEntity->setStatus(
                     AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED
                 );
 
@@ -54,21 +54,21 @@ class UpdateOrderAuthorizationStatusTransaction extends AbstractOrderTransaction
 
             if ($status->getIsDeclined()) {
                 if ($status->getIsSuspended()) {
-                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_SUSPENDED);
+                    $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_AUTH_SUSPENDED);
                 } else {
-                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_DECLINED);
+                    $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_AUTH_DECLINED);
                 }
             }
 
             if ($status->getIsOpen()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_OPEN);
+                $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_AUTH_OPEN);
             }
 
             if ($status->getIsClosed()) {
                 if ($status->getIsReauthorizable()) {
-                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_EXPIRED);
+                    $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_AUTH_EXPIRED);
                 } else {
-                    $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_AUTH_CLOSED);
+                    $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_AUTH_CLOSED);
                 }
             }
 

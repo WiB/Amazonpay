@@ -22,8 +22,8 @@ class IsClosedConditionPlugin implements ConditionInterface
     public function check(SpySalesOrderItem $orderItem)
     {
         foreach ($orderItem->getOrder()->getItems() as $nextOrderItem) {
-            if ($nextOrderItem->getOrder()->getSpyPaymentAmazonpays()->getFirst()->getOrderReferenceStatus()
-                !== AmazonpayConstants::OMS_STATUS_CLOSED) {
+            if ($nextOrderItem->getOrder()->getSpyPaymentAmazonpays()->getFirst()->getStatus()
+                    !== AmazonpayConstants::OMS_STATUS_CLOSED) {
                 return false;
             }
         }

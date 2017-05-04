@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class CancelPreOrderAdapter extends AbstractQuoteAdapter
+class CancelPreOrderAdapter extends AbstractAdapter implements QuoteAdapterInterface
 {
 
     /**

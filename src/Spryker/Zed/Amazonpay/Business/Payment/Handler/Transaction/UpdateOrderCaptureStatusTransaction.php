@@ -40,15 +40,15 @@ class UpdateOrderCaptureStatusTransaction extends AbstractOrderTransaction
             }
 
             if ($this->apiResponse->getCaptureDetails()->getCaptureStatus()->getIsDeclined()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_DECLINED);
+                $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_DECLINED);
             }
 
             if ($this->apiResponse->getCaptureDetails()->getCaptureStatus()->getIsCompleted()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED);
+                $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED);
             }
 
             if ($this->apiResponse->getCaptureDetails()->getCaptureStatus()->getIsClosed()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_CLOSED);
+                $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_CLOSED);
             }
 
             $this->paymentEntity->save();

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-class RefundOrderAdapter extends AbstractOrderAdapter
+class RefundOrderAdapter extends AbstractAdapter implements OrderAdapterInterface
 {
 
     const REFUND_REFERENCE_ID = 'refund_reference_id';
@@ -39,8 +39,6 @@ class RefundOrderAdapter extends AbstractOrderAdapter
                     ->getRefundDetails()
                     ->getRefundReferenceId(),
             static::REFUND_AMOUNT => $refundAmount,
-            //@todo remove before release
-            //'seller_refund_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}',
         ]);
 
         return $this->converter->convert($result);

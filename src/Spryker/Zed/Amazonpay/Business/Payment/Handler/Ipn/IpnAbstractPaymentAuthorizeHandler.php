@@ -14,10 +14,7 @@ abstract class IpnAbstractPaymentAuthorizeHandler extends IpnAbstractTransferReq
 {
 
     /**
-     * @todo CR modify PHP doc
-     *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
-     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */
     protected function retrievePaymentEntity(AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer)

@@ -15,12 +15,12 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
     const ORDER_REFERENCE_STATUS_OPEN = 'Open';
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\GetOrderReferenceDetailsTransaction
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionInterface
      */
     protected $getOrderReferenceDetailsTransaction;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\CancelPreOrderTransaction
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionInterface
      */
     protected $cancelOrderTransaction;
 
@@ -43,7 +43,12 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
      */
     public function execute(QuoteTransfer $quoteTransfer)
     {
-        if (!$quoteTransfer->getAmazonpayPayment()->getAuthorizationDetails()->getAuthorizationStatus()->getIsDeclined()) {
+        if (!$quoteTransfer
+                ->getAmazonpayPayment()
+                ->getAuthorizationDetails()
+                ->getAuthorizationStatus()
+                ->getIsDeclined()
+        ) {
             return $quoteTransfer;
         }
 
@@ -57,8 +62,7 @@ class HandleDeclinedOrderTransaction extends AbstractQuoteTransaction
 
         $checkOrderStatus = $this->getOrderReferenceDetailsTransaction->execute($quoteTransfer);
 
-        //@todo should be  $checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus()->isOpen instead
-        if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus() === self::ORDER_REFERENCE_STATUS_OPEN) {
+        if ($checkOrderStatus->getAmazonpayPayment()->getOrderReferenceStatus()->getIsOpen()) {
             $this->cancelOrderTransaction->execute($quoteTransfer);
         }
 

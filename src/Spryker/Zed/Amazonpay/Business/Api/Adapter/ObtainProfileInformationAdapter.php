@@ -27,8 +27,7 @@ class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAd
         Client $client,
         ArrayConverterInterface $converter
     ) {
-        parent::__construct($client);
-
+        $this->client = $client;
         $this->converter = $converter;
     }
 

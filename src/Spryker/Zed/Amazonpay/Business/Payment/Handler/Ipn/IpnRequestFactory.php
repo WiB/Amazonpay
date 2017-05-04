@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
-use Exception;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface;
@@ -48,9 +47,9 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $ipnRequest
      *
-     * @throws \Exception
+     * @throws IpnHandlerNotFoundException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -70,14 +69,14 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
                 return $this->createIpnOrderReferenceHandler($ipnRequest);
         }
 
-        throw new Exception('Unknown IPN Notification type: ' .
+        throw new IpnHandlerNotFoundException('Unknown IPN Notification type: ' .
             $ipnRequest->getMessage()->getNotificationType());
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $ipnRequest
      *
-     * @throws \Exception
+     * @throws IpnHandlerNotFoundException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -109,15 +108,14 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
-        // @todo return your own exception
-        throw new Exception('No IPN handler for auth payment and status ' .
+        throw new IpnHandlerNotFoundException('No IPN handler for auth payment and status ' .
             $ipnRequest->getAuthorizationDetails()->getAuthorizationStatus()->getState());
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentCaptureRequestTransfer $ipnRequest
      *
-     * @throws \Exception
+     * @throws IpnHandlerNotFoundException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -139,15 +137,14 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             return new IpnEmptyHandler();
         }
 
-        // @todo return your own exception
-        throw new Exception('No IPN handler for capture and status ' .
+        throw new IpnHandlerNotFoundException('No IPN handler for capture and status ' .
             $ipnRequest->getCaptureDetails()->getCaptureStatus()->getState());
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentRefundRequestTransfer $ipnRequest
      *
-     * @throws \Exception
+     * @throws IpnHandlerNotFoundException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -167,15 +164,14 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
-        // @todo return your own exception
-        throw new Exception('No IPN handler for payment refund and status ' .
+        throw new IpnHandlerNotFoundException('No IPN handler for payment refund and status ' .
             $ipnRequest->getRefundDetails()->getRefundStatus()->getState());
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnOrderReferenceNotificationTransfer $ipnRequest
      *
-     * @throws \Exception
+     * @throws IpnHandlerNotFoundException
      *
      * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnRequestHandlerInterface
      */
@@ -213,8 +209,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
-        // @todo return your own exception
-        throw new Exception('No IPN handler for order reference and status ' .
+        throw new IpnHandlerNotFoundException('No IPN handler for order reference and status ' .
             $ipnRequest->getOrderReferenceStatus()->getState());
     }
 

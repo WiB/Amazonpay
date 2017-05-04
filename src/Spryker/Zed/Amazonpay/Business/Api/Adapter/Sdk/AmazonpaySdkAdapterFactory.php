@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk;
 
 use PayWithAmazon\Client;
 use PayWithAmazon\IpnHandler;
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 
 class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
 {
@@ -24,7 +24,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
     const SANDBOX = 'sandbox';
 
     /**
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      *
      * @return \PayWithAmazon\ClientInterface
      */

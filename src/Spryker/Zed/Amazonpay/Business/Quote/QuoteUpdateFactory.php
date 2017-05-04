@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface;
 
@@ -20,7 +20,7 @@ class QuoteUpdateFactory implements QuoteUpdateFactoryInterface
     protected $adapterFactory;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
+     * @var \Spryker\Shared\Amazonpay\AmazonpayConfig
      */
     protected $config;
 
@@ -31,7 +31,7 @@ class QuoteUpdateFactory implements QuoteUpdateFactoryInterface
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface $adapterFactory
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentInterface $shipmentFacade
      */
     public function __construct(

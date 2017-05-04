@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
-use PayWithAmazon\ResponseParser;
+use PayWithAmazon\ResponseInterface;
 
 interface ResponseParserConverterInterface
 {
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AbstractTransfer
      */
-    public function convert(ResponseParser $responseParser);
+    public function convert(ResponseInterface $responseParser);
 
 }

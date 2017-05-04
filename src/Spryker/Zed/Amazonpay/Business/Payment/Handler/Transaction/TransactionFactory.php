@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;
-use Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
 
 class TransactionFactory implements TransactionFactoryInterface
@@ -22,7 +21,7 @@ class TransactionFactory implements TransactionFactoryInterface
     protected $adapterFactory;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\AmazonpayConfigInterface
+     * @var \Spryker\Shared\Amazonpay\AmazonpayConfigInterface
      */
     protected $config;
 
@@ -43,23 +42,20 @@ class TransactionFactory implements TransactionFactoryInterface
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface $adapterFactory
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface $transactionLogger
      * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
-     * @param \Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface $amazonpayPaymentMethod
      */
     public function __construct(
         AdapterFactoryInterface $adapterFactory,
         AmazonpayConfigInterface $config,
         TransactionLoggerInterface $transactionLogger,
-        AmazonpayQueryContainerInterface $amazonpayQueryContainer,
-        AmazonpayInterface $amazonpayPaymentMethod
+        AmazonpayQueryContainerInterface $amazonpayQueryContainer
     ) {
         $this->adapterFactory = $adapterFactory;
         $this->config = $config;
         $this->transactionLogger = $transactionLogger;
         $this->amazonpayQueryContainer = $amazonpayQueryContainer;
-        $this->amazonpayPaymentMethod = $amazonpayPaymentMethod;
     }
 
     /**
@@ -67,17 +63,11 @@ class TransactionFactory implements TransactionFactoryInterface
      */
     public function createConfirmOrderReferenceTransaction()
     {
-        $handler = new ConfirmOrderReferenceTransaction(
+        return new ConfirmOrderReferenceTransaction(
             $this->adapterFactory->createConfirmOrderReferenceAmazonpayAdapter(),
             $this->config,
             $this->transactionLogger
         );
-
-        $handler->registerMethodMapper(
-            $this->amazonpayPaymentMethod
-        );
-
-        return $handler;
     }
 
     /**
@@ -85,17 +75,11 @@ class TransactionFactory implements TransactionFactoryInterface
      */
     public function createSetOrderReferenceTransaction()
     {
-        $handler = new SetOrderReferenceDetailsTransaction(
+        return new SetOrderReferenceDetailsTransaction(
             $this->adapterFactory->createSetOrderReferenceDetailsAmazonpayAdapter(),
             $this->config,
             $this->transactionLogger
         );
-
-        $handler->registerMethodMapper(
-            $this->amazonpayPaymentMethod
-        );
-
-        return $handler;
     }
 
     /**
@@ -103,17 +87,11 @@ class TransactionFactory implements TransactionFactoryInterface
      */
     public function createGetOrderReferenceDetailsTransaction()
     {
-        $handler = new GetOrderReferenceDetailsTransaction(
+        return new GetOrderReferenceDetailsTransaction(
             $this->adapterFactory->createGetOrderReferenceDetailsAmazonpayAdapter(),
             $this->config,
             $this->transactionLogger
         );
-
-        $handler->registerMethodMapper(
-            $this->amazonpayPaymentMethod
-        );
-
-        return $handler;
     }
 
     /**
@@ -159,17 +137,11 @@ class TransactionFactory implements TransactionFactoryInterface
      */
     public function createAuthorizeOrderTransaction()
     {
-        $handler = new AuthorizeOrderTransaction(
+        return new AuthorizeOrderTransaction(
             $this->adapterFactory->createAuthorizeQuoteAdapter(),
             $this->config,
             $this->transactionLogger
         );
-
-        $handler->registerMethodMapper(
-            $this->amazonpayPaymentMethod
-        );
-
-        return $handler;
     }
 
     /**
@@ -203,14 +175,12 @@ class TransactionFactory implements TransactionFactoryInterface
      */
     public function createReauthorizeSuspendedOrderTransaction()
     {
-        $handler = new ReauthorizeOrderTransaction(
+        return new ReauthorizeOrderTransaction(
             $this->adapterFactory->createAuthorizeOrderAdapter(),
             $this->config,
             $this->transactionLogger,
             $this->amazonpayQueryContainer
         );
-
-        return $handler;
     }
 
     /**
@@ -218,18 +188,12 @@ class TransactionFactory implements TransactionFactoryInterface
      */
     protected function createCaptureOrderTransaction()
     {
-        $handler = new CaptureOrderTransaction(
+        return new CaptureOrderTransaction(
             $this->adapterFactory->createCaptureOrderAdapter(),
             $this->config,
             $this->transactionLogger,
             $this->amazonpayQueryContainer
         );
-
-        $handler->registerMethodMapper(
-            $this->amazonpayPaymentMethod
-        );
-
-        return $handler;
     }
 
     /**

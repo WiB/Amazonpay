@@ -54,11 +54,11 @@ class CaptureOrderTransaction extends AbstractOrderTransaction
         }
 
         if ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsDeclined()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_DECLINED);
+            $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_DECLINED);
         } elseif ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsPending()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING);
+            $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_PENDING);
         } elseif ($orderTransfer->getAmazonpayPayment()->getCaptureDetails()->getCaptureStatus()->getIsCompleted()) {
-            $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED);
+            $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_CAPTURE_COMPLETED);
         }
 
         $this->paymentEntity->save();

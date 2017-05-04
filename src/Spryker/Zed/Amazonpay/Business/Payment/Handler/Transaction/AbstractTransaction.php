@@ -7,13 +7,22 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter;
-use Spryker\Zed\Amazonpay\Business\Payment\Handler\AbstractPaymentHandler;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;
 
-abstract class AbstractTransaction extends AbstractPaymentHandler
+abstract class AbstractTransaction
 {
+
+    /**
+     * @var \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapterInterface
+     */
+    protected $executionAdapter;
+
+    /**
+     * @var \Spryker\Shared\Amazonpay\AmazonpayConfigInterface
+     */
+    protected $config;
 
     /**
      * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer
@@ -21,13 +30,13 @@ abstract class AbstractTransaction extends AbstractPaymentHandler
     protected $apiResponse;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger
+     * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface
      */
     protected $transactionsLogger;
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\AbstractAdapter $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface $transactionLogger
      */
     public function __construct(

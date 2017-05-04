@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
+use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Amazonpay\AmazonpayConstants;
 
 class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
 {
@@ -42,9 +44,14 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
             $quoteTransfer->setOrderReference(
                 $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId()
             );
-            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus(
-                $this->apiResponse->getOrderReferenceStatus()
+
+            $orderReferenceStatus = new AmazonpayStatusTransfer();
+            $orderReferenceStatus->setState($this->apiResponse->getOrderReferenceStatus());
+            $orderReferenceStatus->setIsOpen(
+                $this->apiResponse->getOrderReferenceStatus() === AmazonpayConstants::ORDER_REFERENCE_STATUS_OPEN
             );
+
+            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus($orderReferenceStatus);
         }
 
         return $quoteTransfer;

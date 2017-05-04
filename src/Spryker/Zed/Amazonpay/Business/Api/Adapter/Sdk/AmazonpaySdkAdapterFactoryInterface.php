@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 
 interface AmazonpaySdkAdapterFactoryInterface
 {
 
     /**
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      *
      * @return \PayWithAmazon\Client
      */

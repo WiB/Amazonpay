@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Amazonpay\AmazonpayConfig;
+use Spryker\Shared\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface;
 
 class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
@@ -20,7 +20,7 @@ class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
     protected $executionAdapter;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\AmazonpayConfig
+     * @var \Spryker\Shared\Amazonpay\AmazonpayConfig
      */
     protected $config;
 
@@ -31,7 +31,7 @@ class ShippingAddressDataQuoteUpdater implements QuoteUpdaterInterface
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\QuoteAdapterInterface $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfig $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfig $config
      */
     public function __construct(
         QuoteAdapterInterface $executionAdapter,

@@ -14,8 +14,7 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
 {
 
     /**
-     * @TODO CR interface missing
-     * @return \Spryker\Client\Quote\QuoteClient
+     * @return \Spryker\Client\Quote\QuoteClientInterface
      */
     public function getQuoteClient()
     {
@@ -23,8 +22,7 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
     }
 
     /**
-     * @TODO CR interface
-     * @return \Spryker\Client\Checkout\CheckoutClient
+     * @return \Spryker\Client\Checkout\CheckoutClientInterface
      */
     public function getCheckoutClient()
     {
@@ -40,7 +38,7 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
     }
 
     /**
-     * @return \Spryker\Client\Shipment\ShipmentClient
+     * @return \Spryker\Client\Shipment\ShipmentClientInterface
      */
     public function getShipmentClient()
     {
@@ -48,7 +46,7 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
     }
 
     /**
-     * @return \Spryker\Client\Calculation\CalculationClient
+     * @return \Spryker\Client\Calculation\CalculationClientInterface
      */
     public function getCalculationClient()
     {

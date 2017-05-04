@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class SetOrderReferenceDetailsAdapter extends AbstractQuoteAdapter
+class SetOrderReferenceDetailsAdapter extends AbstractAdapter implements QuoteAdapterInterface
 {
 
     const SELLER_ORDER_ID = 'seller_order_id';

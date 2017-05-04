@@ -9,8 +9,8 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AmazonpayGetOrderReferenceDetailsResponseTransfer;
-use PayWithAmazon\ResponseParser;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use PayWithAmazon\ResponseInterface;
 
 class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
@@ -24,31 +24,31 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return array
      */
-    protected function extractOrderReferenceStatus(ResponseParser $responseParser)
+    protected function extractOrderReferenceStatus(ResponseInterface $responseParser)
     {
         return $this->extractResult($responseParser)['OrderReferenceDetails']['OrderReferenceStatus']['State'];
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return boolean
      */
-    protected function extractIsSandbox(ResponseParser $responseParser)
+    protected function extractIsSandbox(ResponseInterface $responseParser)
     {
         return ($this->extractResult($responseParser)['OrderReferenceDetails']['ReleaseEnvironment'] === 'Sandbox');
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function extractBillingAddress(ResponseParser $responseParser)
+    protected function extractBillingAddress(ResponseInterface $responseParser)
     {
         $address = new AddressTransfer();
 
@@ -72,15 +72,19 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     protected function setBody(
         AbstractTransfer $responseTransfer,
-        ResponseParser $responseParser
+        ResponseInterface $responseParser
     ) {
-        $responseTransfer->setOrderReferenceStatus($this->extractOrderReferenceStatus($responseParser));
+        $responseTransfer->setOrderReferenceStatus(
+            $this->convertStatusToTransfer(
+                $this->extractResult($responseParser)['OrderReferenceDetails']['OrderReferenceStatus']
+            )
+        );
         $responseTransfer->setIsSandbox($this->extractIsSandbox($responseParser));
         $responseTransfer->setShippingAddress($this->extractShippingAddress($responseParser));
         $responseTransfer->setBillingAddress($this->extractBillingAddress($responseParser));

@@ -12,6 +12,7 @@ use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToSalesBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -23,6 +24,7 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_SALES = 'sales facade';
     const FACADE_REFUND = 'refund facade';
     const FACADE_OMS = 'oms facade';
+    const SERVICE_UTIL_ENCODING = 'encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +37,7 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentFacade($container);
         $container = $this->addRefundFacade($container);
         $container = $this->addOmsFacade($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -48,7 +51,6 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addRefundFacade($container);
 
-        //@TODO CR keep constitent
         $container[self::FACADE_SALES] = function (Container $container) {
             return new AmazonpayToSalesBridge($container->getLocator()->sales()->facade());
         };
@@ -79,6 +81,20 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_SHIPMENT] = function (Container $container) {
             return new AmazonpayToShipmentBridge($container->getLocator()->shipment()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container)
+    {
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new AmazonpayToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

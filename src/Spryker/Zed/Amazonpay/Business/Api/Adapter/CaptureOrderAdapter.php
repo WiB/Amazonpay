@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-class CaptureOrderAdapter extends AbstractOrderAdapter
+class CaptureOrderAdapter extends AbstractAdapter implements OrderAdapterInterface
 {
 
     const CAPTURE_REFERENCE_ID = 'capture_reference_id';
@@ -32,8 +32,6 @@ class CaptureOrderAdapter extends AbstractOrderAdapter
                     ->getCaptureDetails()
                     ->getCaptureReferenceId(),
             static::CAPTURE_AMOUNT => $this->getAmount($orderTransfer),
-            //@todo CR dont forget to remove before release!
-            //'seller_capture_note' => '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}',
         ]);
 
         return $this->converter->convert($result);

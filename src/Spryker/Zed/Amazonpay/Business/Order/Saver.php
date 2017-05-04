@@ -41,7 +41,7 @@ class Saver implements SaverInterface
     {
         $paymentEntity = new SpyPaymentAmazonpay();
         $paymentEntity->setOrderReferenceId($paymentTransfer->getOrderReferenceId());
-        $paymentEntity->setOrderReferenceStatus($this->getOrderStatus($paymentTransfer));
+        $paymentEntity->setStatus($this->getOrderStatus($paymentTransfer));
         $paymentEntity->setSellerOrderId($paymentTransfer->getSellerOrderId());
 
         $paymentEntity->setAuthorizationReferenceId(

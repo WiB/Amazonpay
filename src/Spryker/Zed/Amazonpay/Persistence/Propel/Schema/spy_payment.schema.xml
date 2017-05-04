@@ -8,7 +8,7 @@
         <column name="fk_sales_order" required="true" type="INTEGER"/>
         <column name="seller_order_id" required="true" type="VARCHAR"/>
         <column name="order_reference_id" required="true" type="VARCHAR"/>
-        <column name="order_reference_status" required="true" type="VARCHAR"/>
+        <column name="status" required="true" type="VARCHAR"/>
         <column name="authorization_reference_id" type="VARCHAR"/>
         <column name="amazon_authorization_id" type="VARCHAR"/>
         <column name="capture_reference_id" type="VARCHAR"/>

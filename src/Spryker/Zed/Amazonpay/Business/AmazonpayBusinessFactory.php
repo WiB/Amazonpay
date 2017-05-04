@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Business;
 
+use Spryker\Shared\Amazonpay\AmazonpayConfig;
 use Spryker\Zed\Amazonpay\AmazonpayDependencyProvider;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
@@ -14,12 +15,11 @@ use Spryker\Zed\Amazonpay\Business\Order\Saver;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactory;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLogger;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\TransactionFactory;
-use Spryker\Zed\Amazonpay\Business\Payment\Method\Amazonpay;
 use Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactory;
+use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\Amazonpay\AmazonpayConfig getConfig()
  * @method \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainer getQueryContainer()
  */
 class AmazonpayBusinessFactory extends AbstractBusinessFactory
@@ -34,9 +34,16 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
             $this->createAdapterFactory(),
             $this->getConfig(),
             $this->createTransactionLogger(),
-            $this->getQueryContainer(),
-            $this->createAmazonpayPaymentMethod()
+            $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Amazonpay\AmazonpayConfig
+     */
+    public function getConfig()
+    {
+        return new AmazonpayConfig();
     }
 
     /**
@@ -52,14 +59,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @TODO CR interface
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactory
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\IpnFactoryInterface
      */
     public function createIpnFactory()
     {
         return new IpnFactory(
             $this->getOmsFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -95,6 +102,14 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(AmazonpayDependencyProvider::FACADE_SHIPMENT);
     }
 
+    /**
+     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
    /**
     * @return \Spryker\Zed\Amazonpay\Business\Api\Adapter\AdapterFactoryInterface
     */
@@ -113,14 +128,6 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     protected function createConverterFactory()
     {
         return new ConverterFactory();
-    }
-
-    /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface
-     */
-    protected function createAmazonpayPaymentMethod()
-    {
-        return new Amazonpay();
     }
 
     /**

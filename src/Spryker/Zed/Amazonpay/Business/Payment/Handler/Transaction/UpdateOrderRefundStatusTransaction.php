@@ -26,9 +26,7 @@ class UpdateOrderRefundStatusTransaction extends AbstractOrderTransaction
      */
     public function execute(OrderTransfer $orderTransfer)
     {
-        if ($orderTransfer->getAmazonpayPayment()->getOrderReferenceStatus()
-                !== AmazonpayConstants::OMS_STATUS_REFUND_PENDING
-        ) {
+        if (!$orderTransfer->getAmazonpayPayment()->getRefundDetails()->getRefundStatus()->getIsPending()) {
             return $orderTransfer;
         }
 
@@ -40,11 +38,11 @@ class UpdateOrderRefundStatusTransaction extends AbstractOrderTransaction
             }
 
             if ($this->apiResponse->getRefundDetails()->getRefundStatus()->getIsDeclined()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_REFUND_DECLINED);
+                $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_REFUND_DECLINED);
             }
 
             if ($this->apiResponse->getRefundDetails()->getRefundStatus()->getIsCompleted()) {
-                $this->paymentEntity->setOrderReferenceStatus(AmazonpayConstants::OMS_STATUS_REFUND_COMPLETED);
+                $this->paymentEntity->setStatus(AmazonpayConstants::OMS_STATUS_REFUND_COMPLETED);
             }
 
             $this->paymentEntity->save();

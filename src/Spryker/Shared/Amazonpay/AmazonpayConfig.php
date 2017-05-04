@@ -7,13 +7,14 @@
 
 namespace Spryker\Shared\Amazonpay;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class AmazonpayConfig extends AbstractBundleConfig
+class AmazonpayConfig extends AbstractBundleConfig implements AmazonpayConfigInterface
 {
 
     /**
+     *
      * @return string
      */
     public function getClientId()
@@ -64,14 +65,6 @@ class AmazonpayConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStoreName()
-    {
-        return $this->get(AmazonpayConstants::STORE_NAME);
-    }
-
-    /**
-     * @return string
-     */
     public function getCurrencyIsoCode()
     {
         return Store::getInstance()->getCurrencyIsoCode();
@@ -83,6 +76,30 @@ class AmazonpayConfig extends AbstractBundleConfig
     public function isSandbox()
     {
         return (bool)$this->get(AmazonpayConstants::SANDBOX);
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorReportLevel()
+    {
+        return $this->get(AmazonpayConstants::ERROR_REPORT_LEVEL);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCaptureNow()
+    {
+        return (bool)$this->get(AmazonpayConstants::CAPTURE_NOW);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAuthTransactionTimeout()
+    {
+        return $this->get(AmazonpayConstants::AUTH_TRANSACTION_TIMEOUT);
     }
 
 }

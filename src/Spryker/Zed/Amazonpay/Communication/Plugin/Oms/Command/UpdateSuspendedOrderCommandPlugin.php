@@ -20,7 +20,7 @@ class UpdateSuspendedOrderCommandPlugin extends AbstractAmazonpayCommandPlugin
     public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         // no partial reauthorize should be possible
-        if ($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus()
+        if ($this->getPaymentEntity($orderEntity)->getStatus()
             === AmazonpayConstants::OMS_STATUS_PAYMENT_METHOD_CHANGED
             && count($orderEntity->getItems()) === count($salesOrderItems)) {
             $this->getFacade()->reauthorizeSuspendedOrder($this->getOrderTransfer($orderEntity));

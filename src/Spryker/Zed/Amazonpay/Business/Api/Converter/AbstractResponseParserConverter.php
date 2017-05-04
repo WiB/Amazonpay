@@ -10,7 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
-use PayWithAmazon\ResponseParser;
+use PayWithAmazon\ResponseInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractResponseParserConverter extends AbstractConverter implements ResponseParserConverterInterface
@@ -35,22 +35,22 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function setBody(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
+    protected function setBody(AbstractTransfer $responseTransfer, ResponseInterface $responseParser)
     {
         return $responseTransfer;
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function setResponseDataToTransfer(AbstractTransfer $responseTransfer, ResponseParser $responseParser)
+    protected function setResponseDataToTransfer(AbstractTransfer $responseTransfer, ResponseInterface $responseParser)
     {
         $responseTransfer->setHeader($this->extractHeader($responseParser));
         if ($responseTransfer->getHeader()->getIsSuccess()) {
@@ -61,21 +61,21 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function convert(ResponseParser $responseParser)
+    public function convert(ResponseInterface $responseParser)
     {
         return $this->setResponseDataToTransfer($this->createTransferObject(), $responseParser);
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return array
      */
-    protected function extractMetadata(ResponseParser $responseParser)
+    protected function extractMetadata(ResponseInterface $responseParser)
     {
         return empty($responseParser->toArray()['ResponseMetadata'])
             ? []
@@ -83,21 +83,21 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return int
      */
-    protected function extractStatusCode(ResponseParser $responseParser)
+    protected function extractStatusCode(ResponseInterface $responseParser)
     {
         return (int)$responseParser->toArray()['ResponseStatus'];
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer
      */
-    protected function extractHeader(ResponseParser $responseParser)
+    protected function extractHeader(ResponseInterface $responseParser)
     {
         $statusCode = $this->extractStatusCode($responseParser);
         $metadata = $this->extractMetadata($responseParser);
@@ -127,11 +127,11 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return bool
      */
-    protected function isSuccess(ResponseParser $responseParser)
+    protected function isSuccess(ResponseInterface $responseParser)
     {
         return
             $this->extractStatusCode($responseParser) == self::STATUS_CODE_SUCCESS
@@ -139,11 +139,11 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return array
      */
-    protected function extractResult(ResponseParser $responseParser)
+    protected function extractResult(ResponseInterface $responseParser)
     {
         $responseType = $this->getResponseType();
 
@@ -153,11 +153,11 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer[]
      */
-    protected function extractConstraints(ResponseParser $responseParser)
+    protected function extractConstraints(ResponseInterface $responseParser)
     {
         $result = $this->extractResult($responseParser);
 
@@ -185,11 +185,11 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseParser $responseParser
+     * @param \PayWithAmazon\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function extractShippingAddress(ResponseParser $responseParser)
+    protected function extractShippingAddress(ResponseInterface $responseParser)
     {
         $address = new AddressTransfer();
 

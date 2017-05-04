@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
@@ -28,7 +28,7 @@ abstract class AbstractOrderTransaction extends AbstractTransaction implements O
 
     /**
      * @param \Spryker\Zed\Amazonpay\Business\Api\Adapter\OrderAdapterInterface $executionAdapter
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      * @param \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface $transactionLogger
      * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
      */

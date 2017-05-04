@@ -7,16 +7,17 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
+use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactoryInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
 class AdapterFactory implements AdapterFactoryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Amazonpay\AmazonpayConfigInterface
+     * @var \Spryker\Shared\Amazonpay\AmazonpayConfigInterface
      */
     protected $config;
 
@@ -31,13 +32,13 @@ class AdapterFactory implements AdapterFactoryInterface
     protected $moneyFacade;
 
     /**
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
-     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory $converterFactory
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactoryInterface $converterFactory
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
      */
     public function __construct(
         AmazonpayConfigInterface $config,
-        ConverterFactory $converterFactory,
+        ConverterFactoryInterface $converterFactory,
         AmazonpayToMoneyInterface $moneyFacade
     ) {
         $this->config = $config;

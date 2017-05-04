@@ -26,6 +26,8 @@ interface AmazonpayConstants
     const PAYMENT_METHOD = 'Amazon Pay';
     const PROVIDER_NAME = 'Amazon Pay';
 
+    const ORDER_REFERENCE_STATUS_OPEN = 'Open';
+
     const OMS_STATUS_NEW = 'new';
     const OMS_STATUS_AUTHORIZED = 'authorized';
     const OMS_STATUS_DECLINED = 'declined';

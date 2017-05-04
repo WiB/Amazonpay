@@ -38,6 +38,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
 
         $paymentTransfer = new AmazonpayPaymentTransfer();
         $paymentTransfer->setResponseHeader($responseHeader);
+        $paymentTransfer->setOrderReferenceStatus(new AmazonpayStatusTransfer());
         $paymentTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
         $paymentTransfer->setAuthorizationDetails($this->getAuthorizationDetailsTransfer($orderEntity));
         $paymentTransfer->setCaptureDetails($this->getCaptureDetailsTransfer($orderEntity));
@@ -75,7 +76,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
         $authDetailsTransfer = new AmazonpayAuthorizationDetailsTransfer();
         $authDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
         $authDetailsTransfer->setAuthorizationStatus(
-            $this->getAuthStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
+            $this->getAuthStatusTransfer($this->getPaymentEntity($orderEntity)->getStatus())
         );
 
         return $authDetailsTransfer;
@@ -91,7 +92,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
         $refundDetailsTransfer = new AmazonpayRefundDetailsTransfer();
         $refundDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
         $refundDetailsTransfer->setRefundStatus(
-            $this->getRefundStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
+            $this->getRefundStatusTransfer($this->getPaymentEntity($orderEntity)->getStatus())
         );
 
         return $refundDetailsTransfer;
@@ -107,7 +108,7 @@ abstract class AbstractAmazonpayCommandPlugin extends AbstractPlugin implements 
         $captureDetailsTransfer = new AmazonpayCaptureDetailsTransfer();
         $captureDetailsTransfer->fromArray($this->getPaymentEntity($orderEntity)->toArray(), true);
         $captureDetailsTransfer->setCaptureStatus(
-            $this->getCaptureStatusTransfer($this->getPaymentEntity($orderEntity)->getOrderReferenceStatus())
+            $this->getCaptureStatusTransfer($this->getPaymentEntity($orderEntity)->getStatus())
         );
 
         return $captureDetailsTransfer;

@@ -9,7 +9,8 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
 use PayWithAmazon\Client;
-use Spryker\Zed\Amazonpay\AmazonpayConfigInterface;
+use PayWithAmazon\ClientInterface;
+use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
@@ -35,20 +36,18 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
      * @param \PayWithAmazon\ClientInterface $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\Amazonpay\AmazonpayConfigInterface $config
+     * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      * @param bool|null $captureNow
      */
     public function __construct(
-        Client $client,
+        ClientInterface $client,
         ResponseParserConverterInterface $converter,
         AmazonpayToMoneyInterface $moneyFacade,
         AmazonpayConfigInterface $config,
         $captureNow = null
     ) {
-        parent::__construct($client);
+        parent::__construct($client, $converter, $moneyFacade);
 
-        $this->converter = $converter;
-        $this->moneyFacade = $moneyFacade;
         $this->setCaptureNow($config, $captureNow);
         $this->transactionTimeout = $config->getAuthTransactionTimeout();
     }

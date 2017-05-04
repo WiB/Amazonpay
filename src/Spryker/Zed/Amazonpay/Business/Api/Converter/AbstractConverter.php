@@ -45,7 +45,11 @@ abstract class AbstractConverter
     protected function convertStatusToTransfer(array $statusData)
     {
         $status = new AmazonpayStatusTransfer();
-        $status->setLastUpdateTimestamp($statusData['LastUpdateTimestamp']);
+
+        if (!empty($statusData['LastUpdateTimestamp'])) {
+            $status->setLastUpdateTimestamp($statusData['LastUpdateTimestamp']);
+        }
+
         $status->setState($statusData['State']);
 
         if (!empty($statusData['ReasonCode'])) {
