@@ -38,7 +38,7 @@ class AmazonpayToUtilEncodingBridge implements AmazonpayToUtilEncodingInterface
      */
     public function encodeJson($jsonValue, $options = null, $depth = null)
     {
-        $this->utilEncodingService->encodeJson($jsonValue, $options, $depth);
+        return $this->utilEncodingService->encodeJson($jsonValue, $options, $depth);
     }
 
     /**
@@ -55,7 +55,7 @@ class AmazonpayToUtilEncodingBridge implements AmazonpayToUtilEncodingInterface
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
-        $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 
 }
