@@ -12,7 +12,7 @@ use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToRefundBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToSalesBridge;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToShipmentBridge;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingBridge;
+use Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
