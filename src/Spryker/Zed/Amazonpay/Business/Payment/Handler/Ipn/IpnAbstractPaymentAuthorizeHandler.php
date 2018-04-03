@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 abstract class IpnAbstractPaymentAuthorizeHandler extends IpnAbstractTransferRequestHandler
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */
     protected function retrievePaymentEntity(AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer)

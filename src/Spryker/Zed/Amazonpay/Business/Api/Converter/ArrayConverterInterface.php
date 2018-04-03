@@ -13,7 +13,7 @@ interface ArrayConverterInterface
     /**
      * @param array $data
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function convert(array $data);
 

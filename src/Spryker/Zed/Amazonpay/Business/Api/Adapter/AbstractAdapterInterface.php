@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 interface AbstractAdapterInterface
 {
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $abstractTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function call(AbstractTransfer $abstractTransfer);
 

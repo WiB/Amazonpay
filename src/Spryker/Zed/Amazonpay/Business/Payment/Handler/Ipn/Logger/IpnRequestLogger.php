@@ -8,20 +8,20 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger;
 
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpayIpnLog;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface;
+use Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface;
 
 class IpnRequestLogger implements IpnRequestLoggerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface
+     * @var \Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface
      */
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface $utilEncoding
      */
     public function __construct(AmazonpayToUtilEncodingInterface $utilEncoding)
     {
@@ -29,7 +29,7 @@ class IpnRequestLogger implements IpnRequestLoggerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequest
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $ipnRequest
      * @param \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay $paymentAmazonpay
      *
      * @return void

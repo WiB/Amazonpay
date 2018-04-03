@@ -26,14 +26,14 @@ class IpnFactory implements IpnFactoryInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface
+     * @var \Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface
      */
     protected $encodingService;
 
     /**
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface $omsFacade
      * @param \Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface $amazonpayQueryContainer
-     * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface
+     * @param \Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface
      */
     public function __construct(
         AmazonpayToOmsInterface $omsFacade,

@@ -11,9 +11,9 @@ interface AmazonpayFactoryInterface
 {
 
     /**
-     * @return \Spryker\Client\Quote\QuoteClientInterface
+     * @return \Spryker\Client\Cart\CartClientInterface
      */
-    public function getQuoteClient();
+    public function getCartClient();
 
     /**
      * @return \Spryker\Client\Checkout\CheckoutClientInterface

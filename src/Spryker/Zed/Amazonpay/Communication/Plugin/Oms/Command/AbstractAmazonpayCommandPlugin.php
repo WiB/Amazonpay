@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 
 /**
  * @method \Spryker\Zed\Amazonpay\Business\AmazonpayFacade getFacade()

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
@@ -46,7 +46,7 @@ abstract class IpnAbstractTransferRequestHandler implements IpnRequestHandlerInt
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnRequestTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $amazonpayIpnRequestTransfer
      *
      * @return void
      */
@@ -66,7 +66,7 @@ abstract class IpnAbstractTransferRequestHandler implements IpnRequestHandlerInt
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $amazonpayIpnPaymentAuthorizeRequestTransfer
      *
      * @return \Orm\Zed\Amazonpay\Persistence\SpyPaymentAmazonpay
      */

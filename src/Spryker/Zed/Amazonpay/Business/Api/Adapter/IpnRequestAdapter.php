@@ -36,7 +36,7 @@ class IpnRequestAdapter implements IpnRequestAdapterInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function getIpnRequest()
     {

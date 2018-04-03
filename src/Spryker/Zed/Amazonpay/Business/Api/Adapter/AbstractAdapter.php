@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use PayWithAmazon\ClientInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 
@@ -55,7 +55,7 @@ abstract class AbstractAdapter
     /**
      * @method
      *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $abstractTransfer
      *
      * @return float
      */

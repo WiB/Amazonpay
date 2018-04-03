@@ -15,7 +15,7 @@ interface QuoteAdapterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function call(QuoteTransfer $quoteTransfer);
 

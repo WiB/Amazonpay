@@ -9,7 +9,7 @@ namespace Spryker\Zed\Amazonpay\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface AmazonpayToQuoteInterface
+interface AmazonpayToCartInterface
 {
 
     /**

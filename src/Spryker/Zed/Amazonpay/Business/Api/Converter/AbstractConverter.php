@@ -10,7 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 use Generated\Shared\Transfer\AmazonpayPriceTransfer;
 use Generated\Shared\Transfer\AmazonpayStatusTransfer;
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 abstract class AbstractConverter
 {
@@ -98,10 +98,10 @@ abstract class AbstractConverter
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      * @param string $name
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function updateNameData(AbstractTransfer $transfer, $name)
     {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 abstract class AbstractTransactionCollection
 {
@@ -27,9 +27,9 @@ abstract class AbstractTransactionCollection
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $abstractTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function executeHandlers(AbstractTransfer $abstractTransfer)
     {

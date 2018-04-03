@@ -8,22 +8,22 @@
 namespace Spryker\Zed\Amazonpay\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Quote\QuoteClientInterface;
+use Spryker\Client\Cart\CartClientInterface;
 
-class AmazonpayToQuoteBridge implements AmazonpayToQuoteInterface
+class AmazonpayToCartBridge implements AmazonpayToCartInterface
 {
 
     /**
-     * @var \Spryker\Client\Quote\QuoteClientInterface
+     * @var \Spryker\Client\Cart\CartClientInterface
      */
-    protected $quoteClient;
+    protected $cartClient;
 
     /**
-     * @param \Spryker\Client\Quote\QuoteClientInterface $quoteClient
+     * @param \Spryker\Client\Cart\CartClientInterface $quoteClient
      */
-    public function __construct(QuoteClientInterface $quoteClient)
+    public function __construct(CartClientInterface $quoteClient)
     {
-        $this->quoteClient = $quoteClient;
+        $this->cartClient = $quoteClient;
     }
 
     /**
@@ -31,7 +31,7 @@ class AmazonpayToQuoteBridge implements AmazonpayToQuoteInterface
      */
     public function getQuote()
     {
-        return $this->quoteClient->getQuote();
+        return $this->cartClient->getQuote();
     }
 
     /**
@@ -41,7 +41,7 @@ class AmazonpayToQuoteBridge implements AmazonpayToQuoteInterface
      */
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->quoteClient->setQuote($quoteTransfer);
+        $this->cartClient->storeQuote($quoteTransfer);
 
         return $this;
     }
@@ -51,7 +51,7 @@ class AmazonpayToQuoteBridge implements AmazonpayToQuoteInterface
      */
     public function clearQuote()
     {
-        $this->quoteClient->clearQuote();
+        $this->cartClient->clearQuote();
     }
 
 }

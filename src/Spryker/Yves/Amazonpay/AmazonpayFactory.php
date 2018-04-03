@@ -14,11 +14,11 @@ class AmazonpayFactory extends AbstractFactory implements AmazonpayFactoryInterf
 {
 
     /**
-     * @return \Spryker\Client\Quote\QuoteClientInterface
+     * @return \Spryker\Client\Cart\CartClientInterface
      */
-    public function getQuoteClient()
+    public function getCartClient()
     {
-        return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_QUOTE);
+        return $this->getProvidedDependency(AmazonpayDependencyProvider::CLIENT_CART);
     }
 
     /**

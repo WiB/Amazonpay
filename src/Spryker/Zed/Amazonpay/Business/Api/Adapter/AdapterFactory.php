@@ -9,7 +9,6 @@ namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
 use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk\AmazonpaySdkAdapterFactory;
-use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ConverterFactoryInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
 

@@ -36,10 +36,10 @@ class PaymentController extends AbstractController
         $amazonPaymentTransfer->setOrderReferenceId($request->query->get(static::URL_PARAM_REFERENCE_ID));
         $amazonPaymentTransfer->setAddressConsentToken($request->query->get(static::URL_PARAM_ACCESS_TOKEN));
 
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $quoteTransfer->setAmazonpayPayment($amazonPaymentTransfer);
         $quoteTransfer = $this->getClient()->handleCartWithAmazonpay($quoteTransfer);
-        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getFactory()->getCartClient()->setQuote($quoteTransfer);
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -53,7 +53,7 @@ class PaymentController extends AbstractController
      */
     public function setOrderReferenceAction(Request $request)
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $quoteTransfer->getAmazonpayPayment()->setOrderReferenceId($request->request->get(static::URL_PARAM_REFERENCE_ID));
 
         return new JsonResponse(['success' => true]);
@@ -64,9 +64,9 @@ class PaymentController extends AbstractController
      */
     public function getShipmentMethodsAction()
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $quoteTransfer = $this->getClient()->addSelectedAddressToQuote($quoteTransfer);
-        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getFactory()->getCartClient()->setQuote($quoteTransfer);
         $shipmentMethods = $this->getFactory()->getShipmentClient()->getAvailableMethods($quoteTransfer);
 
         return [
@@ -81,13 +81,13 @@ class PaymentController extends AbstractController
      */
     public function updateShipmentMethodAction(Request $request)
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $quoteTransfer->getShipment()->setShipmentSelection(
             (int)$request->request->get(static::URL_PARAM_SHIPMENT_METHOD_ID)
         );
         $quoteTransfer = $this->getClient()->addSelectedShipmentMethodToQuote($quoteTransfer);
         $quoteTransfer = $this->getFactory()->getCalculationClient()->recalculate($quoteTransfer);
-        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getFactory()->getCartClient()->setQuote($quoteTransfer);
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -101,7 +101,7 @@ class PaymentController extends AbstractController
      */
     public function confirmPurchaseAction(Request $request)
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
         if (!$quoteTransfer) {
             return $this->getFailedRedirectResponse();
@@ -109,7 +109,7 @@ class PaymentController extends AbstractController
 
         $quoteTransfer = $this->getClient()->confirmPurchase($quoteTransfer);
         $quoteTransfer = $this->getFactory()->getCalculationClient()->recalculate($quoteTransfer);
-        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getFactory()->getCartClient()->setQuote($quoteTransfer);
 
         if ($quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
             if (!$quoteTransfer->getAmazonpayPayment()
@@ -161,7 +161,7 @@ class PaymentController extends AbstractController
      */
     public function changePaymentMethodAction(Request $request)
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -175,7 +175,7 @@ class PaymentController extends AbstractController
      */
     public function successAction(Request $request)
     {
-        $this->getFactory()->getQuoteClient()->clearQuote();
+        $this->getFactory()->getCartClient()->clearQuote();
 
         return [];
     }

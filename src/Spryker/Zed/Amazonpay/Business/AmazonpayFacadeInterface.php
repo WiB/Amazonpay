@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 /**
  * @api
@@ -186,7 +186,7 @@ interface AmazonpayFacadeInterface
      * @param array $headers
      * @param string $body
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function convertAmazonpayIpnRequest(array $headers, $body);
 
@@ -196,7 +196,7 @@ interface AmazonpayFacadeInterface
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ipnRequestTransfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $ipnRequestTransfer
      *
      * @return void
      */

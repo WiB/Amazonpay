@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 
 use Spryker\Shared\Amazonpay\AmazonpayConstants;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLoggerInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
@@ -47,7 +47,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $ipnRequest
+     * @param \Spryker\Shared\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $ipnRequest
      *
      * @throws IpnHandlerNotFoundException
      *
@@ -74,7 +74,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $ipnRequest
+     * @param \Spryker\Shared\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentAuthorizeRequestTransfer $ipnRequest
      *
      * @throws IpnHandlerNotFoundException
      *
@@ -113,7 +113,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentCaptureRequestTransfer $ipnRequest
+     * @param \Spryker\Shared\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentCaptureRequestTransfer $ipnRequest
      *
      * @throws IpnHandlerNotFoundException
      *
@@ -142,7 +142,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentRefundRequestTransfer $ipnRequest
+     * @param \Spryker\Shared\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnPaymentRefundRequestTransfer $ipnRequest
      *
      * @throws IpnHandlerNotFoundException
      *
@@ -169,7 +169,7 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnOrderReferenceNotificationTransfer $ipnRequest
+     * @param \Spryker\Shared\Transfer\AbstractTransfer | \Generated\Shared\Transfer\AmazonpayIpnOrderReferenceNotificationTransfer $ipnRequest
      *
      * @throws IpnHandlerNotFoundException
      *

@@ -103,7 +103,7 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface
+     * @return \Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface
      */
     protected function getUtilEncodingService()
     {

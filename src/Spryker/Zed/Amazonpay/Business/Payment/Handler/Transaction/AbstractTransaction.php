@@ -25,7 +25,7 @@ abstract class AbstractTransaction
     protected $config;
 
     /**
-     * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @var \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected $apiResponse;
 

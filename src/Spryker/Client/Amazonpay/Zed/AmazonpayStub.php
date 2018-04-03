@@ -14,7 +14,7 @@ class AmazonpayStub implements AmazonpayStubInterface
 {
 
     /**
-     * @var \Spryker\Client\ZedRequest\Client\ZedClientInterface
+     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
     protected $zedStub;
 
@@ -29,7 +29,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function handleCartWithAmazonpay(QuoteTransfer $quoteTransfer)
     {
@@ -39,7 +39,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function addSelectedAddressToQuote(QuoteTransfer $quoteTransfer)
     {
@@ -49,7 +49,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function addSelectedShipmentMethodToQuote(QuoteTransfer $quoteTransfer)
     {
@@ -62,7 +62,7 @@ class AmazonpayStub implements AmazonpayStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function confirmPurchase(QuoteTransfer $quoteTransfer)
     {

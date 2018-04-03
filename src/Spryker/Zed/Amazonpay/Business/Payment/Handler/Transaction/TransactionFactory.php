@@ -31,11 +31,6 @@ class TransactionFactory implements TransactionFactoryInterface
     protected $amazonpayQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Amazonpay\Business\Payment\Method\AmazonpayInterface
-     */
-    protected $amazonpayPaymentMethod;
-
-    /**
      * @var \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\Logger\TransactionLoggerInterface
      */
     protected $transactionLogger;
@@ -231,8 +226,7 @@ class TransactionFactory implements TransactionFactoryInterface
             $this->adapterFactory->createRefundOrderAdapter(),
             $this->config,
             $this->transactionLogger,
-            $this->amazonpayQueryContainer,
-            $this->amazonpayPaymentMethod
+            $this->amazonpayQueryContainer
         );
     }
 

@@ -20,7 +20,7 @@ class RefundDetailsConverter extends AbstractArrayConverter
     /**
      * @param array $refundDetailsData
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public function convert(array $refundDetailsData)
     {
