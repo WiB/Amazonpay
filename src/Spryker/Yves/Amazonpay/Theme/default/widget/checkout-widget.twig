@@ -1,8 +1,8 @@
 <!-- Place this code in your HTML where you would like the address widget to appear. -->
-<div id="amazonpayAddressBookWidgetDiv"> </div>
+<div id="amazonpayAddressBookWidgetDiv" style="height: 20vh"> </div>
 
 <!-- Place this code in your HTML where you would like the wallet widget to appear. -->
-<div id="amazonpayWalletWidgetDiv"> </div>
+<div id="amazonpayWalletWidgetDiv" style="height: 20vh"> </div>
 
 <script>
     var amazonpayConfig = {
@@ -77,4 +77,7 @@
             }
         }).bind("amazonpayWalletWidgetDiv");
     };
+</script>
+<script async="async"
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
 </script>

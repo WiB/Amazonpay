@@ -9,7 +9,7 @@ namespace Spryker\Yves\Amazonpay\Controller;
 
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
 use Spryker\Yves\Amazonpay\Plugin\Provider\AmazonpayControllerProvider;
-use Spryker\Yves\Kernel\Controller\AbstractController;
+use Spryker\Yves\Application\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +39,7 @@ class PaymentController extends AbstractController
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $quoteTransfer->setAmazonpayPayment($amazonPaymentTransfer);
         $quoteTransfer = $this->getClient()->handleCartWithAmazonpay($quoteTransfer);
-        $this->getFactory()->getCartClient()->setQuote($quoteTransfer);
+        $this->getFactory()->getCartClient()->storeQuote($quoteTransfer);
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -53,8 +53,11 @@ class PaymentController extends AbstractController
      */
     public function setOrderReferenceAction(Request $request)
     {
-        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
-        $quoteTransfer->getAmazonpayPayment()->setOrderReferenceId($request->request->get(static::URL_PARAM_REFERENCE_ID));
+        $cartClient = $this->getFactory()->getCartClient();
+
+        $quoteTransfer = $cartClient->getQuote();
+        $quoteTransfer->getAmazonpayPayment()->setOrderReferenceId($request->get(static::URL_PARAM_REFERENCE_ID));
+        $cartClient->storeQuote($quoteTransfer);
 
         return new JsonResponse(['success' => true]);
     }
@@ -108,8 +111,9 @@ class PaymentController extends AbstractController
         }
 
         $quoteTransfer = $this->getClient()->confirmPurchase($quoteTransfer);
+
         $quoteTransfer = $this->getFactory()->getCalculationClient()->recalculate($quoteTransfer);
-        $this->getFactory()->getCartClient()->setQuote($quoteTransfer);
+        $this->getFactory()->getCartClient()->storeQuote($quoteTransfer);
 
         if ($quoteTransfer->getAmazonpayPayment()->getResponseHeader()->getIsSuccess()) {
             if (!$quoteTransfer->getAmazonpayPayment()

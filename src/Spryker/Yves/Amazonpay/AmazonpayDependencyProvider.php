@@ -31,27 +31,19 @@ class AmazonpayDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container[self::CLIENT_CART] = function () use ($container) {
-            return new AmazonpayToCartBridge(
-                $container->getLocator()->cart()->client()
-            );
+            return $container->getLocator()->cart()->client();
         };
 
         $container[self::CLIENT_SHIPMENT] = function () use ($container) {
-            return new AmazonpayToShipmentBridge(
-                $container->getLocator()->shipment()->client()
-            );
+            return $container->getLocator()->shipment()->client();
         };
 
         $container[self::CLIENT_CHECKOUT] = function () use ($container) {
-            return new AmazonpayToCheckoutBridge(
-                $container->getLocator()->checkout()->client()
-            );
+            return $container->getLocator()->checkout()->client();
         };
 
         $container[self::CLIENT_CALCULATION] = function () use ($container) {
-            return new AmazonpayToCalculationBridge(
-                $container->getLocator()->calculation()->client()
-            );
+            return $container->getLocator()->calculation()->client();
         };
 
         return $container;

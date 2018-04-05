@@ -2,6 +2,9 @@
     var amazonpayConfig = {
         clientId: "{{ amazonpayConfig.clientId }}",
         sellerId: "{{ amazonpayConfig.sellerId }}",
+        buttonType: "{{ amazonpayConfig.buttonType }}",
+        buttonColor: "{{ amazonpayConfig.buttonColor }}",
+        buttonSize: "{{ amazonpayConfig.buttonSize }}",
         logout: {{ logout }},
         redirectUrl: "{{ path('amazonpay_checkout', {'amazonpay': 'amazonpay'}) }}"
     };
@@ -23,9 +26,9 @@
         var addressConsentToken;
 
         OffAmazonPayments.Button('AmazonPayButton', amazonpayConfig.sellerId, {
-            type:  'PwA',
-            color: 'Gold',
-            size:  'medium',
+            type:  amazonpayConfig.buttonType,
+            color: amazonpayConfig.buttonColor,
+            size:  amazonpayConfig.buttonSize,
             language: 'en-GB',
 
             authorization: function() {
@@ -41,7 +44,7 @@
                 if (!referenceId) {
                     errorHandler(new Error('referenceId missing'));
                 } else {
-                    window.location = amazonpayConfig.redirectUrl + '?reference_id=' +
+                    window.location = amazonpayConfig.redirectUrl + '&reference_id=' +
                         orderReference.getAmazonOrderReferenceId() +
                         "&access_token=" + addressConsentToken;
                 }
