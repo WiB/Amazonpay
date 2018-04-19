@@ -85,7 +85,7 @@ interface AmazonpayConstants
     const WIDGET_BUTTON_SIZE_XTRA_LARGE = 'x-large';
 
     const WIDGET_BUTTON_COLOR_GOLD = 'Gold';
-    const WIDGET_BUTTON_COLOR_LIGHT_GRAY = 'Light Gray';
-    const WIDGET_BUTTON_COLOR_DARK_GRAY = 'Dark Gray';
+    const WIDGET_BUTTON_COLOR_LIGHT_GRAY = 'LightGray';
+    const WIDGET_BUTTON_COLOR_DARK_GRAY = 'DarkGray';
 
 }
