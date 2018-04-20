@@ -67,6 +67,7 @@ interface AmazonpayConstants
     const REASON_CODE_SELLER_CLOSED = 'SellerClosed';
     const REASON_CODE_PAYMENT_METHOD_INVALID = 'InvalidPaymentMethod';
     const REASON_CODE_AMAZON_CLOSED = 'AmazonClosed';
+    const REASON_CODE_TRANSACTION_TIMED_OUT = 'TransactionTimedOut';
 
     const IPN_REQUEST_TYPE_PAYMENT_AUTHORIZE = 'PaymentAuthorize';
     const IPN_REQUEST_TYPE_PAYMENT_CAPTURE = 'PaymentCapture';
