@@ -174,13 +174,12 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
         }
 
         foreach ($constraints as $constraint) {
-            foreach($constraint as $nestedConstraint) {
-                $constraintTransfer = new AmazonpayResponseConstraintTransfer();
-                $constraintTransfer->setConstraintId($nestedConstraint['ConstraintID']);
-                $constraintTransfer->setConstraintDescription($nestedConstraint['Description']);
+            $constraintTransfer = new AmazonpayResponseConstraintTransfer();
+            $constraintTransfer->setConstraintId($constraint['ConstraintID']);
+            $constraintTransfer->setConstraintDescription($constraint['Description']);
 
-                $constraintTransfers[] = $constraintTransfer;
-            }
+            $constraintTransfers[] = $constraintTransfer;
+
         }
 
         return $constraintTransfers;
