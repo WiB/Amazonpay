@@ -10,7 +10,7 @@ namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn;
 use Spryker\Zed\Amazonpay\Business\Payment\Handler\Ipn\Logger\IpnRequestLogger;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToOmsInterface;
 use Spryker\Zed\Amazonpay\Persistence\AmazonpayQueryContainerInterface;
-use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToUtilEncodingInterface;
+use Spryker\Zed\Amazonpay\Dependency\Service\AmazonpayToUtilEncodingInterface;
 
 class IpnFactory implements IpnFactoryInterface
 {
