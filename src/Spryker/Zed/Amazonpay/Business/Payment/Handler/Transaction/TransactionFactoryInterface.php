@@ -26,7 +26,7 @@ interface TransactionFactoryInterface
     public function createGetOrderReferenceDetailsTransaction();
 
     /**
-     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\OrderTransactionInterface
+     * @return \Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction\QuoteTransactionInterface
      */
     public function createCancelPreOrderTransaction();
 

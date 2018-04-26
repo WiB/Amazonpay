@@ -9,14 +9,14 @@ namespace Spryker\Zed\Amazonpay\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\Amazonpay\Business\AmazonpayFacade getFacade()
  * @method \Spryker\Zed\Amazonpay\Communication\AmazonpayCommunicationFactory getFactory()
  */
-class AmazonpaySaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
+class AmazonpaySaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderPluginInterface
 {
 
     /**
@@ -25,7 +25,7 @@ class AmazonpaySaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrd
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->getFacade()->saveOrderPayment($quoteTransfer, $checkoutResponse);
     }
