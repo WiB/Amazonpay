@@ -49,6 +49,12 @@
         });
     }
 </script>
-<script async="async"
-        src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
-</script>
+{% if amazonpayConfig.isSandbox %}
+    <script async="async"
+                src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js'>
+    </script>
+{% else %}
+    <script async="async"
+            src='https://static-na.payments-amazon.com/OffAmazonPayments/us/js/Widgets.js'>
+    </script>
+{% endif %}
