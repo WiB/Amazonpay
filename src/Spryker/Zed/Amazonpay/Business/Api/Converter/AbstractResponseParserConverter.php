@@ -166,12 +166,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
         }
 
         $constraintTransfers = [];
-
-        if (count($result['OrderReferenceDetails']['Constraints']) === 1) {
-            $constraints = array_values($result['OrderReferenceDetails']['Constraints']);
-        } else {
-            $constraints = $result['OrderReferenceDetails']['Constraints'];
-        }
+        $constraints = $result['OrderReferenceDetails']['Constraints']['Constraint'];
 
         foreach ($constraints as $constraint) {
             $constraintTransfer = new AmazonpayResponseConstraintTransfer();
