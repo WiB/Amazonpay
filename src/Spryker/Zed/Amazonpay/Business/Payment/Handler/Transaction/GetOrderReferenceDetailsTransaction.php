@@ -45,13 +45,9 @@ class GetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
                 $quoteTransfer->getAmazonpayPayment()->getOrderReferenceId()
             );
 
-            $orderReferenceStatus = new AmazonpayStatusTransfer();
-            $orderReferenceStatus->setState($this->apiResponse->getOrderReferenceStatus());
-            $orderReferenceStatus->setIsOpen(
-                $this->apiResponse->getOrderReferenceStatus() === AmazonpayConstants::ORDER_REFERENCE_STATUS_OPEN
+            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus(
+                $this->apiResponse->getOrderReferenceStatus()
             );
-
-            $quoteTransfer->getAmazonpayPayment()->setOrderReferenceStatus($orderReferenceStatus);
         }
 
         return $quoteTransfer;
