@@ -39,14 +39,6 @@ class AmazonpayBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Amazonpay\AmazonpayConfig
-     */
-    public function getConfig()
-    {
-        return new AmazonpayConfig();
-    }
-
-    /**
      * @return \Spryker\Zed\Amazonpay\Business\Quote\QuoteUpdateFactoryInterface
      */
     public function createQuoteUpdateFactory()
