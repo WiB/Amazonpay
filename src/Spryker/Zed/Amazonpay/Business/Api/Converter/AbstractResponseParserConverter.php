@@ -165,8 +165,19 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
             return [];
         }
 
+        if (!isset($result['OrderReferenceDetails']['Constraints']['Constraint'])) {
+            return [];
+        }
+
         $constraintTransfers = [];
-        $constraints = $result['OrderReferenceDetails']['Constraints']['Constraint'];
+
+        if (isset($result['OrderReferenceDetails']['Constraints']['Constraint']['ConstraintID'])) {
+            $constraints = [
+                $result['OrderReferenceDetails']['Constraints']['Constraint']
+            ];
+        } else {
+            $constraints = $result['OrderReferenceDetails']['Constraints']['Constraint'];
+        }
 
         foreach ($constraints as $constraint) {
             $constraintTransfer = new AmazonpayResponseConstraintTransfer();
