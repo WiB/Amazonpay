@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Amazonpay\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Store;
 
 class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
 {
@@ -35,7 +36,19 @@ class SetOrderReferenceDetailsTransaction extends AbstractQuoteTransaction
             $this->generateOperationReferenceId($quoteTransfer)
         );
 
+        $quoteTransfer->getAmazonpayPayment()->setStoreName(
+            $this->getStoreName()
+        );
+
         return parent::execute($quoteTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        return Store::getInstance()->getStoreName();
     }
 
 }

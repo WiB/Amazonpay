@@ -7,6 +7,7 @@
         <property name="fkSalesOrder" type="int" />
         <property name="orderReferenceId" type="string"/>
         <property name="sellerOrderId" type="string"/>
+        <property name="storeName" type="string"/>
         <property name="addressConsentToken" type="string"/>
         <property name="status" type="string"/>
         <property name="orderReferenceStatus" type="AmazonpayStatus"/>
