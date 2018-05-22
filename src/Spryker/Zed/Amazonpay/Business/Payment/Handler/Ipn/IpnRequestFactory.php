@@ -209,6 +209,14 @@ class IpnRequestFactory implements IpnRequestFactoryInterface
             );
         }
 
+        if ($ipnRequest->getOrderReferenceStatus()->getIsCanceled()) {
+            return new IpnOrderReferenceCanceledHandler(
+                $this->omsFacade,
+                $this->amazonpayQueryContainer,
+                $this->ipnRequestLogger
+            );
+        }
+
         throw new IpnHandlerNotFoundException('No IPN handler for order reference and status ' .
             $ipnRequest->getOrderReferenceStatus()->getState());
     }

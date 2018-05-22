@@ -16,6 +16,7 @@ abstract class AbstractConverter
 {
 
     const STATUS_DECLINED = 'Declined';
+    const STATUS_CANCELED = 'Canceled';
     const STATUS_PENDING = 'Pending';
     const STATUS_OPEN = 'Open';
     const STATUS_CLOSED = 'Closed';
@@ -84,6 +85,10 @@ abstract class AbstractConverter
 
         $status->setIsPending(
             $statusData['State'] === static::STATUS_PENDING
+        );
+
+        $status->setIsCanceled(
+            $statusData['State'] === static::STATUS_CANCELED
         );
 
         $status->setIsOpen(

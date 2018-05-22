@@ -79,6 +79,7 @@
         <property name="state" type="string"/>
         <property name="reasonCode" type="string"/>
         <property name="lastUpdateTimestamp" type="string"/>
+        <property name="isCanceled" type="bool"/>
         <property name="isDeclined" type="bool"/>
         <property name="isSuspended" type="bool"/>
         <property name="isPending" type="bool"/>
