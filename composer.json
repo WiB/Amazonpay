@@ -15,7 +15,7 @@
     "spryker/oms": "^3.0.9",
     "spryker/sales": "^2.2.0",
     "spryker/util-encoding": "^1.0.0 || ^2.0.1",
-    "amzn/login-and-pay-with-amazon-sdk-php": "^2.1",
+    "amzn/login-and-pay-with-amazon-sdk-php": "^3.4.1",
     "ralouphie/getallheaders": "^2.0"
   },
   "description": "Amazon Pay Bundle",
