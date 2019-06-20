@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
+use AmazonPay\ResponseInterface;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AmazonpayGetOrderReferenceDetailsResponseTransfer;
 use Spryker\Shared\Transfer\AbstractTransfer;
-use PayWithAmazon\ResponseInterface;
 
 class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 {
@@ -24,7 +24,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return array
      */
@@ -34,7 +34,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return boolean
      */
@@ -44,7 +44,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -72,7 +72,7 @@ class GetOrderReferenceDetailsConverter extends AbstractResponseParserConverter
 
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
+use AmazonPay\Client;
+use AmazonPay\ClientInterface;
 use Generated\Shared\Transfer\AmazonpayPaymentTransfer;
-use PayWithAmazon\Client;
-use PayWithAmazon\ClientInterface;
 use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
@@ -33,7 +33,7 @@ abstract class AbstractAuthorizeAdapter extends AbstractAdapter
     protected $transactionTimeout;
 
     /**
-     * @param \PayWithAmazon\ClientInterface $client
+     * @param \AmazonPay\ClientInterface $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
      * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config

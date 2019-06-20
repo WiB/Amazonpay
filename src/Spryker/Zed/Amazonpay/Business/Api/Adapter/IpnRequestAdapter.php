@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use PayWithAmazon\IpnHandler;
+use AmazonPay\IpnHandler;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface;
 
 class IpnRequestAdapter implements IpnRequestAdapterInterface
 {
 
     /**
-     * @var \PayWithAmazon\IpnHandler
+     * @var \AmazonPay\IpnHandler
      */
     protected $ipnHandler;
 
@@ -24,7 +24,7 @@ class IpnRequestAdapter implements IpnRequestAdapterInterface
     protected $ipnArrayConverter;
 
     /**
-     * @param \PayWithAmazon\IpnHandler $ipnHandler
+     * @param \AmazonPay\IpnHandler $ipnHandler
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $ipnArrayConverter
      */
     public function __construct(

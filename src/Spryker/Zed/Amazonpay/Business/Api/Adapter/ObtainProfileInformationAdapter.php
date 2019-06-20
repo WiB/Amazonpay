@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
+use AmazonPay\Client;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PayWithAmazon\Client;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface;
 
 class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAdapterInterface
@@ -20,7 +20,7 @@ class ObtainProfileInformationAdapter extends AbstractAdapter implements QuoteAd
     protected $converter;
 
     /**
-     * @param \PayWithAmazon\Client $client
+     * @param \AmazonPay\Client $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ArrayConverterInterface $converter
      */
     public function __construct(

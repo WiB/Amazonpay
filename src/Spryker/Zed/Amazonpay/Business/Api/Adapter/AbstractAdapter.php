@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter;
 
-use PayWithAmazon\ClientInterface;
+use AmazonPay\ClientInterface;
 use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface;
 use Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface;
@@ -23,7 +23,7 @@ abstract class AbstractAdapter
     const AMAZON_REFUND_ID = 'amazon_refund_id';
 
     /**
-     * @var \PayWithAmazon\Client
+     * @var \AmazonPay\Client
      */
     protected $client;
 
@@ -38,7 +38,7 @@ abstract class AbstractAdapter
     protected $converter;
 
     /**
-     * @param \PayWithAmazon\ClientInterface $client
+     * @param \AmazonPay\ClientInterface $client
      * @param \Spryker\Zed\Amazonpay\Business\Api\Converter\ResponseParserConverterInterface $converter
      * @param \Spryker\Zed\Amazonpay\Dependency\Facade\AmazonpayToMoneyInterface $moneyFacade
      */

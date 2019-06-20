@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Converter;
 
+use AmazonPay\ResponseInterface;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer;
 use Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer;
-use PayWithAmazon\ResponseInterface;
 use Spryker\Shared\Transfer\AbstractTransfer;
 
 abstract class AbstractResponseParserConverter extends AbstractConverter implements ResponseParserConverterInterface
@@ -35,7 +35,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
 
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
@@ -46,7 +46,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
 
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer $responseTransfer
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
@@ -61,7 +61,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
@@ -71,7 +71,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return array
      */
@@ -83,7 +83,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return int
      */
@@ -93,7 +93,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AmazonpayResponseHeaderTransfer
      */
@@ -127,7 +127,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return bool
      */
@@ -139,7 +139,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return array
      */
@@ -153,7 +153,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AmazonpayResponseConstraintTransfer[]
      */
@@ -192,7 +192,7 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
     }
 
     /**
-     * @param \PayWithAmazon\ResponseInterface $responseParser
+     * @param \AmazonPay\ResponseInterface $responseParser
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */

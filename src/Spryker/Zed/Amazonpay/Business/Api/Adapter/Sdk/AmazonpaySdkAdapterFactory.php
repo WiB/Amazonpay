@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Amazonpay\Business\Api\Adapter\Sdk;
 
-use PayWithAmazon\Client;
-use PayWithAmazon\IpnHandler;
+use AmazonPay\Client;
+use AmazonPay\IpnHandler;
 use Spryker\Shared\Amazonpay\AmazonpayConfigInterface;
 
 class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
@@ -26,7 +26,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
     /**
      * @param \Spryker\Shared\Amazonpay\AmazonpayConfigInterface $config
      *
-     * @return \PayWithAmazon\ClientInterface
+     * @return \AmazonPay\ClientInterface
      */
     public function createAmazonpayClient(AmazonpayConfigInterface $config)
     {
@@ -48,7 +48,7 @@ class AmazonpaySdkAdapterFactory implements AmazonpaySdkAdapterFactoryInterface
      * @param array $headers
      * @param string $body
      *
-     * @return \PayWithAmazon\IpnHandlerInterface
+     * @return \AmazonPay\IpnHandlerInterface
      */
     public function createAmazonpayIpnHandler(array $headers, $body)
     {
