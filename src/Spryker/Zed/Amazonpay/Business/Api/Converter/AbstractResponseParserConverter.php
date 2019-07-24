@@ -120,7 +120,9 @@ abstract class AbstractResponseParserConverter extends AbstractConverter impleme
         }
 
         if ($constraints) {
-            $header->setConstraints($constraints);
+            foreach($constraints as $constraint) {
+                $header->addConstraint($constraint);
+            }
         }
 
         return $header;
